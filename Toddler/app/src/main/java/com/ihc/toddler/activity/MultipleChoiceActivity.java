@@ -20,7 +20,6 @@ public class MultipleChoiceActivity extends AppCompatActivity {
     private TextView questionTextView;
     private Button answerA, answerB, answerC, answerD;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
