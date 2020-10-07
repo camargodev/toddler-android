@@ -19,23 +19,13 @@ import com.ihc.toddler.view.ExerciseViewFactory;
 
 import java.util.Arrays;
 
-public class TrueOrFalseActivity extends AppCompatActivity {
+public class TrueOrFalseActivity extends GenericExerciseActivity {
 
-    private TextView questionTextView;
     private Button trueButton, falseButton;
-    private QuizManager quizManager = QuizManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Exercise currentExercise = quizManager.getCurrentExercise();
-        ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);
-
-        setContentView(exerciseView.getLayoutId());
-
-        mapLayout();
-        exerciseView.mapQuestion(questionTextView);
         exerciseView.mapAnswers(Arrays.asList(trueButton, falseButton));
     }
 
@@ -45,21 +35,9 @@ public class TrueOrFalseActivity extends AppCompatActivity {
 
     public void answerB(View view) { submitAndGoToNext(2); }
 
-    private void submitAndGoToNext(Integer answer) {
-        quizManager.submitAnswer(answer);
-        if (quizManager.isLastExercise()) {
-            Intent resultsIntent = new Intent(this, DisplayResultsActivity.class);
-            startActivity(resultsIntent);
-            return;
-        }
-        Exercise nextExercise = quizManager.goToNext().getCurrentExercise();
-        ExerciseView nextExerciseView = ExerciseViewFactory.make(nextExercise);
-        Intent nextExerciseIntent = nextExerciseView.getIntent(this);
-        startActivity(nextExerciseIntent);
-    }
-
-    private void mapLayout() {
-        questionTextView = findViewById(R.id.question);
+    @Override
+    protected void mapLayout() {
+        super.mapLayout();
         trueButton = findViewById(R.id.ans_true);
         falseButton = findViewById(R.id.ans_false);
     }

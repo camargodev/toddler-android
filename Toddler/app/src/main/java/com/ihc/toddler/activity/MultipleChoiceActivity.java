@@ -18,23 +18,13 @@ import com.ihc.toddler.view.ExerciseViewFactory;
 
 import java.util.Arrays;
 
-public class MultipleChoiceActivity extends AppCompatActivity {
+public class MultipleChoiceActivity extends GenericExerciseActivity {
 
-    private TextView questionTextView;
     private Button answerA, answerB, answerC, answerD;
-    private QuizManager quizManager = QuizManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Exercise currentExercise = quizManager.getCurrentExercise();
-        ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);
-
-        setContentView(exerciseView.getLayoutId());
-
-        mapLayout();
-        exerciseView.mapQuestion(questionTextView);
         exerciseView.mapAnswers(Arrays.asList(answerA, answerB, answerC, answerD));
     }
 
@@ -50,21 +40,9 @@ public class MultipleChoiceActivity extends AppCompatActivity {
 
     public void answerD(View view) { submitAndGoToNext(4); }
 
-    private void submitAndGoToNext(Integer answer) {
-        quizManager.submitAnswer(answer);
-        if (quizManager.isLastExercise()) {
-            Intent resultsIntent = new Intent(this, DisplayResultsActivity.class);
-            startActivity(resultsIntent);
-            return;
-        }
-        Exercise nextExercise = quizManager.goToNext().getCurrentExercise();
-        ExerciseView nextExerciseView = ExerciseViewFactory.make(nextExercise);
-        Intent nextExerciseIntent = nextExerciseView.getIntent(this);
-        startActivity(nextExerciseIntent);
-    }
-
-    private void mapLayout() {
-        questionTextView = findViewById(R.id.question);
+    @Override
+    protected void mapLayout() {
+        super.mapLayout();
         answerA = findViewById(R.id.ans_a);
         answerB = findViewById(R.id.ans_b);
         answerC = findViewById(R.id.ans_c);
