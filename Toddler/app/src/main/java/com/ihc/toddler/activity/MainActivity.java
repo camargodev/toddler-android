@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mapLayout();
 
         List<Exercise> exercises = new ArrayList<>();
         exercises.add(new MultipleChoiceExercise("Quanto é 3+3?", Arrays.asList("1", "3", "6", "9")));
@@ -43,14 +42,4 @@ public class MainActivity extends AppCompatActivity {
         Intent firstQuestion = exerciseView.getIntent(this);
         startActivity(firstQuestion);
     }
-
-    public void answerA(View view) {}
-
-    public void answerB(View view) {}
-
-    public void answerC(View view) {}
-
-    public void answerD(View view) {}
-
-    private void mapLayout() {}
 }

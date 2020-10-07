@@ -1,5 +1,7 @@
 package com.ihc.toddler.manager;
 
+import android.content.Intent;
+
 import com.ihc.toddler.entity.Exercise;
 
 import java.util.ArrayList;
@@ -14,6 +16,7 @@ public class QuizManager {
     private int answeredCount = 0;
 
     private static final Integer BLANK_ANSWER = 0;
+    private static final String BLANK_ANSWER_TEXT = "Not answered";
 
     private QuizManager() {}
 
@@ -60,6 +63,18 @@ public class QuizManager {
         if (isCurrentExerciseAnswered())
             answeredCount -= 1;
         answers.set(currentExercise, BLANK_ANSWER);
+    }
+
+    public List<String> getAnswersTexts() {
+        List<String> texts = new ArrayList<>();
+        for (int i = 0; i < answers.size(); i++) {
+            Integer currentAnswer = answers.get(i);
+            if (currentAnswer.equals(BLANK_ANSWER))
+                texts.add(BLANK_ANSWER_TEXT);
+            else
+                texts.add(exercises.get(i).getAnswers().get(currentAnswer-1));
+        }
+        return texts;
     }
 
     private boolean isCurrentExerciseAnswered() {

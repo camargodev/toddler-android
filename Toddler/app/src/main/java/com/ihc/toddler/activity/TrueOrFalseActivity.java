@@ -47,7 +47,11 @@ public class TrueOrFalseActivity extends AppCompatActivity {
 
     private void submitAndGoToNext(Integer answer) {
         quizManager.submitAnswer(answer);
-        if (quizManager.isLastExercise()) return;
+        if (quizManager.isLastExercise()) {
+            Intent resultsIntent = new Intent(this, DisplayResultsActivity.class);
+            startActivity(resultsIntent);
+            return;
+        }
         Exercise nextExercise = quizManager.goToNext().getCurrentExercise();
         ExerciseView nextExerciseView = ExerciseViewFactory.make(nextExercise);
         Intent nextExerciseIntent = nextExerciseView.getIntent(this);
