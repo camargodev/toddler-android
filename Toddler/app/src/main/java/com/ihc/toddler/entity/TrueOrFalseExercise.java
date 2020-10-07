@@ -5,12 +5,14 @@ import android.widget.TextView;
 
 import com.ihc.toddler.R;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 
-public class MultipleChoiceExercise extends Exercise {
+public class TrueOrFalseExercise extends Exercise {
 
-    public MultipleChoiceExercise(String question, List<String> answers) {
-        super(question, 4, answers);
+    public TrueOrFalseExercise(String question) {
+        super(question, 2, Arrays.asList("True", "False"));
     }
 
     @Override
@@ -22,7 +24,6 @@ public class MultipleChoiceExercise extends Exercise {
 
     @Override
     public int getLayoutId() {
-        return R.layout.multiple_choice_activity;
+        return R.layout.true_or_false_activity;
     }
-
 }

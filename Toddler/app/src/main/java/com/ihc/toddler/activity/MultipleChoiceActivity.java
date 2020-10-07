@@ -1,7 +1,5 @@
 package com.ihc.toddler.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -9,13 +7,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.MultipleChoiceExercise;
 
 import java.util.Arrays;
 
-public class MainActivity extends AppCompatActivity {
+public class MultipleChoiceActivity extends AppCompatActivity {
 
     private TextView questionTextView;
     private Button answerA, answerB, answerC, answerD;
