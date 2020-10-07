@@ -33,6 +33,4 @@ public abstract class Exercise {
         this.answers = answers;
     }
 
-    public abstract void display(TextView questionTextView, List<Button> answers);
-    public abstract int getLayoutId();
 }

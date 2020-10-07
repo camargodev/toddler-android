@@ -12,6 +12,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.MultipleChoiceExercise;
+import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.view.ExerciseView;
+import com.ihc.toddler.view.ExerciseViewFactory;
 
 import java.util.Arrays;
 
@@ -19,33 +22,41 @@ public class MultipleChoiceActivity extends AppCompatActivity {
 
     private TextView questionTextView;
     private Button answerA, answerB, answerC, answerD;
+    private QuizManager quizManager = QuizManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        Exercise currentExercise = quizManager.getCurrentExercise();
+        ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);
+
+        setContentView(exerciseView.getLayoutId());
+
         mapLayout();
-        Exercise ex = new MultipleChoiceExercise("Quanto é 3x3?", Arrays.asList("1", "3", "6", "9"));
-        ex.display(questionTextView, Arrays.asList(answerA, answerB, answerC, answerD));
+        exerciseView.mapQuestion(questionTextView);
+        exerciseView.mapAnswers(Arrays.asList(answerA, answerB, answerC, answerD));
     }
 
     public void answerA(View view) {
-        Toast.makeText(this, "Incorreto", Toast.LENGTH_LONG).show();
+        submitAndGoToNext(1);
     }
 
     public void answerB(View view) {
-        Toast.makeText(this, "Incorreto", Toast.LENGTH_LONG).show();
+        submitAndGoToNext(2);
     }
 
-    public void answerC(View view) {
-        Toast.makeText(this, "Incorreto", Toast.LENGTH_LONG).show();
-    }
+    public void answerC(View view) { submitAndGoToNext(3); }
 
-    public void answerD(View view) {
-        Toast.makeText(this, "Correto", Toast.LENGTH_LONG).show();
-        Intent nextTask = new Intent(this, TrueOrFalseActivity.class);
-        finish();
-        startActivity(nextTask);
+    public void answerD(View view) { submitAndGoToNext(4); }
+
+    private void submitAndGoToNext(Integer answer) {
+        quizManager.submitAnswer(answer);
+        if (quizManager.isLastExercise()) return;
+        Exercise nextExercise = quizManager.goToNext().getCurrentExercise();
+        ExerciseView nextExerciseView = ExerciseViewFactory.make(nextExercise);
+        Intent nextExerciseIntent = nextExerciseView.getIntent(this);
+        startActivity(nextExerciseIntent);
     }
 
     private void mapLayout() {

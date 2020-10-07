@@ -1,7 +1,5 @@
 package com.ihc.toddler.manager;
 
-import android.content.Intent;
-
 import com.ihc.toddler.entity.Exercise;
 
 import java.util.ArrayList;
@@ -34,12 +32,14 @@ public class QuizManager {
         return exercises.get(currentExercise);
     }
 
-    public void goToNext() {
+    public QuizManager goToNext() {
         currentExercise += 1;
+        return this;
     }
 
-    public void goToLast() {
+    public QuizManager goToLast() {
         currentExercise -= 1;
+        return this;
     }
 
     public boolean isLastExercise() {

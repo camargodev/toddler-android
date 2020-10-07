@@ -1,5 +1,6 @@
 package com.ihc.toddler.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,9 @@ import com.ihc.toddler.R;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.MultipleChoiceExercise;
 import com.ihc.toddler.entity.TrueOrFalseExercise;
+import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.view.ExerciseView;
+import com.ihc.toddler.view.ExerciseViewFactory;
 
 import java.util.Arrays;
 
@@ -19,22 +23,35 @@ public class TrueOrFalseActivity extends AppCompatActivity {
 
     private TextView questionTextView;
     private Button trueButton, falseButton;
+    private QuizManager quizManager = QuizManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.true_or_false_activity);
+
+        Exercise currentExercise = quizManager.getCurrentExercise();
+        ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);
+
+        setContentView(exerciseView.getLayoutId());
+
         mapLayout();
-        Exercise ex = new TrueOrFalseExercise("2 é par?");
-        ex.display(questionTextView, Arrays.asList(trueButton, falseButton));
+        exerciseView.mapQuestion(questionTextView);
+        exerciseView.mapAnswers(Arrays.asList(trueButton, falseButton));
     }
 
     public void answerA(View view) {
-        Toast.makeText(this, "Correto", Toast.LENGTH_LONG).show();
+        submitAndGoToNext(1);
     }
 
-    public void answerB(View view) {
-        Toast.makeText(this, "Incorreto", Toast.LENGTH_LONG).show();
+    public void answerB(View view) { submitAndGoToNext(2); }
+
+    private void submitAndGoToNext(Integer answer) {
+        quizManager.submitAnswer(answer);
+        if (quizManager.isLastExercise()) return;
+        Exercise nextExercise = quizManager.goToNext().getCurrentExercise();
+        ExerciseView nextExerciseView = ExerciseViewFactory.make(nextExercise);
+        Intent nextExerciseIntent = nextExerciseView.getIntent(this);
+        startActivity(nextExerciseIntent);
     }
 
     private void mapLayout() {

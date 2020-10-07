@@ -13,16 +13,4 @@ public class MultipleChoiceExercise extends Exercise {
         super(question, 4, answers);
     }
 
-    @Override
-    public void display(TextView questionTextView, List<Button> answerButtons) {
-        questionTextView.setText(question);
-        for (int i = 0; i < numberOfAnswers; i++)
-            answerButtons.get(i).setText(answers.get(i));
-    }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.multiple_choice_activity;
-    }
-
 }

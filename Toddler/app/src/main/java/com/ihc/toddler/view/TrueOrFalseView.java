@@ -1,9 +1,13 @@
 package com.ihc.toddler.view;
 
+import android.content.Context;
+import android.content.Intent;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.ihc.toddler.R;
+import com.ihc.toddler.activity.MultipleChoiceActivity;
+import com.ihc.toddler.activity.TrueOrFalseActivity;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.MultipleChoiceExercise;
 import com.ihc.toddler.entity.TrueOrFalseExercise;
@@ -12,9 +16,9 @@ import java.util.List;
 
 public class TrueOrFalseView implements ExerciseView {
 
-    private TrueOrFalseExercise exercise;
+    private Exercise exercise;
 
-    public TrueOrFalseView(TrueOrFalseExercise exercise) {
+    public TrueOrFalseView(Exercise exercise) {
         this.exercise = exercise;
     }
 
@@ -29,12 +33,13 @@ public class TrueOrFalseView implements ExerciseView {
     }
 
     @Override
-    public void mapAnswers(List<Button> buttons) throws Exception {
-        if (buttons.size() != exercise.getAnswers().size())
-            throw new Exception("Cannot map answers to screen");
-        if (buttons.size() != 2)
-            throw new Exception("Should only have two answers in true or false");
+    public void mapAnswers(List<Button> buttons) {
         for (int i = 0; i < buttons.size(); i++)
             buttons.get(i).setText(exercise.getAnswers().get(i));
+    }
+
+    @Override
+    public Intent getIntent(Context context) {
+        return new Intent(context, TrueOrFalseActivity.class);
     }
 }

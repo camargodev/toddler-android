@@ -12,47 +12,45 @@ import android.widget.Toast;
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.MultipleChoiceExercise;
+import com.ihc.toddler.entity.TrueOrFalseExercise;
+import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.view.ExerciseView;
+import com.ihc.toddler.view.ExerciseViewFactory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
-    private TextView questionTextView;
-    private Button answerA, answerB, answerC, answerD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mapLayout();
-        Exercise ex = new MultipleChoiceExercise("Quanto é 3x3?", Arrays.asList("1", "3", "6", "9"));
-        ex.display(questionTextView, Arrays.asList(answerA, answerB, answerC, answerD));
+
+        List<Exercise> exercises = new ArrayList<>();
+        exercises.add(new MultipleChoiceExercise("Quanto é 3+3?", Arrays.asList("1", "3", "6", "9")));
+        exercises.add(new TrueOrFalseExercise("2 é par?"));
+        exercises.add(new MultipleChoiceExercise("Quantas sílabas tem em casa?", Arrays.asList("1", "2", "3", "4")));
+        exercises.add(new TrueOrFalseExercise("7 é maior que 10?"));
+
+        QuizManager manager = QuizManager.getInstance();
+        manager.setExercises(exercises);
+
+        Exercise currentExercise = manager.getCurrentExercise();
+        ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);
+        Intent firstQuestion = exerciseView.getIntent(this);
+        startActivity(firstQuestion);
     }
 
-    public void answerA(View view) {
-        Toast.makeText(this, "Incorreto", Toast.LENGTH_LONG).show();
-    }
+    public void answerA(View view) {}
 
-    public void answerB(View view) {
-        Toast.makeText(this, "Incorreto", Toast.LENGTH_LONG).show();
-    }
+    public void answerB(View view) {}
 
-    public void answerC(View view) {
-        Toast.makeText(this, "Incorreto", Toast.LENGTH_LONG).show();
-    }
+    public void answerC(View view) {}
 
-    public void answerD(View view) {
-        Toast.makeText(this, "Correto", Toast.LENGTH_LONG).show();
-        Intent nextTask = new Intent(this, TrueOrFalseActivity.class);
-        finish();
-        startActivity(nextTask);
-    }
+    public void answerD(View view) {}
 
-    private void mapLayout() {
-        questionTextView = findViewById(R.id.question);
-        answerA = findViewById(R.id.ans_a);
-        answerB = findViewById(R.id.ans_b);
-        answerC = findViewById(R.id.ans_c);
-        answerD = findViewById(R.id.ans_d);
-    }
+    private void mapLayout() {}
 }
