@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.MultipleChoiceExercise;
+import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.entity.TrueOrFalseExercise;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.view.ExerciseView;
@@ -33,9 +34,9 @@ public class MainActivity extends AppCompatActivity {
         exercises.add(new TrueOrFalseExercise("2 é par?"));
         exercises.add(new MultipleChoiceExercise("Quantas sílabas tem em casa?", Arrays.asList("1", "2", "3", "4")));
         exercises.add(new TrueOrFalseExercise("7 é maior que 10?"));
+        Quiz quiz = new Quiz("Basic 101", exercises);
 
-        QuizManager manager = QuizManager.getInstance();
-        manager.setExercises(exercises);
+        QuizManager manager = QuizManager.getInstance(quiz);
 
         Exercise currentExercise = manager.getCurrentExercise();
         ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);

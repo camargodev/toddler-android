@@ -28,12 +28,7 @@ public class DisplayResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results_display_activity);
         mapLayout();
-
-        List<String> answers = QuizManager.getInstance().getAnswersTexts();
-        StringBuilder answerConcatenation = new StringBuilder();
-        for (String answer : answers)
-            answerConcatenation.append(answer).append("\n");
-        results.setText(answerConcatenation);
+        results.setText(QuizManager.getInstance().getQuizText());
     }
 
     private void mapLayout() {
