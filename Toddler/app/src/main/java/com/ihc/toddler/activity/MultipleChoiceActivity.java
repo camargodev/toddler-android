@@ -24,20 +24,10 @@ public class MultipleChoiceActivity extends GenericExerciseActivity {
 
     private Button answerA, answerB, answerC, answerD;
 
-    private TextToSpeech textToSpeech;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         exerciseView.mapAnswers(Arrays.asList(answerA, answerB, answerC, answerD));
-        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR)
-                    textToSpeech.setLanguage(new Locale("pt", "BR"));
-            }
-        });
-
     }
 
     public void answerA(View view) {
@@ -53,11 +43,7 @@ public class MultipleChoiceActivity extends GenericExerciseActivity {
     public void answerD(View view) { submitAndGoToNext(4); }
 
     public void readQuestion(View view) {
-
-        String toSpeak = questionTextView.getText().toString();
-//        Toast.makeText(getApplicationContext(), toSpeak,Toast.LENGTH_SHORT).show();
-        textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
-
+        super.readQuestion();
     }
 
     @Override

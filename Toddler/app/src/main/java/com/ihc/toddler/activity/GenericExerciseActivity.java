@@ -2,6 +2,7 @@ package com.ihc.toddler.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,12 +16,14 @@ import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public class GenericExerciseActivity extends AppCompatActivity {
 
     protected TextView questionTextView;
     protected QuizManager quizManager = QuizManager.getInstance();
     protected ExerciseView exerciseView;
+    protected TextToSpeech textToSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,14 @@ public class GenericExerciseActivity extends AppCompatActivity {
         mapLayout();
 
         exerciseView.mapQuestion(questionTextView);
+
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR)
+                    textToSpeech.setLanguage(new Locale("pt", "BR"));
+            }
+        });
     }
 
     protected void submitAndGoToNext(Integer answer) {
@@ -46,6 +57,11 @@ public class GenericExerciseActivity extends AppCompatActivity {
         ExerciseView nextExerciseView = ExerciseViewFactory.make(nextExercise);
         Intent nextExerciseIntent = nextExerciseView.getIntent(this);
         startActivity(nextExerciseIntent);
+    }
+
+    protected void readQuestion() {
+        String toSpeak = questionTextView.getText().toString();
+        textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     protected void mapLayout() {
