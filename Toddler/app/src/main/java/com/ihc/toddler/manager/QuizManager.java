@@ -1,13 +1,7 @@
 package com.ihc.toddler.manager;
 
-import android.content.Intent;
-
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.Quiz;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class QuizManager {
 
     private static QuizManager quizManager = new QuizManager();
@@ -40,7 +34,7 @@ public class QuizManager {
         return this;
     }
 
-    public QuizManager goToLast() {
+    public QuizManager goToPrevious() {
         currentExercise -= 1;
         return this;
     }
@@ -48,6 +42,8 @@ public class QuizManager {
     public boolean isLastExercise() {
         return currentExercise == (quiz.getNumberOfExercises() - 1);
     }
+
+    public boolean isFirstExercise() { return currentExercise ==  0; }
 
     public void submitAnswer(Integer answer) {
         quiz.submitAnswer(currentExercise, answer);
@@ -59,6 +55,22 @@ public class QuizManager {
 
     public String getQuizText() {
         return quiz.toString();
+    }
+
+    public int getNumberOfExercises() {
+        return quiz.getNumberOfExercises();
+    }
+
+    public int getCurrentExerciseNumber() {
+        return this.currentExercise + 1;
+    }
+
+    public boolean isCurrentExerciseAnswered() {
+        return !quiz.getAnswers().get(currentExercise).equals(Quiz.BLANK_ANSWER);
+    }
+
+    public int getCurrentAnswer() {
+        return quiz.getAnswers().get(currentExercise);
     }
 
 }

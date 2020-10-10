@@ -1,28 +1,17 @@
 package com.ihc.toddler.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.ihc.toddler.R;
-import com.ihc.toddler.entity.Exercise;
-import com.ihc.toddler.entity.MultipleChoiceExercise;
-import com.ihc.toddler.manager.QuizManager;
-import com.ihc.toddler.view.ExerciseView;
-import com.ihc.toddler.view.ExerciseViewFactory;
 
 import java.util.Arrays;
-import java.util.Locale;
 
 public class MultipleChoiceActivity extends GenericExerciseActivity {
 
     private Button answerA, answerB, answerC, answerD;
+    private static final int A = 1, B = 2, C = 3, D = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +20,24 @@ public class MultipleChoiceActivity extends GenericExerciseActivity {
     }
 
     public void answerA(View view) {
-        submitAndGoToNext(1);
+        submitAnswer(answerA, A);
     }
 
     public void answerB(View view) {
-        submitAndGoToNext(2);
+        submitAnswer(answerB, B);
     }
 
-    public void answerC(View view) { submitAndGoToNext(3); }
+    public void answerC(View view) { submitAnswer(answerC, C); }
 
-    public void answerD(View view) { submitAndGoToNext(4); }
+    public void answerD(View view) { submitAnswer(answerD, D); }
 
     public void readQuestion(View view) {
         super.readQuestion();
     }
+
+    public void next(View view) { goToNext(); }
+
+    public void previous(View view) { goToPrevious(); }
 
     @Override
     protected void mapLayout() {
@@ -53,5 +46,23 @@ public class MultipleChoiceActivity extends GenericExerciseActivity {
         answerB = findViewById(R.id.ans_b);
         answerC = findViewById(R.id.ans_c);
         answerD = findViewById(R.id.ans_d);
+    }
+
+    @Override
+    protected void clearAnswerButtons() {
+        answerA.setBackgroundResource(android.R.drawable.btn_default);
+        answerB.setBackgroundResource(android.R.drawable.btn_default);
+        answerC.setBackgroundResource(android.R.drawable.btn_default);
+        answerD.setBackgroundResource(android.R.drawable.btn_default);
+    }
+
+    @Override
+    protected void markButtonExercise(int answer) {
+        switch (answer) {
+            case A: markAsAnswered(answerA); break;
+            case B: markAsAnswered(answerB); break;
+            case C: markAsAnswered(answerC); break;
+            case D: markAsAnswered(answerD); break;
+        }
     }
 }

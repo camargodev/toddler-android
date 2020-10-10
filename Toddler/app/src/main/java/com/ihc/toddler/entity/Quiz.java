@@ -12,8 +12,8 @@ public class Quiz {
     private List<Integer> answers;
     private int answeredCount = 0;
 
-    private static final Integer BLANK_ANSWER = 0;
-    private static final String BLANK_ANSWER_TEXT = "Not answered";
+    public static final Integer BLANK_ANSWER = 0;
+    public static final String BLANK_ANSWER_TEXT = "Not answered";
 
     public Quiz(String title, List<Exercise> exercises) {
         this.title = title;

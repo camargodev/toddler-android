@@ -7,4 +7,6 @@
     <string name="ans_true">V</string>
     <string name="ans_false">F</string>
     <string name="talk">Ler Questão</string>
+    <string name="next">Próxima</string>
+    <string name="previous">Anterior</string>
 </resources>
