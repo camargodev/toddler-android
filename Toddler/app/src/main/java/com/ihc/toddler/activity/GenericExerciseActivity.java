@@ -3,6 +3,7 @@ package com.ihc.toddler.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.telecom.Call;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -52,13 +53,16 @@ public class GenericExerciseActivity extends AppCompatActivity {
         quizManager.submitAnswer(answer);
         if (quizManager.isLastExercise()) {
             Intent resultsIntent = new Intent(this, DisplayResultsActivity.class);
+            finish();
             startActivity(resultsIntent);
             return;
         }
         Exercise nextExercise = quizManager.goToNext().getCurrentExercise();
         ExerciseView nextExerciseView = ExerciseViewFactory.make(nextExercise);
         Intent nextExerciseIntent = nextExerciseView.getIntent(this);
+        finish();
         startActivity(nextExerciseIntent);
+        this.overridePendingTransition(0, 0);
     }
 
     protected void readQuestion() {
