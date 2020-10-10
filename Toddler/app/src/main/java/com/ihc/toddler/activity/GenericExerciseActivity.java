@@ -3,6 +3,7 @@ package com.ihc.toddler.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -37,6 +38,8 @@ public class GenericExerciseActivity extends AppCompatActivity {
         mapLayout();
         setCurrentExerciseText();
 
+        if (quizManager.isFirstExercise()) hidePreviousButton();
+
         exerciseView.mapQuestion(questionTextView);
 
         textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -48,14 +51,12 @@ public class GenericExerciseActivity extends AppCompatActivity {
         });
     }
 
+    protected void hidePreviousButton() {
+        previousButton.setVisibility(View.GONE);
+    }
+
     protected void submitAndGoToNext(Integer answer) {
         quizManager.submitAnswer(answer);
-        if (quizManager.isLastExercise()) {
-            Intent resultsIntent = new Intent(this, DisplayResultsActivity.class);
-            finish();
-            startActivity(resultsIntent);
-            return;
-        }
         goToNext();
     }
 
@@ -69,6 +70,12 @@ public class GenericExerciseActivity extends AppCompatActivity {
     }
 
     protected void goToNext() {
+        if (quizManager.isLastExercise()) {
+            Intent resultsIntent = new Intent(this, DisplayResultsActivity.class);
+            finish();
+            startActivity(resultsIntent);
+            return;
+        }
         Exercise nextExercise = quizManager.goToNext().getCurrentExercise();
         ExerciseView nextExerciseView = ExerciseViewFactory.make(nextExercise);
         Intent nextExerciseIntent = nextExerciseView.getIntent(this);

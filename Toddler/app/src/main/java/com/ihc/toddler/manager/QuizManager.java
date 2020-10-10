@@ -49,6 +49,8 @@ public class QuizManager {
         return currentExercise == (quiz.getNumberOfExercises() - 1);
     }
 
+    public boolean isFirstExercise() { return currentExercise ==  0; }
+
     public void submitAnswer(Integer answer) {
         quiz.submitAnswer(currentExercise, answer);
     }
