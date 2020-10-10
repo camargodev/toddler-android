@@ -1,13 +1,7 @@
 package com.ihc.toddler.manager;
 
-import android.content.Intent;
-
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.Quiz;
-
-import java.util.ArrayList;
-import java.util.List;
-
 public class QuizManager {
 
     private static QuizManager quizManager = new QuizManager();
@@ -69,6 +63,14 @@ public class QuizManager {
 
     public int getCurrentExerciseNumber() {
         return this.currentExercise + 1;
+    }
+
+    public boolean isCurrentExerciseAnswered() {
+        return !quiz.getAnswers().get(currentExercise).equals(Quiz.BLANK_ANSWER);
+    }
+
+    public int getCurrentAnswer() {
+        return quiz.getAnswers().get(currentExercise);
     }
 
 }

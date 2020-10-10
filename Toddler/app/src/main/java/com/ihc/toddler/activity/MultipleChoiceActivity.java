@@ -11,6 +11,7 @@ import java.util.Arrays;
 public class MultipleChoiceActivity extends GenericExerciseActivity {
 
     private Button answerA, answerB, answerC, answerD;
+    private static final int A = 1, B = 2, C = 3, D = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,16 +20,16 @@ public class MultipleChoiceActivity extends GenericExerciseActivity {
     }
 
     public void answerA(View view) {
-        submitAnswer(answerA, 1);
+        submitAnswer(answerA, A);
     }
 
     public void answerB(View view) {
-        submitAnswer(answerB, 2);
+        submitAnswer(answerB, B);
     }
 
-    public void answerC(View view) { submitAnswer(answerC, 3); }
+    public void answerC(View view) { submitAnswer(answerC, C); }
 
-    public void answerD(View view) { submitAnswer(answerD, 4); }
+    public void answerD(View view) { submitAnswer(answerD, D); }
 
     public void readQuestion(View view) {
         super.readQuestion();
@@ -53,5 +54,15 @@ public class MultipleChoiceActivity extends GenericExerciseActivity {
         answerB.setBackgroundResource(android.R.drawable.btn_default);
         answerC.setBackgroundResource(android.R.drawable.btn_default);
         answerD.setBackgroundResource(android.R.drawable.btn_default);
+    }
+
+    @Override
+    protected void markButtonExercise(int answer) {
+        switch (answer) {
+            case A: markAsAnswered(answerA); break;
+            case B: markAsAnswered(answerB); break;
+            case C: markAsAnswered(answerC); break;
+            case D: markAsAnswered(answerD); break;
+        }
     }
 }

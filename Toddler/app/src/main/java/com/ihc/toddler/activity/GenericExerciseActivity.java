@@ -38,6 +38,9 @@ public abstract class GenericExerciseActivity extends AppCompatActivity {
 
         mapLayout();
         setCurrentExerciseText();
+        clearAnswerButtons();
+        if (quizManager.isCurrentExerciseAnswered())
+            setExerciseAsAnswered();
 
         if (quizManager.isFirstExercise()) hidePreviousButton();
 
@@ -59,6 +62,10 @@ public abstract class GenericExerciseActivity extends AppCompatActivity {
     protected void submitAnswer(Button button, Integer answer) {
         clearAnswerButtons();
         quizManager.submitAnswer(answer);
+        markAsAnswered(button);
+    }
+
+    protected void markAsAnswered(Button button) {
         button.setBackgroundColor(Color.BLUE);
     }
 
@@ -105,5 +112,12 @@ public abstract class GenericExerciseActivity extends AppCompatActivity {
         exerciseTextView.setText(text);
     }
 
+    protected void setExerciseAsAnswered() {
+        int answer = quizManager.getCurrentAnswer();
+        markButtonExercise(answer);
+    }
+
     protected abstract void clearAnswerButtons();
+    protected abstract void markButtonExercise(int answer);
+
 }

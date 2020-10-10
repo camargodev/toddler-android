@@ -12,6 +12,8 @@ public class TrueOrFalseActivity extends GenericExerciseActivity {
 
     private Button trueButton, falseButton;
 
+    private static final int TRUE = 1, FALSE = 2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,10 +21,10 @@ public class TrueOrFalseActivity extends GenericExerciseActivity {
     }
 
     public void answerA(View view) {
-        submitAnswer(trueButton, 1);
+        submitAnswer(trueButton, TRUE);
     }
 
-    public void answerB(View view) { submitAnswer(falseButton, 2); }
+    public void answerB(View view) { submitAnswer(falseButton, FALSE); }
 
     public void readQuestion(View view) {
         super.readQuestion();
@@ -43,5 +45,18 @@ public class TrueOrFalseActivity extends GenericExerciseActivity {
     protected void clearAnswerButtons() {
         trueButton.setBackgroundResource(android.R.drawable.btn_default);
         falseButton.setBackgroundResource(android.R.drawable.btn_default);
+    }
+
+    @Override
+    protected void markAsAnswered(Button button) {
+        super.markAsAnswered(button);
+    }
+
+    @Override
+    protected void markButtonExercise(int answer) {
+        switch (answer) {
+            case TRUE: markAsAnswered(trueButton); break;
+            case FALSE: markAsAnswered(falseButton); break;
+        }
     }
 }
