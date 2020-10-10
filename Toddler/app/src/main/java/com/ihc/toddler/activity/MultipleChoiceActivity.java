@@ -2,6 +2,7 @@ package com.ihc.toddler.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 public class MultipleChoiceActivity extends GenericExerciseActivity {
 
@@ -39,6 +41,10 @@ public class MultipleChoiceActivity extends GenericExerciseActivity {
     public void answerC(View view) { submitAndGoToNext(3); }
 
     public void answerD(View view) { submitAndGoToNext(4); }
+
+    public void readQuestion(View view) {
+        super.readQuestion();
+    }
 
     @Override
     protected void mapLayout() {

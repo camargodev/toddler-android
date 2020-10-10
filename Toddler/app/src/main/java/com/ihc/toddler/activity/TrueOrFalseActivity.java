@@ -35,6 +35,10 @@ public class TrueOrFalseActivity extends GenericExerciseActivity {
 
     public void answerB(View view) { submitAndGoToNext(2); }
 
+    public void readQuestion(View view) {
+        super.readQuestion();
+    }
+
     @Override
     protected void mapLayout() {
         super.mapLayout();
