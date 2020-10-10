@@ -40,7 +40,7 @@ public class QuizManager {
         return this;
     }
 
-    public QuizManager goToLast() {
+    public QuizManager goToPrevious() {
         currentExercise -= 1;
         return this;
     }

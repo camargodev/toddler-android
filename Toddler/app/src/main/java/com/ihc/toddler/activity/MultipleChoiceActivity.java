@@ -46,6 +46,10 @@ public class MultipleChoiceActivity extends GenericExerciseActivity {
         super.readQuestion();
     }
 
+    public void next(View view) { goToNext(); }
+
+    public void previous(View view) { goToPrevious(); }
+
     @Override
     protected void mapLayout() {
         super.mapLayout();

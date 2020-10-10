@@ -3,8 +3,6 @@ package com.ihc.toddler.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.telecom.Call;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -16,7 +14,6 @@ import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
 
-import java.util.Arrays;
 import java.util.Locale;
 
 public class GenericExerciseActivity extends AppCompatActivity {
@@ -26,6 +23,7 @@ public class GenericExerciseActivity extends AppCompatActivity {
     protected QuizManager quizManager = QuizManager.getInstance();
     protected ExerciseView exerciseView;
     protected TextToSpeech textToSpeech;
+    protected Button nextButton, previousButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +33,7 @@ public class GenericExerciseActivity extends AppCompatActivity {
         exerciseView = ExerciseViewFactory.make(currentExercise);
 
         setContentView(exerciseView.getLayoutId());
+
         mapLayout();
         setCurrentExerciseText();
 
@@ -57,6 +56,19 @@ public class GenericExerciseActivity extends AppCompatActivity {
             startActivity(resultsIntent);
             return;
         }
+        goToNext();
+    }
+
+    protected void goToPrevious() {
+        Exercise previousExercise = quizManager.goToPrevious().getCurrentExercise();
+        ExerciseView previousExerciseView = ExerciseViewFactory.make(previousExercise);
+        Intent previousExerciseIntent = previousExerciseView.getIntent(this);
+        finish();
+        startActivity(previousExerciseIntent);
+        this.overridePendingTransition(0, 0);
+    }
+
+    protected void goToNext() {
         Exercise nextExercise = quizManager.goToNext().getCurrentExercise();
         ExerciseView nextExerciseView = ExerciseViewFactory.make(nextExercise);
         Intent nextExerciseIntent = nextExerciseView.getIntent(this);
@@ -73,6 +85,8 @@ public class GenericExerciseActivity extends AppCompatActivity {
     protected void mapLayout() {
         exerciseTextView = findViewById(R.id.exercise_number);
         questionTextView = findViewById(R.id.question);
+        nextButton = findViewById(R.id.next);
+        previousButton = findViewById(R.id.previous);
     }
 
     protected void setCurrentExerciseText() {
