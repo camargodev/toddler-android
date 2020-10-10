@@ -18,7 +18,7 @@ import com.ihc.toddler.view.ExerciseViewFactory;
 
 import java.util.Locale;
 
-public class GenericExerciseActivity extends AppCompatActivity {
+public abstract class GenericExerciseActivity extends AppCompatActivity {
 
     protected TextView exerciseTextView;
     protected TextView questionTextView;
@@ -57,10 +57,9 @@ public class GenericExerciseActivity extends AppCompatActivity {
     }
 
     protected void submitAnswer(Button button, Integer answer) {
-
+        clearAnswerButtons();
         quizManager.submitAnswer(answer);
         button.setBackgroundColor(Color.BLUE);
-//        goToNext();
     }
 
     protected void goToPrevious() {
@@ -105,4 +104,6 @@ public class GenericExerciseActivity extends AppCompatActivity {
         String text = "Exercício " + current + " de " + total;
         exerciseTextView.setText(text);
     }
+
+    protected abstract void clearAnswerButtons();
 }

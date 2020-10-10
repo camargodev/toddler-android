@@ -38,4 +38,10 @@ public class TrueOrFalseActivity extends GenericExerciseActivity {
         trueButton = findViewById(R.id.ans_true);
         falseButton = findViewById(R.id.ans_false);
     }
+
+    @Override
+    protected void clearAnswerButtons() {
+        trueButton.setBackgroundResource(android.R.drawable.btn_default);
+        falseButton.setBackgroundResource(android.R.drawable.btn_default);
+    }
 }

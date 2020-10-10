@@ -46,4 +46,12 @@ public class MultipleChoiceActivity extends GenericExerciseActivity {
         answerC = findViewById(R.id.ans_c);
         answerD = findViewById(R.id.ans_d);
     }
+
+    @Override
+    protected void clearAnswerButtons() {
+        answerA.setBackgroundResource(android.R.drawable.btn_default);
+        answerB.setBackgroundResource(android.R.drawable.btn_default);
+        answerC.setBackgroundResource(android.R.drawable.btn_default);
+        answerD.setBackgroundResource(android.R.drawable.btn_default);
+    }
 }
