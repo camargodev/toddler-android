@@ -61,4 +61,12 @@ public class QuizManager {
         return quiz.toString();
     }
 
+    public int getNumberOfExercises() {
+        return quiz.getNumberOfExercises();
+    }
+
+    public int getCurrentExerciseNumber() {
+        return this.currentExercise + 1;
+    }
+
 }

@@ -20,6 +20,7 @@ import java.util.Locale;
 
 public class GenericExerciseActivity extends AppCompatActivity {
 
+    protected TextView exerciseTextView;
     protected TextView questionTextView;
     protected QuizManager quizManager = QuizManager.getInstance();
     protected ExerciseView exerciseView;
@@ -34,6 +35,7 @@ public class GenericExerciseActivity extends AppCompatActivity {
 
         setContentView(exerciseView.getLayoutId());
         mapLayout();
+        setCurrentExerciseText();
 
         exerciseView.mapQuestion(questionTextView);
 
@@ -65,6 +67,14 @@ public class GenericExerciseActivity extends AppCompatActivity {
     }
 
     protected void mapLayout() {
+        exerciseTextView = findViewById(R.id.exercise_number);
         questionTextView = findViewById(R.id.question);
+    }
+
+    protected void setCurrentExerciseText() {
+        int current = quizManager.getCurrentExerciseNumber();
+        int total = quizManager.getNumberOfExercises();
+        String text = "Exercício " + current + " de " + total;
+        exerciseTextView.setText(text);
     }
 }
