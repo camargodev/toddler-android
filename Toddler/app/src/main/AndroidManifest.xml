@@ -20,6 +20,7 @@
         <activity android:name=".activity.TrueOrFalseActivity"/>
         <activity android:name=".activity.DisplayResultsActivity"/>
         <activity android:name=".activity.GenericExerciseActivity"/>
+        <activity android:name=".activity.ContentActivity"/>
     </application>
 
 </manifest>

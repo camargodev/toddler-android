@@ -10,4 +10,7 @@
     <string name="talk_content">Ler Conteúdo</string>
     <string name="next">Próxima</string>
     <string name="previous">Anterior</string>
+    <string name="start_content">Iniciar Conteúdo</string>
+    <string name="start_quiz">Iniciar qUiz</string>
+
 </resources>
