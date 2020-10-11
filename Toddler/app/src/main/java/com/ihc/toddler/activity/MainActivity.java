@@ -18,6 +18,8 @@ import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.entity.TrueOrFalseExercise;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.repository.ContentRepository;
+import com.ihc.toddler.repository.QuizRepository;
 import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
 
@@ -40,11 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startContent(View view) {
 
-        List<ContentPart> parts = new ArrayList<>();
-        parts.add(new ContentPart("O que é uma sílaba?", "Separar as silabas é bom"));
-        parts.add(new ContentPart("AAAAa", "Vamos separar as sílabas"));
-        parts.add(new ContentPart("BBBB" , "Com casa é ca-sa"));
-        Content content = new Content(parts);
+        Content content = ContentRepository.getContent();
 
         ContentManager.getInstance(content);
         Intent firstPart = new Intent(this, ContentActivity.class);
@@ -53,13 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startQuiz(View view) {
-        List<Exercise> exercises = new ArrayList<>();
-        exercises.add(new MultipleChoiceExercise("Quantas sílabas\ntem a palavra\nCASA?", Arrays.asList("1", "2", "3", "4")));
-        exercises.add(new TrueOrFalseExercise("As sílabas de PATO\nsão PA e TO?"));
-        exercises.add(new MultipleChoiceExercise("Quais são as\nsílabas de AMOR?", Arrays.asList("AM-OR", "AMOR", "A-MOR", "AMO-R")));
-        exercises.add(new TrueOrFalseExercise("AMIGO tem\n3 sílabas?"));
-        Quiz quiz = new Quiz("Separação de sílabas", exercises);
-
+        Quiz quiz = QuizRepository.getQuiz();
         QuizManager manager = QuizManager.getInstance(quiz);
 
         Exercise currentExercise = manager.getCurrentExercise();

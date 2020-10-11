@@ -25,6 +25,7 @@ public class GenericActivity extends AppCompatActivity {
                     textToSpeech.setLanguage(new Locale("pt", "BR"));
             }
         });
+        textToSpeech.setSpeechRate(0.8f);
         speechManager = new SpeechManager(textToSpeech);
     }
 }
