@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class DisplayResultsActivity extends AppCompatActivity {
+public class DisplayResultsActivity extends GenericActivity {
 
     private TextView quizTitle, results, message;
     private Button button;
@@ -70,5 +70,11 @@ public class DisplayResultsActivity extends AppCompatActivity {
         return "Ainda faltam exercícios.\nVolte e responda-os.";
     }
 
+    public void readAction(View view) {
+        speechManager.talk(getMessage());
+    }
 
+    public void readResults(View view) {
+        speechManager.talk(quiz.toString());
+    }
 }

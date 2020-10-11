@@ -18,6 +18,9 @@ public class TrueOrFalseActivity extends GenericExerciseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         exerciseView.mapAnswers(Arrays.asList(trueButton, falseButton));
+
+        speechManager.readWithLongClick(trueButton);
+        speechManager.readWithLongClick(falseButton);
     }
 
     public void answerA(View view) {

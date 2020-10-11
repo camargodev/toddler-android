@@ -12,7 +12,7 @@ import com.ihc.toddler.manager.QuizManager;
 
 import javax.xml.datatype.Duration;
 
-public class ContentEndActivity extends AppCompatActivity {
+public class ContentEndActivity extends GenericActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +22,9 @@ public class ContentEndActivity extends AppCompatActivity {
 
     public void backToMenu(View view) {
         finish();
+    }
+
+    public void readText(View view) {
+        speechManager.talk(getResources().getString(R.string.content_end));
     }
 }
