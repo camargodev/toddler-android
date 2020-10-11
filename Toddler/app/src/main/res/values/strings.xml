@@ -6,7 +6,8 @@
     <string name="ans_d">D</string>
     <string name="ans_true">V</string>
     <string name="ans_false">F</string>
-    <string name="talk">Ler Questão</string>
+    <string name="talk_question">Ler Questão</string>
+    <string name="talk_content">Ler Conteúdo</string>
     <string name="next">Próxima</string>
     <string name="previous">Anterior</string>
 </resources>
