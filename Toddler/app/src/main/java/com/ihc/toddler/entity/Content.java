@@ -1,29 +1,18 @@
 package com.ihc.toddler.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Content {
+public class Content extends AbstractActivity {
 
-    List<String> textParts = new ArrayList<>();
-
-    public Content() {
-    }
+    List<String> textParts;
 
     public Content(List<String> textParts) {
+        super();
         this.textParts = textParts;
     }
 
     public List<String> getTextParts() {
         return textParts;
-    }
-
-    public void setTextParts(List<String> textParts) {
-        this.textParts = textParts;
-    }
-
-    public void addPartToText(String part) {
-        textParts.add(part);
     }
 
     public int getNumberOfParts() {

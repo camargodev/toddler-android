@@ -1,17 +1,15 @@
 package com.ihc.toddler.entity;
 
-import android.widget.Button;
-import android.widget.TextView;
-
 import java.util.List;
 
-public abstract class Exercise {
+public abstract class Exercise extends AbstractActivity {
 
     protected String question;
     protected int numberOfAnswers;
     protected List<String> answers;
 
     public Exercise(String question, int numberOfAnswers, List<String> answers) {
+        super();
         this.question = question;
         this.numberOfAnswers = numberOfAnswers;
         this.answers = answers;
