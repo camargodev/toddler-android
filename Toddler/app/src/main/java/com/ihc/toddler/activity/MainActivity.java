@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         exercises.add(new TrueOrFalseExercise("As sílabas de PATO\nsão PA e TO?"));
         exercises.add(new MultipleChoiceExercise("Quais são as\nsílabas de AMOR?", Arrays.asList("AM-OR", "AMOR", "A-MOR", "AMO-R")));
         exercises.add(new TrueOrFalseExercise("AMIGO tem\n3 sílabas?"));
-        Quiz quiz = new Quiz("Basic 101", exercises);
+        Quiz quiz = new Quiz("Separação de sílabas", exercises);
 
         QuizManager manager = QuizManager.getInstance(quiz);
 
