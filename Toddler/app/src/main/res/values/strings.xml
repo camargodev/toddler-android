@@ -13,5 +13,7 @@
     <string name="start_content">Iniciar Conteúdo</string>
     <string name="start_quiz">Iniciar Quiz</string>
     <string name="content_end">Você terminou a lição.\nVolte para o início e faça os exercícios</string>
+    <string name="prev_symbol"><![CDATA[<]]></string>
+    <string name="next_symbol"><![CDATA[>]]></string>
 
 </resources>
