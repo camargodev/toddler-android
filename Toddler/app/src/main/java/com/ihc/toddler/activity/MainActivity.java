@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.Content;
+import com.ihc.toddler.entity.ContentPart;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.MultipleChoiceExercise;
 import com.ihc.toddler.entity.Quiz;
@@ -39,10 +40,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void startContent(View view) {
 
-        List<String> parts = new ArrayList<>();
-        parts.add("Separar as silabas é bom");
-        parts.add("Vamos separar as sílabas");
-        parts.add("Com casa é ca-sa");
+        List<ContentPart> parts = new ArrayList<>();
+        parts.add(new ContentPart("O que é uma sílaba?", "Separar as silabas é bom"));
+        parts.add(new ContentPart("AAAAa", "Vamos separar as sílabas"));
+        parts.add(new ContentPart("BBBB" , "Com casa é ca-sa"));
         Content content = new Content(parts);
 
         ContentManager.getInstance(content);
