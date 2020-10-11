@@ -21,17 +21,19 @@ import java.util.List;
 
 public class DisplayResultsActivity extends AppCompatActivity {
 
-    private TextView results;
+    private TextView quizTitle, results;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results_display_activity);
         mapLayout();
-        results.setText(QuizManager.getInstance().getQuizText());
+        quizTitle.setText(QuizManager.getInstance().getQuiz().getTitle());
+        results.setText(QuizManager.getInstance().getQuiz().toString());
     }
 
     private void mapLayout() {
+        quizTitle = findViewById(R.id.results_title);
         results = findViewById(R.id.results);
     }
 }
