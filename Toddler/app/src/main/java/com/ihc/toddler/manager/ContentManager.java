@@ -51,7 +51,7 @@ public class ContentManager {
         return content.getNumberOfParts();
     }
 
-    public int getCurrentExerciseNumber() {
+    public int getCurrentPartNumber() {
         return this.currentPart + 1;
     }
 

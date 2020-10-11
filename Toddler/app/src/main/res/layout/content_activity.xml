@@ -4,43 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".activity.ContentActivity">
+
+    <TextView
+        android:id="@+id/part_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:text="@string/exercise_x_of_y"
+        android:layout_marginTop="40dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5" />
 
     <TextView
         android:id="@+id/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.3"/>
-
-    <Button
-        android:id="@+id/talk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:onClick="readContent"
-        android:text="@string/talk_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/content"
-        app:layout_constraintHorizontal_bias="0.5" />
+        app:layout_constraintVertical_bias="0.3"
+        android:gravity="center_horizontal|center_vertical"
+        android:onClick="readPart"/>
 
     <Button
         android:id="@+id/next"
         android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:text="@string/next_symbol"
-        android:textColor="#FFFFFF"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        android:background="@drawable/round_button"
-        android:typeface="serif"
+        android:layout_height="50dp"
+        android:background="@drawable/next"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="20dp"
         app:layout_constraintRight_toRightOf="parent"
@@ -50,18 +49,23 @@
     <Button
         android:id="@+id/previous"
         android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:text="@string/prev_symbol"
-        android:textColor="#FFFFFF"
-        android:textSize="50sp"
-        android:textStyle="bold"
-        android:background="@drawable/round_button"
-        android:typeface="serif"
+        android:layout_height="50dp"
+        android:background="@drawable/prev"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginStart="25dp"
         android:onClick="previous" />
+
+    <ImageView
+        android:id="@+id/small_logo"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="10dp"
+        app:srcCompat="@drawable/small_logo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
