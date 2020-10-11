@@ -1,12 +1,15 @@
 package com.ihc.toddler.activity;
 
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 
 import com.ihc.toddler.R;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MultipleChoiceActivity extends GenericExerciseActivity {
 
@@ -17,6 +20,11 @@ public class MultipleChoiceActivity extends GenericExerciseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         exerciseView.mapAnswers(Arrays.asList(answerA, answerB, answerC, answerD));
+
+        answerA.setOnLongClickListener(answerTextReader(A));
+        answerB.setOnLongClickListener(answerTextReader(B));
+        answerC.setOnLongClickListener(answerTextReader(C));
+        answerD.setOnLongClickListener(answerTextReader(D));
     }
 
     public void answerA(View view) {

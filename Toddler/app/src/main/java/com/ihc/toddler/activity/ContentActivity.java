@@ -76,7 +76,7 @@ public class ContentActivity extends AppCompatActivity {
     protected void setCurrentExerciseText() {
         int current = contentManager.getCurrentPartNumber();
         int total = contentManager.getNumberOfParts();
-        String text = "Exercício " + current + " de " + total;
+        String text = "Parte " + current + " de " + total;
         currentPartTextView.setText(text);
     }
 

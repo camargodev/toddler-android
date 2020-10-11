@@ -124,6 +124,16 @@ public abstract class GenericExerciseActivity extends AppCompatActivity {
         button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
+    protected View.OnLongClickListener answerTextReader(final int answerId) {
+        return new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                textToSpeech.speak(quizManager.getCurrentExercise().getAnswers().get(answerId-1), TextToSpeech.QUEUE_FLUSH, null);
+                return false;
+            }
+        };
+    }
+
     protected abstract void clearAnswerButtons();
     protected abstract void markButtonExercise(int answer);
 
