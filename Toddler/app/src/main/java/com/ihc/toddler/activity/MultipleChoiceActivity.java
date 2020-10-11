@@ -50,10 +50,10 @@ public class MultipleChoiceActivity extends GenericExerciseActivity {
 
     @Override
     protected void clearAnswerButtons() {
-        answerA.setBackgroundResource(android.R.drawable.btn_default);
-        answerB.setBackgroundResource(android.R.drawable.btn_default);
-        answerC.setBackgroundResource(android.R.drawable.btn_default);
-        answerD.setBackgroundResource(android.R.drawable.btn_default);
+        clearAnswerButton(answerA);
+        clearAnswerButton(answerB);
+        clearAnswerButton(answerC);
+        clearAnswerButton(answerD);
     }
 
     @Override

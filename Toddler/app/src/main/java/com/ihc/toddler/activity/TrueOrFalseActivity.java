@@ -43,13 +43,8 @@ public class TrueOrFalseActivity extends GenericExerciseActivity {
 
     @Override
     protected void clearAnswerButtons() {
-        trueButton.setBackgroundResource(android.R.drawable.btn_default);
-        falseButton.setBackgroundResource(android.R.drawable.btn_default);
-    }
-
-    @Override
-    protected void markAsAnswered(Button button) {
-        super.markAsAnswered(button);
+        clearAnswerButton(trueButton);
+        clearAnswerButton(falseButton);
     }
 
     @Override

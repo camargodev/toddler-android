@@ -15,5 +15,7 @@
     <string name="content_end">Você terminou a lição.\nVolte para o início e faça os exercícios</string>
     <string name="prev_symbol"><![CDATA[<]]></string>
     <string name="next_symbol"><![CDATA[>]]></string>
+    <string name="exercise_x_of_y">Exercício X de Y</string>
+    <string name="question_dummy">Qual é a resposta?</string>
 
 </resources>
