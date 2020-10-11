@@ -53,11 +53,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void startQuiz(View view) {
         List<Exercise> exercises = new ArrayList<>();
-        exercises.add(new MultipleChoiceExercise("Quanto é 3+3?", Arrays.asList("1", "3", "6", "9")));
-        exercises.add(new TrueOrFalseExercise("2 é par?"));
-        exercises.add(new MultipleChoiceExercise("Quantas sílabas tem em casa?", Arrays.asList("1", "2", "3", "4")));
-        exercises.add(new TrueOrFalseExercise("7 é maior que 10?"));
-        Quiz quiz = new Quiz("Basic 101", exercises);
+        exercises.add(new MultipleChoiceExercise("Quantas sílabas\ntem a palavra\nCASA?", Arrays.asList("1", "2", "3", "4")));
+        exercises.add(new TrueOrFalseExercise("As sílabas de PATO\nsão PA e TO?"));
+        exercises.add(new MultipleChoiceExercise("Quais são as\nsílabas de AMOR?", Arrays.asList("AM-OR", "AMOR", "A-MOR", "AMO-R")));
+        exercises.add(new TrueOrFalseExercise("AMIGO tem\n3 sílabas?"));
+        Quiz quiz = new Quiz("Separação de sílabas", exercises);
 
         QuizManager manager = QuizManager.getInstance(quiz);
 

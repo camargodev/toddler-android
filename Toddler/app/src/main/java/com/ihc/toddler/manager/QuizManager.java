@@ -53,9 +53,7 @@ public class QuizManager {
         quiz.clearAnswer(currentExercise);
     }
 
-    public String getQuizText() {
-        return quiz.toString();
-    }
+    public Quiz getQuiz() { return quiz; }
 
     public int getNumberOfExercises() {
         return quiz.getNumberOfExercises();

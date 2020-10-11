@@ -1,5 +1,6 @@
 package com.ihc.toddler.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -66,7 +67,8 @@ public abstract class GenericExerciseActivity extends AppCompatActivity {
     }
 
     protected void markAsAnswered(Button button) {
-        button.setBackgroundColor(Color.BLUE);
+        button.setBackgroundResource(R.drawable.selected_button);
+        button.setTextColor(getResources().getColor(R.color.colorAccent));
     }
 
     protected void goToPrevious() {
@@ -115,6 +117,11 @@ public abstract class GenericExerciseActivity extends AppCompatActivity {
     protected void setExerciseAsAnswered() {
         int answer = quizManager.getCurrentAnswer();
         markButtonExercise(answer);
+    }
+
+    protected void clearAnswerButton(Button button) {
+        button.setBackgroundResource(R.drawable.unselected_button);
+        button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
     protected abstract void clearAnswerButtons();

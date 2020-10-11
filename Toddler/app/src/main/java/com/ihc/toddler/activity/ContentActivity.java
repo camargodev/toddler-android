@@ -21,7 +21,7 @@ import java.util.Locale;
 
 public class ContentActivity extends AppCompatActivity {
 
-    protected TextView contentTextView;
+    protected TextView contentTextView, currentPartTextView;
     protected TextToSpeech textToSpeech;
     protected Button nextButton, previousButton;
     protected ContentManager contentManager = ContentManager.getInstance();
@@ -31,6 +31,7 @@ public class ContentActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_activity);
         mapLayout();
+        setCurrentExerciseText();
 
         if (contentManager.isFirstPart()) hidePreviousButton();
 
@@ -72,13 +73,21 @@ public class ContentActivity extends AppCompatActivity {
         this.overridePendingTransition(0, 0);
     }
 
+    protected void setCurrentExerciseText() {
+        int current = contentManager.getCurrentPartNumber();
+        int total = contentManager.getNumberOfParts();
+        String text = "Exercício " + current + " de " + total;
+        currentPartTextView.setText(text);
+    }
+
     protected void mapLayout() {
         contentTextView = findViewById(R.id.content);
+        currentPartTextView = findViewById(R.id.part_number);
         nextButton = findViewById(R.id.next);
         previousButton = findViewById(R.id.previous);
     }
 
-    public void readContent(View view) {
+    public void readPart(View view) {
         String toSpeak = contentTextView.getText().toString();
         textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
     }
