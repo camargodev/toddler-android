@@ -85,11 +85,11 @@
 
     <Button
         android:id="@+id/next"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:text="@string/next_symbol"
         android:textColor="#FFFFFF"
-        android:textSize="70sp"
+        android:textSize="50sp"
         android:textStyle="bold"
         android:background="@drawable/round_button"
         android:typeface="serif"
@@ -101,11 +101,11 @@
 
     <Button
         android:id="@+id/previous"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:text="@string/prev_symbol"
         android:textColor="#FFFFFF"
-        android:textSize="70sp"
+        android:textSize="50sp"
         android:textStyle="bold"
         android:background="@drawable/round_button"
         android:typeface="serif"
