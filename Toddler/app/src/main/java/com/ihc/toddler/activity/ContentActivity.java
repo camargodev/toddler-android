@@ -19,10 +19,9 @@ import com.ihc.toddler.view.ExerciseViewFactory;
 
 import java.util.Locale;
 
-public class ContentActivity extends AppCompatActivity {
+public class ContentActivity extends GenericActivity {
 
     protected TextView contentTextView, currentPartTextView;
-    protected TextToSpeech textToSpeech;
     protected Button nextButton, previousButton;
     protected ContentManager contentManager = ContentManager.getInstance();
 
@@ -37,14 +36,6 @@ public class ContentActivity extends AppCompatActivity {
 
         String currentPartText = contentManager.getCurrentPart();
         contentTextView.setText(currentPartText);
-
-        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR)
-                    textToSpeech.setLanguage(new Locale("pt", "BR"));
-            }
-        });
     }
 
     protected void hidePreviousButton() {

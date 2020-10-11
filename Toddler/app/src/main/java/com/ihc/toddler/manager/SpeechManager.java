@@ -20,7 +20,7 @@ public class SpeechManager {
         element.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+                talk(text);
             }
         });
     }
@@ -33,9 +33,13 @@ public class SpeechManager {
         element.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+                talk(text);
                 return false;
             }
         });
+    }
+
+    public void talk(String text) {
+        textToSpeech.speak(text, TextToSpeech.QUEUE_FLUSH, null);
     }
 }

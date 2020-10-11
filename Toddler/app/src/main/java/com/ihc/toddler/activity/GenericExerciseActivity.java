@@ -20,14 +20,14 @@ import com.ihc.toddler.view.ExerciseViewFactory;
 
 import java.util.Locale;
 
-public abstract class GenericExerciseActivity extends AppCompatActivity {
+public abstract class GenericExerciseActivity extends GenericActivity {
 
     protected TextView exerciseTextView;
     protected TextView questionTextView;
     protected QuizManager quizManager = QuizManager.getInstance();
     protected ExerciseView exerciseView;
-    protected TextToSpeech textToSpeech;
-    protected SpeechManager speechManager;
+//    protected TextToSpeech textToSpeech;
+//    protected SpeechManager speechManager;
     protected Button nextButton, previousButton;
 
     @Override
@@ -49,14 +49,14 @@ public abstract class GenericExerciseActivity extends AppCompatActivity {
 
         exerciseView.mapQuestion(questionTextView);
 
-        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR)
-                    textToSpeech.setLanguage(new Locale("pt", "BR"));
-            }
-        });
-        speechManager = new SpeechManager(textToSpeech);
+//        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+//            @Override
+//            public void onInit(int status) {
+//                if(status != TextToSpeech.ERROR)
+//                    textToSpeech.setLanguage(new Locale("pt", "BR"));
+//            }
+//        });
+//        speechManager = new SpeechManager(textToSpeech);
     }
 
     protected void hidePreviousButton() {
