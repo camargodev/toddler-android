@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
 
@@ -26,6 +27,7 @@ public abstract class GenericExerciseActivity extends AppCompatActivity {
     protected QuizManager quizManager = QuizManager.getInstance();
     protected ExerciseView exerciseView;
     protected TextToSpeech textToSpeech;
+    protected SpeechManager speechManager;
     protected Button nextButton, previousButton;
 
     @Override
@@ -54,6 +56,7 @@ public abstract class GenericExerciseActivity extends AppCompatActivity {
                     textToSpeech.setLanguage(new Locale("pt", "BR"));
             }
         });
+        speechManager = new SpeechManager(textToSpeech);
     }
 
     protected void hidePreviousButton() {
@@ -122,16 +125,6 @@ public abstract class GenericExerciseActivity extends AppCompatActivity {
     protected void clearAnswerButton(Button button) {
         button.setBackgroundResource(R.drawable.unselected_button);
         button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
-    }
-
-    protected View.OnLongClickListener answerTextReader(final int answerId) {
-        return new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                textToSpeech.speak(quizManager.getCurrentExercise().getAnswers().get(answerId-1), TextToSpeech.QUEUE_FLUSH, null);
-                return false;
-            }
-        };
     }
 
     protected abstract void clearAnswerButtons();

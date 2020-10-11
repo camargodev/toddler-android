@@ -21,10 +21,10 @@ public class MultipleChoiceActivity extends GenericExerciseActivity {
         super.onCreate(savedInstanceState);
         exerciseView.mapAnswers(Arrays.asList(answerA, answerB, answerC, answerD));
 
-        answerA.setOnLongClickListener(answerTextReader(A));
-        answerB.setOnLongClickListener(answerTextReader(B));
-        answerC.setOnLongClickListener(answerTextReader(C));
-        answerD.setOnLongClickListener(answerTextReader(D));
+        speechManager.readWithLongClick(answerA);
+        speechManager.readWithLongClick(answerB);
+        speechManager.readWithLongClick(answerC);
+        speechManager.readWithLongClick(answerD);
     }
 
     public void answerA(View view) {
