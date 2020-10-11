@@ -4,21 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.TrueOrFalseActivity">
+    tools:context=".activity.ContentActivity">
 
     <TextView
-        android:id="@+id/exercise_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toTopOf="@id/question"
-        android:layout_marginBottom="100dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.5" />
-
-    <TextView
-        android:id="@+id/question"
+        android:id="@+id/content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
@@ -34,34 +23,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:onClick="readQuestion"
-        android:text="@string/talk_question"
+        android:onClick="readContent"
+        android:text="@string/talk_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/question"
+        app:layout_constraintBottom_toTopOf="@id/content"
         app:layout_constraintHorizontal_bias="0.5" />
-
-    <Button
-        android:id="@+id/ans_true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
-        android:layout_marginStart="75dp"
-        android:onClick="answerA"
-        android:text="@string/ans_a"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/question" />
-
-    <Button
-        android:id="@+id/ans_false"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="answerB"
-        android:text="@string/ans_b"
-        android:layout_marginEnd="75dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/ans_true" />
 
     <Button
         android:id="@+id/next"

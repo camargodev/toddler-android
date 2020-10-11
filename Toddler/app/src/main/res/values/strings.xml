@@ -6,7 +6,12 @@
     <string name="ans_d">D</string>
     <string name="ans_true">V</string>
     <string name="ans_false">F</string>
-    <string name="talk">Ler Questão</string>
+    <string name="talk_question">Ler Questão</string>
+    <string name="talk_content">Ler Conteúdo</string>
     <string name="next">Próxima</string>
     <string name="previous">Anterior</string>
+    <string name="start_content">Iniciar Conteúdo</string>
+    <string name="start_quiz">Iniciar Quiz</string>
+    <string name="content_end">Você terminou a lição.\nVolte para o início e faça os exercícios</string>
+
 </resources>
