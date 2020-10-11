@@ -11,6 +11,7 @@
     <string name="next">Próxima</string>
     <string name="previous">Anterior</string>
     <string name="start_content">Iniciar Conteúdo</string>
-    <string name="start_quiz">Iniciar qUiz</string>
+    <string name="start_quiz">Iniciar Quiz</string>
+    <string name="content_end">Você terminou a lição.\nVolte para o início e faça os exercícios</string>
 
 </resources>

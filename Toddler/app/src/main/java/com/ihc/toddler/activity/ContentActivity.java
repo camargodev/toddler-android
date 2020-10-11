@@ -60,9 +60,9 @@ public class ContentActivity extends AppCompatActivity {
 
     protected void goToNext() {
         if (contentManager.isLastPart()) {
-            Intent resultsIntent = new Intent(this, DisplayResultsActivity.class);
+            Intent contentEndActivity = new Intent(this, ContentEndActivity.class);
             finish();
-            startActivity(resultsIntent);
+            startActivity(contentEndActivity);
             return;
         }
         contentManager.goToNext();
