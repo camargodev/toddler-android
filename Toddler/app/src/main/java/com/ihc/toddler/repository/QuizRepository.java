@@ -17,8 +17,10 @@ public class QuizRepository {
         List<Exercise> exercises = new ArrayList<>();
         exercises.add(new MultipleChoiceExercise("Quantas sílabas\ntem a palavra\nCASA?", Arrays.asList("1", "2", "3", "4")));
         exercises.add(new TrueOrFalseExercise("As sílabas de PATO\nsão PA e TO?"));
+        exercises.add(new TrueOrFalseExercise("AMIGO tem\n2 sílabas?"));
         exercises.add(new MultipleChoiceExercise("Quais são as\nsílabas de AMOR?", Arrays.asList("AM-OR", "AMOR", "A-MOR", "AMO-R")));
-        exercises.add(new TrueOrFalseExercise("AMIGO tem\n3 sílabas?"));
+        exercises.add(new MultipleChoiceExercise("Se uma palavra é\numa dissílaba, quantas\nletras ela tem?", Arrays.asList("1", "2", "3", "4")));
+        exercises.add(new TrueOrFalseExercise("Uma palavra com 5\nsílabas é uma polissílaba?"));
         return new Quiz("Separação de sílabas", exercises);
     }
 }
