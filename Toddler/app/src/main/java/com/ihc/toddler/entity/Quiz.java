@@ -13,7 +13,7 @@ public class Quiz {
     private int answeredCount = 0;
 
     public static final Integer BLANK_ANSWER = 0;
-    public static final String BLANK_ANSWER_TEXT = "Sem Resposta :(";
+    public static final String BLANK_ANSWER_TEXT = "Sem Resposta :|";
 
     public Quiz(String title, List<Exercise> exercises) {
         this.title = title;
@@ -88,12 +88,11 @@ public class Quiz {
         for (int i = 0; i < exercises.size(); i++) {
             Exercise exercise = exercises.get(i);
             Integer answer = answers.get(i);
-            text.append(exercise.getQuestion().replace("\n", " "));
-            text.append("\n");
+            text.append(i + 1).append(") ");
             if (answer.equals(BLANK_ANSWER))
                 text.append(BLANK_ANSWER_TEXT);
             else
-                text.append(exercise.getAnswers().get(answer-1));
+                text.append(answer == exercise.getAnswer() ? "Correta :D" : "Incorreta :(");
             text.append("\n");
             text.append("\n");
         }

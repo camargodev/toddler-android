@@ -8,11 +8,12 @@ import com.ihc.toddler.R;
 
 import java.util.Arrays;
 
+import static com.ihc.toddler.entity.TrueOrFalseExercise.FALSE;
+import static com.ihc.toddler.entity.TrueOrFalseExercise.TRUE;
+
 public class TrueOrFalseActivity extends GenericExerciseActivity {
 
     private Button trueButton, falseButton;
-
-    private static final int TRUE = 1, FALSE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

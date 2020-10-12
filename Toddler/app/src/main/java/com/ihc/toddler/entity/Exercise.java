@@ -7,12 +7,22 @@ public abstract class Exercise extends AbstractActivity {
     protected String question;
     protected int numberOfAnswers;
     protected List<String> answers;
+    protected int answer;
 
-    public Exercise(String question, int numberOfAnswers, List<String> answers) {
+    public Exercise(String question, int numberOfAnswers, List<String> answers, int answer) {
         super();
         this.question = question;
         this.numberOfAnswers = numberOfAnswers;
         this.answers = answers;
+        this.answer = answer;
+    }
+
+    public int getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(int answer) {
+        this.answer = answer;
     }
 
     public String getQuestion() {
