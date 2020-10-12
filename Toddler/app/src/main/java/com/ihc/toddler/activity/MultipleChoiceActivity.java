@@ -11,10 +11,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.ihc.toddler.entity.MultipleChoiceExercise.A;
+import static com.ihc.toddler.entity.MultipleChoiceExercise.B;
+import static com.ihc.toddler.entity.MultipleChoiceExercise.C;
+import static com.ihc.toddler.entity.MultipleChoiceExercise.D;
+
 public class MultipleChoiceActivity extends GenericExerciseActivity {
 
     private Button answerA, answerB, answerC, answerD;
-    private static final int A = 1, B = 2, C = 3, D = 4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,6 +1,7 @@
 package com.ihc.toddler.manager;
 
 import com.ihc.toddler.entity.Content;
+import com.ihc.toddler.entity.ContentPart;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.Quiz;
 
@@ -27,7 +28,7 @@ public class ContentManager {
         return contentManager;
     }
 
-    public String getCurrentPart() {
+    public ContentPart getCurrentPart() {
         return content.getTextParts().get(currentPart);
     }
 

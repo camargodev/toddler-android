@@ -4,18 +4,18 @@ import java.util.List;
 
 public class Content extends AbstractActivity {
 
-    List<String> textParts;
+    List<ContentPart> parts;
 
-    public Content(List<String> textParts) {
+    public Content(List<ContentPart> parts) {
         super();
-        this.textParts = textParts;
+        this.parts = parts;
     }
 
-    public List<String> getTextParts() {
-        return textParts;
+    public List<ContentPart> getTextParts() {
+        return parts;
     }
 
     public int getNumberOfParts() {
-        return textParts.size();
+        return parts.size();
     }
 }
