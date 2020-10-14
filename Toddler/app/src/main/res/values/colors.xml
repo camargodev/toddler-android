@@ -4,11 +4,11 @@
     <color name="colorPrimaryDark">#465E60</color>
     <color name="colorAccent">#FFFFFF</color>
 
-    <color name="cardColor1">#FFA19A</color>
-    <color name="cardColor2">#EDFFD7</color>
-    <color name="cardColor3">#9CE0FF</color>
-    <color name="cardColor4">#FFF6AB</color>
-    <color name="cardColor5">#FFCC80</color>
-    <color name="cardColor6">#F6C0FF</color>
-    <color name="cardColor7">#B0BCFF</color>
+    <color name="cardColor1">#FFC3BE</color>
+    <color name="cardColor2">#ECFFD5</color>
+    <color name="cardColor3">#C3ECFF</color>
+    <color name="cardColor4">#FFF8C1</color>
+    <color name="cardColor5">#FFDBA6</color>
+    <color name="cardColor6">#F9D3FF</color>
+    <color name="cardColor7">#BDC7FF</color>
 </resources>
