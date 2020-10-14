@@ -55,8 +55,8 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
         public ActivityViewHolder(View itemView) {
             super(itemView);
             parent = itemView.findViewById(R.id.parent);
-            name = itemView.findViewById(R.id.name);
-            age = itemView.findViewById(R.id.age);
+            name = itemView.findViewById(R.id.activity_title);
+            age = itemView.findViewById(R.id.activity_type);
         }
     }
 }
