@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         List<AbstractActivity> activities = populateAcitivies();
-        ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities);
+        ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, this);
 
         RecyclerView.LayoutManager manager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(manager);

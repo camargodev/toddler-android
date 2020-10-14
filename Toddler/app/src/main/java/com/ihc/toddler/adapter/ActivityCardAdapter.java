@@ -1,6 +1,6 @@
 package com.ihc.toddler.adapter;
 
-import android.graphics.Color;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ihc.toddler.R;
@@ -17,12 +18,16 @@ import com.ihc.toddler.entity.Quiz;
 import java.util.List;
 import java.util.Random;
 
+import static com.ihc.toddler.manager.ColorManager.getRandomColorId;
+
 public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapter.ActivityViewHolder> {
 
     List<AbstractActivity> activities;
+    Context originScreen;
 
-    public ActivityCardAdapter(List<AbstractActivity> activities) {
+    public ActivityCardAdapter(List<AbstractActivity> activities, Context originScreen) {
         this.activities = activities;
+        this.originScreen = originScreen;
     }
 
     @NonNull
@@ -36,11 +41,9 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     @Override
     public void onBindViewHolder(@NonNull ActivityViewHolder holder, int position) {
         AbstractActivity activity = activities.get(position);
-        Random rnd = new Random();
-        int currentColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-        holder.parent.setBackgroundColor(currentColor);
-        holder.name.setText(activity.getTitle());
-        holder.age.setText((activity instanceof Quiz) ? "Quiz" : "Conteudo");
+        holder.parent.setBackgroundColor(ContextCompat.getColor(originScreen, getRandomColorId()));
+        holder.title.setText(activity.getTitle());
+        holder.type.setText((activity instanceof Quiz) ? "Quiz" : "Conteudo");
 
     }
 
@@ -50,13 +53,13 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     }
 
     static class ActivityViewHolder extends RecyclerView.ViewHolder {
-        TextView name,age;
+        TextView title, type;
         LinearLayout parent;
         public ActivityViewHolder(View itemView) {
             super(itemView);
             parent = itemView.findViewById(R.id.parent);
-            name = itemView.findViewById(R.id.activity_title);
-            age = itemView.findViewById(R.id.activity_type);
+            title = itemView.findViewById(R.id.activity_title);
+            type = itemView.findViewById(R.id.activity_type);
         }
     }
 }
