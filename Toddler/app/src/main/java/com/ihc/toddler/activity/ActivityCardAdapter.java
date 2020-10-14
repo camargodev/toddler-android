@@ -11,16 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ihc.toddler.R;
+import com.ihc.toddler.entity.AbstractActivity;
+import com.ihc.toddler.entity.Exercise;
+import com.ihc.toddler.entity.Quiz;
 
 import java.util.List;
 import java.util.Random;
 
-class StudentAdapter extends RecyclerView.Adapter {
+class ActivityCardAdapter extends RecyclerView.Adapter {
 
-    List<studentData> studentDataList;
+    List<AbstractActivity> activities;
 
-    public StudentAdapter(List<studentData> studentDataList) {
-        this.studentDataList=studentDataList;
+    public ActivityCardAdapter(List<AbstractActivity> activities) {
+        this.activities = activities;
     }
 
     @NonNull
@@ -33,32 +36,22 @@ class StudentAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        studentData data = studentDataList.get(position);
+        AbstractActivity activity = activities.get(position);
         MyViewHolder myViewHolder = (MyViewHolder) holder;
         Random rnd = new Random();
         int currentColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
         myViewHolder.parent.setBackgroundColor(currentColor);
-        myViewHolder.name.setText(data.name);
-        myViewHolder.age.setText(String.valueOf(data.age));
+        myViewHolder.name.setText(activity.getTitle());
+        myViewHolder.age.setText((activity instanceof Quiz) ? "Quiz" : "Conteudo");
 
     }
-
-//    @Override
-//    public void onBindViewHolder(MyViewHolder viewHolder, int i) {
-//        studentData data=studentDataList.get(i);
-//        Random rnd = new Random();
-//        int currentColor = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-//        viewHolder.parent.setBackgroundColor(currentColor);
-//        viewHolder.name.setText(data.name);
-//        viewHolder.age.setText(String.valueOf(data.age));
-//    }
 
     @Override
     public int getItemCount() {
-        return studentDataList.size();
+        return activities.size();
     }
 
-    class MyViewHolder extends RecyclerView.ViewHolder {
+    static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView name,age;
         LinearLayout parent;
         public MyViewHolder(View itemView) {

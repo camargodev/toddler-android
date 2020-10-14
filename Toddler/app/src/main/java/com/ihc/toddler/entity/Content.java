@@ -6,8 +6,9 @@ public class Content extends AbstractActivity {
 
     List<ContentPart> parts;
 
-    public Content(List<ContentPart> parts) {
+    public Content(String title, List<ContentPart> parts) {
         super();
+        super.title = title;
         this.parts = parts;
     }
 

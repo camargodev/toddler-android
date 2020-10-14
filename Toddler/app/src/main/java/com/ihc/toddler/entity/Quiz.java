@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Quiz {
-
-    private String title;
+public class Quiz extends AbstractActivity {
 
     private List<Exercise> exercises;
     private List<Integer> answers;
