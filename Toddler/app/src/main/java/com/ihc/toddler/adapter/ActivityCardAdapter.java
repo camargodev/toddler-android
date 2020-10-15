@@ -1,9 +1,11 @@
 package com.ihc.toddler.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +18,6 @@ import com.ihc.toddler.entity.AbstractActivity;
 import com.ihc.toddler.entity.Quiz;
 
 import java.util.List;
-import java.util.Random;
 
 import static com.ihc.toddler.manager.ColorManager.getRandomColorId;
 
@@ -34,16 +35,19 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     @Override
     public ActivityViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.student_list_row, viewGroup, false);
+                .inflate(R.layout.card_activity_list_row, viewGroup, false);
         return new ActivityViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ActivityViewHolder holder, int position) {
         AbstractActivity activity = activities.get(position);
-        holder.parent.setBackgroundColor(ContextCompat.getColor(originScreen, getRandomColorId()));
+        int color = ContextCompat.getColor(originScreen, getRandomColorId());
+        holder.topPart.setBackgroundColor(color);
         holder.title.setText(activity.getTitle());
-        holder.type.setText((activity instanceof Quiz) ? "Quiz" : "Conteudo");
+        holder.title.setTextColor(color);
+        if (activity instanceof Quiz)
+            holder.icon.setBackgroundResource(R.drawable.homework);
 
     }
 
@@ -53,13 +57,15 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     }
 
     static class ActivityViewHolder extends RecyclerView.ViewHolder {
-        TextView title, type;
-        LinearLayout parent;
+        TextView title;
+        LinearLayout parent, topPart;
+        ImageView icon;
         public ActivityViewHolder(View itemView) {
             super(itemView);
             parent = itemView.findViewById(R.id.parent);
+            topPart = itemView.findViewById(R.id.top_part);
             title = itemView.findViewById(R.id.activity_title);
-            type = itemView.findViewById(R.id.activity_type);
+            icon = itemView.findViewById(R.id.small_logo);
         }
     }
 }
