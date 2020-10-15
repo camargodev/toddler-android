@@ -7,6 +7,7 @@ import android.graphics.LinearGradient;
 import android.graphics.Shader;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.shapes.RectShape;
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.repository.QuizRepository;
 import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
@@ -39,10 +41,12 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
 
     List<AbstractActivity> activities;
     Context originScreen;
+    TextToSpeech textToSpeech;
 
-    public ActivityCardAdapter(List<AbstractActivity> activities, Context originScreen) {
+    public ActivityCardAdapter(List<AbstractActivity> activities, Context originScreen, TextToSpeech textToSpeech) {
         this.activities = activities;
         this.originScreen = originScreen;
+        this.textToSpeech = textToSpeech;
     }
 
     @NonNull
@@ -50,7 +54,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     public ActivityViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_activity_list_row, viewGroup, false);
-        return new ActivityViewHolder(itemView, position, activities);
+        return new ActivityViewHolder(itemView, position, activities, textToSpeech);
     }
 
     @Override
@@ -76,7 +80,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
         TextView title, type;
         FrameLayout parent, topPart;
         ImageView icon;
-        public ActivityViewHolder(View itemView, final int position, final List<AbstractActivity> activities) {
+        public ActivityViewHolder(View itemView, final int position, final List<AbstractActivity> activities, final TextToSpeech textToSpeech) {
             super(itemView);
             parent = itemView.findViewById(R.id.parent);
             topPart = itemView.findViewById(R.id.top_part);
@@ -101,6 +105,16 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
                         Intent firstPart = new Intent(v.getContext(), ContentActivity.class);
                         v.getContext().startActivity(firstPart);
                     }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    AbstractActivity activity = activities.get(getAdapterPosition());
+                    String toTalk = activity.getTypeName() + "   " + activity.getTitle();
+                    new SpeechManager(textToSpeech).talk(toTalk);
+                    return false;
                 }
             });
         }

@@ -15,13 +15,17 @@ import com.ihc.toddler.repository.QuizRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
 
 import android.annotation.TargetApi;
 import android.os.Build;
+import android.speech.tts.TextToSpeech;
 
 public class MainActivity extends AppCompatActivity {
+    protected TextToSpeech textToSpeech;
+
     @TargetApi(Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +37,18 @@ public class MainActivity extends AppCompatActivity {
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
 
+        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR)
+                    textToSpeech.setLanguage(new Locale("pt", "BR"));
+            }
+        });
+        textToSpeech.setSpeechRate(0.8f);
+
 
         List<AbstractActivity> activities = populateActivities();
-        ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, this);
+        ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, this, textToSpeech);
 
         RecyclerView.LayoutManager manager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(manager);
