@@ -79,8 +79,18 @@ public class DisplayResultsActivity extends GenericActivity {
     }
 
     private String getMessage() {
-        if (isFinished()) return "Você terminou os exercícios.\nParabéns! Vá para o menu.";
-        return "Ainda faltam exercícios.\nVolte e responda-os.";
+        double grade;
+        int correct = 0;
+        for (int i = 0; i < quiz.getNumberOfExercises(); i++) {
+            Exercise exercise = quiz.getExercises().get(i);
+            Integer selectedAnswer = quiz.getAnswers().get(i);
+            if (exercise.getAnswer() == selectedAnswer) {
+                correct += 1;
+            }
+        }
+        grade = ((double) correct/ quiz.getNumberOfExercises()) * 10;
+        String stringGrade = String.format("%.2f", grade);
+        return "Sua nota: " + stringGrade + "/10";
     }
 
     public void readAction(View view) {
