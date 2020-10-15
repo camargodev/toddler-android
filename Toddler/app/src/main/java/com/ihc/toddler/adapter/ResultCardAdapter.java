@@ -48,7 +48,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     public QuizViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_result_list_row, viewGroup, false);
-        return new QuizViewHolder(itemView);
+        return new QuizViewHolder(itemView, quiz, textToSpeech);
     }
 
     @Override
@@ -89,17 +89,19 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     static class QuizViewHolder extends RecyclerView.ViewHolder {
         TextView number, description, emoticon;
         FrameLayout parent, topPart;
-        public QuizViewHolder(View itemView) {
+        public QuizViewHolder(View itemView, final Quiz quiz, final TextToSpeech textToSpeech) {
             super(itemView);
             topPart = itemView.findViewById(R.id.exercise_top_part);
             number = itemView.findViewById(R.id.exercise_number);
             description = itemView.findViewById(R.id.exercise_description);
             emoticon = itemView.findViewById(R.id.small_emoticon);
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    AbstractActivity activity = activities.get(getAdapterPosition());
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new SpeechManager(textToSpeech).talk(description.getText().toString());
+//                    Exercise exercise = quiz.getExercises().get(getAdapterPosition());
+//                    String  answer = quiz.getExercises().get(getAdapterPosition());
 //                    if (activity instanceof Quiz) {
 //                        Quiz quiz = QuizRepository.getQuiz();
 //                        QuizManager manager = QuizManager.getInstance(quiz);
@@ -113,8 +115,8 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
 //                        Intent firstPart = new Intent(v.getContext(), ContentActivity.class);
 //                        v.getContext().startActivity(firstPart);
 //                    }
-//                }
-//            });
+                }
+            });
 //
 //            itemView.setOnLongClickListener(new View.OnLongClickListener() {
 //                @Override

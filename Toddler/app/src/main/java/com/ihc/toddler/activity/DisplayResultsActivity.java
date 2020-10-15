@@ -38,7 +38,6 @@ public class DisplayResultsActivity extends GenericActivity {
         setContentView(R.layout.results_display_activity);
         mapLayout();
         quizTitle.setText(quiz.getTitle());
-//        results.setText(quiz.toString());
         message.setText(getMessage());
         if (isFinished())
             button.setBackgroundResource(R.drawable.next);
@@ -56,7 +55,6 @@ public class DisplayResultsActivity extends GenericActivity {
 
     private void mapLayout() {
         quizTitle = findViewById(R.id.results_title);
-//        results = findViewById(R.id.results);
         message = findViewById(R.id.exercise_message);
         button = findViewById(R.id.exercise_action);
     }
