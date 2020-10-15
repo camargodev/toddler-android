@@ -1,6 +1,8 @@
 package com.ihc.toddler.activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -99,12 +101,43 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     }
 
     protected void goToNext() {
-        if (quizManager.isLastExercise()) {
-            Intent resultsIntent = new Intent(this, DisplayResultsActivity.class);
-            finish();
-            startActivity(resultsIntent);
-            return;
-        }
+
+            if (quizManager.isLastExercise()) {
+                if (quizManager.getNumberOfExercises() != quizManager.getQuiz().getAnsweredCount()) {
+                    new AlertDialog.Builder(this, R.style.AlertDialogTheme)
+                            .setTitle("Pera lá")
+                            .setMessage("Esse é o último exercício e você ainda não respondeu todos. " +
+                                    "Antes de continuar, garanta que todos estão respondidos.")
+
+                            .setPositiveButton("Ok", null)
+                            .setIcon(R.drawable.small_logo)
+                            .show();
+                    return;
+
+                } else {
+                    new AlertDialog.Builder(this, R.style.AlertDialogTheme)
+                            .setTitle("Acabou?")
+                            .setMessage("Você tem certeza que não quer mudar a resposta de nenhum exercício?")
+
+                            .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                                Intent resultsIntent = new Intent(getApplicationContext(), DisplayResultsActivity.class);
+                                                finish();
+                                                startActivity(resultsIntent);
+                                }
+                            })
+
+                            // A null listener allows the button to dismiss the dialog and take no further action.
+                            .setNegativeButton("Voltar", null)
+                            .setIcon(R.drawable.small_logo)
+                            .show();
+                    return;
+
+                }
+            }
+
+
+
         Exercise nextExercise = quizManager.goToNext().getCurrentExercise();
         ExerciseView nextExerciseView = ExerciseViewFactory.make(nextExercise);
         Intent nextExerciseIntent = nextExerciseView.getIntent(this);

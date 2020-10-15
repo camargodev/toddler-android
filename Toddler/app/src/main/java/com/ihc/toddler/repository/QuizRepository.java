@@ -22,7 +22,7 @@ public class QuizRepository {
         exercises.add(new TrueOrFalseExercise("As sílabas de PATO\nsão PA e TO?", TRUE));
         exercises.add(new TrueOrFalseExercise("AMIGO tem\n2 sílabas?", FALSE));
         exercises.add(new MultipleChoiceExercise("Quais são as\nsílabas de AMOR?", Arrays.asList("AM-OR", "AMOR", "A-MOR", "AMO-R"), A));
-        exercises.add(new MultipleChoiceExercise("Se uma palavra é\numa dissílaba, quantas\nletras ela tem?", Arrays.asList("1", "2", "3", "4"), B));
+        exercises.add(new MultipleChoiceExercise("Se uma palavra é\numa dissílaba, quantas\nsílabas ela tem?", Arrays.asList("1", "2", "3", "4"), B));
         exercises.add(new TrueOrFalseExercise("Uma palavra com 5\nsílabas é uma polissílaba?", TRUE));
         return new Quiz("Separação de sílabas", exercises);
     }
