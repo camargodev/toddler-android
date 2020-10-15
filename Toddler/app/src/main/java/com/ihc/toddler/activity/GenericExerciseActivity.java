@@ -10,9 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.Exercise;
+import com.ihc.toddler.manager.ColorManager;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.view.ExerciseView;
@@ -23,12 +25,12 @@ import java.util.Locale;
 public abstract class GenericExerciseActivity extends GenericActivity {
 
     protected TextView exerciseTextView;
-    protected TextView questionTextView;
+    protected Button question;
     protected QuizManager quizManager = QuizManager.getInstance();
     protected ExerciseView exerciseView;
-//    protected TextToSpeech textToSpeech;
-//    protected SpeechManager speechManager;
     protected Button nextButton, previousButton;
+    protected Integer unselectedColor = ColorManager.getRandomColorId();
+    protected Integer selectedColor = ColorManager.getRandomColorId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public abstract class GenericExerciseActivity extends GenericActivity {
 
         setContentView(exerciseView.getLayoutId());
 
+
         mapLayout();
         setCurrentExerciseText();
         clearAnswerButtons();
@@ -47,7 +50,9 @@ public abstract class GenericExerciseActivity extends GenericActivity {
 
         if (quizManager.isFirstExercise()) hidePreviousButton();
 
-        exerciseView.mapQuestion(questionTextView);
+        exerciseView.mapQuestion(question);
+        
+        question.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
 
 //        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
 //            @Override
@@ -70,7 +75,8 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     }
 
     protected void markAsAnswered(Button button) {
-        button.setBackgroundResource(R.drawable.selected_button);
+        button.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
+//        button.setBackgroundResource(R.drawable.selected_button);
         button.setTextColor(getResources().getColor(R.color.colorAccent));
     }
 
@@ -99,13 +105,13 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     }
 
     protected void readQuestion() {
-        String toSpeak = questionTextView.getText().toString();
+        String toSpeak = question.getText().toString();
         textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     protected void mapLayout() {
         exerciseTextView = findViewById(R.id.exercise_number);
-        questionTextView = findViewById(R.id.question);
+        question = findViewById(R.id.talk);
         nextButton = findViewById(R.id.next);
         previousButton = findViewById(R.id.previous);
     }
@@ -123,8 +129,10 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     }
 
     protected void clearAnswerButton(Button button) {
-        button.setBackgroundResource(R.drawable.unselected_button);
-        button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        button.setBackgroundTintList(AppCompatResources.getColorStateList(this, unselectedColor));
+//        button.setBackgroundResource(R.drawable.unselected_button);
+//        button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        button.setTextColor(getResources().getColor(R.color.colorAccent));
     }
 
     protected abstract void clearAnswerButtons();
