@@ -3,6 +3,9 @@ package com.ihc.toddler.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
@@ -25,6 +28,7 @@ import java.util.Locale;
 public abstract class GenericExerciseActivity extends GenericActivity {
 
     protected TextView exerciseTextView;
+    protected TextView selectedAnswer;
     protected Button question;
     protected QuizManager quizManager = QuizManager.getInstance();
     protected ExerciseView exerciseView;
@@ -75,9 +79,14 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     }
 
     protected void markAsAnswered(Button button) {
+
         button.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
 //        button.setBackgroundResource(R.drawable.selected_button);
         button.setTextColor(getResources().getColor(R.color.colorAccent));
+        int answerIndex = quizManager.getCurrentAnswer() - 1;
+        String selectedAnswerText = quizManager.getCurrentExercise().getAnswers().get(answerIndex);
+        String text = "RESPOSTA SELECIONADA: " + selectedAnswerText;
+        selectedAnswer.setText(text);
     }
 
     protected void goToPrevious() {
@@ -111,6 +120,7 @@ public abstract class GenericExerciseActivity extends GenericActivity {
 
     protected void mapLayout() {
         exerciseTextView = findViewById(R.id.exercise_number);
+        selectedAnswer = findViewById(R.id.selected_answer);
         question = findViewById(R.id.talk);
         nextButton = findViewById(R.id.next);
         previousButton = findViewById(R.id.previous);
@@ -130,7 +140,7 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     }
 
     protected void clearAnswerButton(Button button) {
-        button.setBackgroundTintList(AppCompatResources.getColorStateList(this, unselectedColor));
+        button.setBackgroundTintList(AppCompatResources.getColorStateList(this, R.color.notAnswered));
 //        button.setBackgroundResource(R.drawable.unselected_button);
 //        button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
         button.setTextColor(getResources().getColor(R.color.colorAccent));
