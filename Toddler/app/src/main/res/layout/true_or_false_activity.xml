@@ -80,7 +80,7 @@
 
     <Button
         android:id="@+id/next"
-        android:layout_width="100dp"
+        android:layout_width="70dp"
         android:layout_height="50dp"
         android:background="@drawable/next"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -91,7 +91,7 @@
 
     <Button
         android:id="@+id/previous"
-        android:layout_width="100dp"
+        android:layout_width="70dp"
         android:layout_height="50dp"
         android:background="@drawable/prev"
         app:layout_constraintBottom_toBottomOf="parent"
