@@ -96,4 +96,14 @@ public class Quiz extends AbstractActivity {
         }
         return text.toString();
     }
+
+    @Override
+    public String getTypeName() {
+        return "Exercício " + super.getId();
+    }
+
+    @Override
+    public AbstractActivity clone() {
+        return new Quiz(this.title, this.exercises);
+    }
 }

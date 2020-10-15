@@ -9,11 +9,15 @@ import android.os.Bundle;
 import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.ActivityCardAdapter;
 import com.ihc.toddler.entity.AbstractActivity;
+import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.repository.ContentRepository;
 import com.ihc.toddler.repository.QuizRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Random;
+
 import android.annotation.TargetApi;
 import android.os.Build;
 
@@ -30,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
 
 
-        List<AbstractActivity> activities = populateAcitivies();
+        List<AbstractActivity> activities = populateActivities();
         ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, this);
 
         RecyclerView.LayoutManager manager = new GridLayoutManager(this, 2);
@@ -38,14 +42,27 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(activityCardAdapter);
     }
 
-    private List<AbstractActivity>  populateAcitivies() {
+    private List<AbstractActivity>  populateActivities() {
         List<AbstractActivity> activities = new ArrayList<>();
         AbstractActivity quiz = QuizRepository.getQuiz();
         AbstractActivity content = ContentRepository.getContent();
-        for (int i = 0; i < 7; i ++) {
-            activities.add(quiz);
-            activities.add(content);
+        int contentCounter = 1, quizCounter = 1;
+        content.setId(contentCounter++);
+        activities.add(content);
+        for (int i = 0; i < 5; i ++) {
+            int random = new Random().nextInt(10);
+            if (random % 2 == 0) {
+                AbstractActivity cloneQuiz = quiz.clone();
+                cloneQuiz.setId(quizCounter++);
+                activities.add(cloneQuiz);
+            } else {
+                AbstractActivity cloneContent = content.clone();
+                cloneContent.setId(contentCounter++);
+                activities.add(cloneContent);
+            }
         }
+        quiz.setId(quizCounter);
+        activities.add(quiz);
         return activities;
     }
 }
