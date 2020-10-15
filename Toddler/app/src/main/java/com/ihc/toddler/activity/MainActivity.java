@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
 
+        if (getSupportActionBar() != null)
+            getSupportActionBar().hide();
+
 
         List<AbstractActivity> activities = populateAcitivies();
         ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, this);

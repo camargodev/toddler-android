@@ -10,6 +10,7 @@ import android.graphics.drawable.shapes.RectShape;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -59,7 +60,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
 
         holder.topPart.setBackgroundColor(color);
         holder.title.setText(activity.getTitle());
-        holder.title.setTextColor(color);
+//        holder.title.setTextColor(color);
         if (activity instanceof Quiz) {
             holder.icon.setBackgroundResource(R.drawable.homework);
             holder.type.setText("Exercício 1");
@@ -74,7 +75,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
 
     static class ActivityViewHolder extends RecyclerView.ViewHolder {
         TextView title, type;
-        LinearLayout parent, topPart;
+        FrameLayout parent, topPart;
         ImageView icon;
         public ActivityViewHolder(View itemView, final int position, final List<AbstractActivity> activities) {
             super(itemView);
