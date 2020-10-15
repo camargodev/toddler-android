@@ -47,26 +47,25 @@
             android:layout_height="55dp"
             android:layout_gravity="bottom">
 
-
             <TextView
                 android:id="@+id/exercise_description"
-                android:layout_width="100dp"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:text="Exercício"
                 android:textColor="#FFF"
-                android:textStyle="bold"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:textSize="18sp" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/exercise_number"
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
             android:textColor="#FFF"
+            android:textStyle="bold"
             android:text="Exercício 1"
             android:textSize="18sp" />
 

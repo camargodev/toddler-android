@@ -13,4 +13,9 @@
     <color name="cardColor7">#7B8FFF</color>
 
     <color name="cadsBgColor">#FFFDEF</color>
+
+    <color name="correct">#99C861</color>
+    <color name="wrong">#FF897F</color>
+    <color name="notAnswered">#989898</color>
+
 </resources>

@@ -47,18 +47,38 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     @Override
     public QuizViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_activity_list_row, viewGroup, false);
+                .inflate(R.layout.card_result_list_row, viewGroup, false);
         return new QuizViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull QuizViewHolder holder, int position) {
         Exercise exercise = quiz.getExercises().get(position);
-        int color = ContextCompat.getColor(originScreen, getRandomColorId());
+        Integer selectedAnswer = quiz.getAnswers().get(position);
 
-        holder.topPart.setBackgroundColor(color);
-        holder.description.setText(exercise.getQuestion());
-        holder.number.setText("Exercise " + (position+1));
+        String questionHeader = (position+1) + ": "+ exercise.getQuestion().replace("\n", " ");
+        holder.number.setText(questionHeader);
+
+        if (selectedAnswer.equals(Quiz.BLANK_ANSWER)) {
+            int color = ContextCompat.getColor(originScreen, R.color.notAnswered);
+            holder.topPart.setBackgroundColor(color);
+            holder.emoticon.setText(":|");
+            holder.description.setText("Não respondido ");
+        } else if (selectedAnswer.equals(exercise.getAnswer())) {
+            int color = ContextCompat.getColor(originScreen, R.color.correct);
+            holder.topPart.setBackgroundColor(color);
+            holder.emoticon.setText(":)");
+            String correctString = "Você acertou! A resposta é: " + exercise.getAnswers().get(exercise.getAnswer()-1);
+            holder.description.setText(correctString);
+        } else {
+            int color = ContextCompat.getColor(originScreen, R.color.wrong);
+            holder.topPart.setBackgroundColor(color);
+            holder.emoticon.setText(":(");
+            String incorrectString = "Poxa, você marcou " + exercise.getAnswers().get(selectedAnswer-1)
+                    +   " e o correto é " + exercise.getAnswers().get(exercise.getAnswer()-1);
+            holder.description.setText(incorrectString);
+        }
+
     }
 
     @Override
@@ -67,13 +87,14 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     }
 
     static class QuizViewHolder extends RecyclerView.ViewHolder {
-        TextView number, description;
+        TextView number, description, emoticon;
         FrameLayout parent, topPart;
         public QuizViewHolder(View itemView) {
             super(itemView);
             topPart = itemView.findViewById(R.id.exercise_top_part);
             number = itemView.findViewById(R.id.exercise_number);
             description = itemView.findViewById(R.id.exercise_description);
+            emoticon = itemView.findViewById(R.id.small_emoticon);
 
 //            itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
