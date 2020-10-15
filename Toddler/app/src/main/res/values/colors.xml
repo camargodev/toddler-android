@@ -8,7 +8,9 @@
     <color name="cardColor2">#99C861</color>
     <color name="cardColor3">#66AFD1</color>
     <color name="cardColor4">#70BAA9</color>
-    <color name="cardColor5">#B9C166</color>
+<!--    <color name="cardColor5">#F379A3</color>-->
     <color name="cardColor6">#EE7EFF</color>
     <color name="cardColor7">#7B8FFF</color>
+
+    <color name="cadsBgColor">#FFFDEF</color>
 </resources>

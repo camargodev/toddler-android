@@ -2,6 +2,10 @@ package com.ihc.toddler.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,11 +47,14 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     public void onBindViewHolder(@NonNull ActivityViewHolder holder, int position) {
         AbstractActivity activity = activities.get(position);
         int color = ContextCompat.getColor(originScreen, getRandomColorId());
+
         holder.topPart.setBackgroundColor(color);
         holder.title.setText(activity.getTitle());
         holder.title.setTextColor(color);
-        if (activity instanceof Quiz)
+        if (activity instanceof Quiz) {
             holder.icon.setBackgroundResource(R.drawable.homework);
+            holder.type.setText("Exercício 1");
+        }
 
     }
 
@@ -57,7 +64,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     }
 
     static class ActivityViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
+        TextView title, type;
         LinearLayout parent, topPart;
         ImageView icon;
         public ActivityViewHolder(View itemView) {
@@ -65,6 +72,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
             parent = itemView.findViewById(R.id.parent);
             topPart = itemView.findViewById(R.id.top_part);
             title = itemView.findViewById(R.id.activity_title);
+            type = itemView.findViewById(R.id.activity_type);
             icon = itemView.findViewById(R.id.small_logo);
         }
     }

@@ -36,6 +36,6 @@ public class ContentRepository {
                     "É palavra com três sílabas.\n\nExemplo: BA-TA-TA\n"));
         parts.add(new ContentPart("Polissílaba" ,
                     "É uma palavra com 4 ou mais sílabas.\n\nExemplo: BRA-SI-LEI-RO"));
-        return new Content("Conteúdo 101", parts);
+        return new Content("Separação de sílabas", parts);
     }
 }
