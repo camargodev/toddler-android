@@ -51,7 +51,7 @@ public abstract class GenericExerciseActivity extends GenericActivity {
         if (quizManager.isFirstExercise()) hidePreviousButton();
 
         exerciseView.mapQuestion(question);
-        
+
         question.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
 
 //        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
@@ -119,8 +119,9 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     protected void setCurrentExerciseText() {
         int current = quizManager.getCurrentExerciseNumber();
         int total = quizManager.getNumberOfExercises();
-        String text = "Exercício " + current + " de " + total;
+        String text = "EXERCÍCIO " + current + " DE " + total;
         exerciseTextView.setText(text);
+        exerciseTextView.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
     }
 
     protected void setExerciseAsAnswered() {
