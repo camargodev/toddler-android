@@ -1,6 +1,7 @@
 package com.ihc.toddler.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Shader;
@@ -18,8 +19,16 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ihc.toddler.R;
+import com.ihc.toddler.activity.ContentActivity;
 import com.ihc.toddler.entity.AbstractActivity;
+import com.ihc.toddler.entity.Content;
+import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.Quiz;
+import com.ihc.toddler.manager.ContentManager;
+import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.repository.QuizRepository;
+import com.ihc.toddler.view.ExerciseView;
+import com.ihc.toddler.view.ExerciseViewFactory;
 
 import java.util.List;
 
@@ -40,7 +49,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     public ActivityViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_activity_list_row, viewGroup, false);
-        return new ActivityViewHolder(itemView);
+        return new ActivityViewHolder(itemView, position, activities);
     }
 
     @Override
@@ -67,13 +76,33 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
         TextView title, type;
         LinearLayout parent, topPart;
         ImageView icon;
-        public ActivityViewHolder(View itemView) {
+        public ActivityViewHolder(View itemView, final int position, final List<AbstractActivity> activities) {
             super(itemView);
             parent = itemView.findViewById(R.id.parent);
             topPart = itemView.findViewById(R.id.top_part);
             title = itemView.findViewById(R.id.activity_title);
             type = itemView.findViewById(R.id.activity_type);
             icon = itemView.findViewById(R.id.small_logo);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AbstractActivity activity = activities.get(getAdapterPosition());
+                    if (activity instanceof Quiz) {
+                        Quiz quiz = QuizRepository.getQuiz();
+                        QuizManager manager = QuizManager.getInstance(quiz);
+
+                        Exercise currentExercise = manager.getCurrentExercise();
+                        ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);
+                        Intent firstQuestion = exerciseView.getIntent(v.getContext());
+                        v.getContext().startActivity(firstQuestion);
+                    } else {
+                        ContentManager.getInstance((Content) activity);
+                        Intent firstPart = new Intent(v.getContext(), ContentActivity.class);
+                        v.getContext().startActivity(firstPart);
+                    }
+                }
+            });
         }
     }
 }
