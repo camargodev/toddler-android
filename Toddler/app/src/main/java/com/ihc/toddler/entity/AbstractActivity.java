@@ -1,11 +1,10 @@
 package com.ihc.toddler.entity;
 
-import java.util.UUID;
-
 public abstract class AbstractActivity {
 
     private int id;
     protected String title;
+    protected Subject subject;
 
     public int getId() {
         return id;
@@ -21,6 +20,14 @@ public abstract class AbstractActivity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Subject getSubject() {
+        return subject;
+    }
+
+    public void setSubject(Subject subject) {
+        this.subject = subject;
     }
 
     public abstract String getTypeName();
