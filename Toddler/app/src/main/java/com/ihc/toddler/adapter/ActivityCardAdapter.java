@@ -1,0 +1,122 @@
+package com.ihc.toddler.adapter;
+
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
+import android.speech.tts.TextToSpeech;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.ihc.toddler.R;
+import com.ihc.toddler.activity.ContentActivity;
+import com.ihc.toddler.entity.AbstractActivity;
+import com.ihc.toddler.entity.Content;
+import com.ihc.toddler.entity.Exercise;
+import com.ihc.toddler.entity.Quiz;
+import com.ihc.toddler.manager.ContentManager;
+import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.manager.SpeechManager;
+import com.ihc.toddler.repository.QuizRepository;
+import com.ihc.toddler.view.ExerciseView;
+import com.ihc.toddler.view.ExerciseViewFactory;
+
+import java.util.List;
+
+import static com.ihc.toddler.manager.ColorManager.getRandomColorId;
+
+public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapter.ActivityViewHolder> {
+
+    List<AbstractActivity> activities;
+    Context originScreen;
+    TextToSpeech textToSpeech;
+
+    public ActivityCardAdapter(List<AbstractActivity> activities, Context originScreen, TextToSpeech textToSpeech) {
+        this.activities = activities;
+        this.originScreen = originScreen;
+        this.textToSpeech = textToSpeech;
+    }
+
+    @NonNull
+    @Override
+    public ActivityViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
+        View itemView = LayoutInflater.from(viewGroup.getContext())
+                .inflate(R.layout.card_activity_list_row, viewGroup, false);
+        return new ActivityViewHolder(itemView, position, activities, textToSpeech);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ActivityViewHolder holder, int position) {
+        AbstractActivity activity = activities.get(position);
+        int color = ContextCompat.getColor(originScreen, getRandomColorId());
+
+        holder.topPart.setBackgroundColor(color);
+        holder.title.setText(activity.getTitle());
+        holder.type.setText(activity.getTypeName());
+        if (activity instanceof Quiz) {
+            holder.icon.setBackgroundResource(R.drawable.homework);
+        }
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return activities.size();
+    }
+
+    static class ActivityViewHolder extends RecyclerView.ViewHolder {
+        TextView title, type;
+        FrameLayout parent, topPart;
+        ImageView icon;
+        public ActivityViewHolder(View itemView, final int position, final List<AbstractActivity> activities, final TextToSpeech textToSpeech) {
+            super(itemView);
+            parent = itemView.findViewById(R.id.parent);
+            topPart = itemView.findViewById(R.id.top_part);
+            title = itemView.findViewById(R.id.activity_title);
+            type = itemView.findViewById(R.id.activity_type);
+            icon = itemView.findViewById(R.id.small_logo);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AbstractActivity activity = activities.get(getAdapterPosition());
+                    if (activity instanceof Quiz) {
+                        Quiz quiz = QuizRepository.getQuiz();
+                        QuizManager manager = QuizManager.getInstance(quiz);
+
+                        Exercise currentExercise = manager.getCurrentExercise();
+                        ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);
+                        Intent firstQuestion = exerciseView.getIntent(v.getContext());
+                        v.getContext().startActivity(firstQuestion);
+                    } else {
+                        ContentManager.getInstance((Content) activity);
+                        Intent firstPart = new Intent(v.getContext(), ContentActivity.class);
+                        v.getContext().startActivity(firstPart);
+                    }
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    AbstractActivity activity = activities.get(getAdapterPosition());
+                    String toTalk = activity.getTypeName() + "   " + activity.getTitle();
+                    new SpeechManager(textToSpeech).talk(toTalk);
+                    return false;
+                }
+            });
+        }
+    }
+}

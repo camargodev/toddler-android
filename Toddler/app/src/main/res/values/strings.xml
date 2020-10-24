@@ -17,5 +17,6 @@
     <string name="next_symbol"><![CDATA[>]]></string>
     <string name="exercise_x_of_y">Exercício X de Y</string>
     <string name="question_dummy">Qual é a resposta?</string>
+    <string name="appbar_scrolling_view_behavior">Teste</string>
 
 </resources>

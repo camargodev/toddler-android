@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/cadsBgColor"
     tools:context=".activity.MultipleChoiceActivity">
 
     <TextView
         android:id="@+id/exercise_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
         android:text="@string/exercise_x_of_y"
         app:layout_constraintBottom_toTopOf="@id/talk"
         android:layout_marginBottom="40dp"
@@ -19,21 +20,20 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintHorizontal_bias="0.5" />
 
-    <TextView
-        android:id="@+id/question"
-        android:layout_width="230dp"
-        android:layout_height="90dp"
-        android:text="@string/question_dummy"
-        android:textColor="@color/colorAccent"
-        android:translationZ="10dp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/talk"
-        app:layout_constraintRight_toRightOf="@id/talk"
-        android:textSize="20sp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="10dp"
-        android:gravity="center_horizontal|center_vertical"
-        />
+<!--    <TextView-->
+<!--        android:id="@+id/question"-->
+<!--        android:layout_width="230dp"-->
+<!--        android:layout_height="90dp"-->
+<!--        android:text="@string/question_dummy"-->
+<!--        android:textColor="@color/colorAccent"-->
+<!--        android:translationZ="10dp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintTop_toTopOf="@id/talk"-->
+<!--        android:textSize="20sp"-->
+<!--        android:layout_marginTop="15dp"-->
+<!--        android:layout_marginEnd="10dp"-->
+<!--        android:gravity="center_horizontal|center_vertical"-->
+<!--        />-->
 
     <Button
         android:id="@+id/talk"
@@ -41,7 +41,12 @@
         android:layout_height="130dp"
         android:layout_marginBottom="20dp"
         android:onClick="readQuestion"
-        android:background="@drawable/question_bg"
+        android:text="@string/question_dummy"
+        android:textColor="@color/colorAccent"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:background="@drawable/circled_square"
+        android:backgroundTint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -55,7 +60,7 @@
         android:layout_marginStart="75dp"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:background="@drawable/unselected_button"
+        android:background="@drawable/circled_square"
         android:onClick="answerA"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -65,7 +70,7 @@
         android:id="@+id/ans_b"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:background="@drawable/unselected_button"
+        android:background="@drawable/circled_square"
         android:onClick="answerB"
         android:textSize="18sp"
         android:layout_marginEnd="75dp"
@@ -76,7 +81,7 @@
         android:id="@+id/ans_c"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:background="@drawable/unselected_button"
+        android:background="@drawable/circled_square"
         android:onClick="answerC"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="@id/ans_a"
@@ -87,7 +92,7 @@
         android:id="@+id/ans_d"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:background="@drawable/unselected_button"
+        android:background="@drawable/circled_square"
         android:onClick="answerD"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="@id/ans_b"
@@ -96,7 +101,7 @@
 
     <Button
         android:id="@+id/next"
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:layout_height="50dp"
         android:background="@drawable/next"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -107,7 +112,7 @@
 
     <Button
         android:id="@+id/previous"
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:layout_height="50dp"
         android:background="@drawable/prev"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -116,15 +121,28 @@
         android:layout_marginStart="25dp"
         android:onClick="previous" />
 
-    <ImageView
-        android:id="@+id/small_logo"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+    <TextView
+        android:id="@+id/selected_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="NENHUMA RESPOSTA SELECIONADA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="10dp"
-        app:srcCompat="@drawable/small_logo" />
+        android:layout_marginBottom="100dp"
+        app:layout_constraintHorizontal_bias="0.5" />
+
+<!--    <ImageView-->
+<!--        android:id="@+id/small_logo"-->
+<!--        android:layout_width="75dp"-->
+<!--        android:layout_height="75dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        android:layout_marginBottom="10dp"-->
+<!--        app:srcCompat="@drawable/small_logo" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

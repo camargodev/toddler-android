@@ -2,7 +2,7 @@ package com.ihc.toddler.entity;
 
 import java.util.List;
 
-public abstract class Exercise extends AbstractActivity {
+public abstract class Exercise {
 
     protected String question;
     protected int numberOfAnswers;

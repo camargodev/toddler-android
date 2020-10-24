@@ -1,8 +1,13 @@
 package com.ihc.toddler.activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
@@ -10,9 +15,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.Exercise;
+import com.ihc.toddler.manager.ColorManager;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.view.ExerciseView;
@@ -23,12 +30,13 @@ import java.util.Locale;
 public abstract class GenericExerciseActivity extends GenericActivity {
 
     protected TextView exerciseTextView;
-    protected TextView questionTextView;
+    protected TextView selectedAnswer;
+    protected Button question;
     protected QuizManager quizManager = QuizManager.getInstance();
     protected ExerciseView exerciseView;
-//    protected TextToSpeech textToSpeech;
-//    protected SpeechManager speechManager;
     protected Button nextButton, previousButton;
+    protected Integer unselectedColor = ColorManager.getRandomColorId();
+    protected Integer selectedColor = ColorManager.getRandomColorId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +47,7 @@ public abstract class GenericExerciseActivity extends GenericActivity {
 
         setContentView(exerciseView.getLayoutId());
 
+
         mapLayout();
         setCurrentExerciseText();
         clearAnswerButtons();
@@ -47,7 +56,9 @@ public abstract class GenericExerciseActivity extends GenericActivity {
 
         if (quizManager.isFirstExercise()) hidePreviousButton();
 
-        exerciseView.mapQuestion(questionTextView);
+        exerciseView.mapQuestion(question);
+
+        question.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
 
 //        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
 //            @Override
@@ -70,8 +81,14 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     }
 
     protected void markAsAnswered(Button button) {
-        button.setBackgroundResource(R.drawable.selected_button);
+
+        button.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
+//        button.setBackgroundResource(R.drawable.selected_button);
         button.setTextColor(getResources().getColor(R.color.colorAccent));
+        int answerIndex = quizManager.getCurrentAnswer() - 1;
+        String selectedAnswerText = quizManager.getCurrentExercise().getAnswers().get(answerIndex);
+        String text = "RESPOSTA SELECIONADA: " + selectedAnswerText;
+        selectedAnswer.setText(text);
     }
 
     protected void goToPrevious() {
@@ -84,12 +101,43 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     }
 
     protected void goToNext() {
-        if (quizManager.isLastExercise()) {
-            Intent resultsIntent = new Intent(this, DisplayResultsActivity.class);
-            finish();
-            startActivity(resultsIntent);
-            return;
-        }
+
+            if (quizManager.isLastExercise()) {
+                if (quizManager.getNumberOfExercises() != quizManager.getQuiz().getAnsweredCount()) {
+                    new AlertDialog.Builder(this, R.style.AlertDialogTheme)
+                            .setTitle("Pera lá")
+                            .setMessage("Esse é o último exercício e você ainda não respondeu todos. " +
+                                    "Antes de continuar, garanta que todos estão respondidos.")
+
+                            .setPositiveButton("Ok", null)
+                            .setIcon(R.drawable.small_logo)
+                            .show();
+                    return;
+
+                } else {
+                    new AlertDialog.Builder(this, R.style.AlertDialogTheme)
+                            .setTitle("Acabou?")
+                            .setMessage("Você tem certeza que não quer mudar a resposta de nenhum exercício?")
+
+                            .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                                Intent resultsIntent = new Intent(getApplicationContext(), DisplayResultsActivity.class);
+                                                finish();
+                                                startActivity(resultsIntent);
+                                }
+                            })
+
+                            // A null listener allows the button to dismiss the dialog and take no further action.
+                            .setNegativeButton("Voltar", null)
+                            .setIcon(R.drawable.small_logo)
+                            .show();
+                    return;
+
+                }
+            }
+
+
+
         Exercise nextExercise = quizManager.goToNext().getCurrentExercise();
         ExerciseView nextExerciseView = ExerciseViewFactory.make(nextExercise);
         Intent nextExerciseIntent = nextExerciseView.getIntent(this);
@@ -99,13 +147,14 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     }
 
     protected void readQuestion() {
-        String toSpeak = questionTextView.getText().toString();
+        String toSpeak = question.getText().toString();
         textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
     }
 
     protected void mapLayout() {
         exerciseTextView = findViewById(R.id.exercise_number);
-        questionTextView = findViewById(R.id.question);
+        selectedAnswer = findViewById(R.id.selected_answer);
+        question = findViewById(R.id.talk);
         nextButton = findViewById(R.id.next);
         previousButton = findViewById(R.id.previous);
     }
@@ -113,8 +162,9 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     protected void setCurrentExerciseText() {
         int current = quizManager.getCurrentExerciseNumber();
         int total = quizManager.getNumberOfExercises();
-        String text = "Exercício " + current + " de " + total;
+        String text = "EXERCÍCIO " + current + " DE " + total;
         exerciseTextView.setText(text);
+        exerciseTextView.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
     }
 
     protected void setExerciseAsAnswered() {
@@ -123,8 +173,10 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     }
 
     protected void clearAnswerButton(Button button) {
-        button.setBackgroundResource(R.drawable.unselected_button);
-        button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        button.setBackgroundTintList(AppCompatResources.getColorStateList(this, R.color.notAnswered));
+//        button.setBackgroundResource(R.drawable.unselected_button);
+//        button.setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+        button.setTextColor(getResources().getColor(R.color.colorAccent));
     }
 
     protected abstract void clearAnswerButtons();

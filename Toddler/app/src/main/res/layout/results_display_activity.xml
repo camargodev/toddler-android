@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/cadsBgColor"
     tools:context=".activity.DisplayResultsActivity">
 
     <TextView
@@ -19,34 +19,55 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.1" />
+        app:layout_constraintVertical_bias="0.07" />
 
     <TextView
-        android:id="@+id/results"
+        android:id="@+id/your_answers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:textSize="18sp"
+        android:text="Suas Respostas:"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@id/results_recycler_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="10dp"/>
+
+<!--    <TextView-->
+<!--        android:id="@+id/results"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Hello World!"-->
+<!--        android:textSize="18sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/results_title"-->
+<!--        app:layout_constraintHorizontal_bias="0.5"-->
+<!--        app:layout_constraintVertical_bias="0.1"-->
+<!--        android:onClick="readResults"-->
+<!--        android:gravity="center_horizontal|center_vertical"-->
+<!--        tools:ignore="OnClick" />-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/results_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/results_title"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintVertical_bias="0.1"
-        android:onClick="readResults"
-        android:gravity="center_horizontal|center_vertical"
-        tools:ignore="OnClick" />
+        android:layout_marginBottom="80dp"
+        android:scrollbars="vertical" />
 
     <TextView
         android:id="@+id/exercise_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-        android:textSize="18sp"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="25dp"
         android:onClick="readAction"
         android:gravity="center_horizontal|center_vertical" />
 
@@ -55,11 +76,24 @@
         android:layout_width="80dp"
         android:layout_height="50dp"
         android:background="@drawable/prev"
-        app:layout_constraintBottom_toTopOf="@id/exercise_message"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="23dp"
         android:onClick="exerciseAction" />
+
+    <TextView
+        android:id="@+id/back_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Voltar para o menu"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/exercise_action"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="10dp"
+        android:onClick="readAction"
+        android:gravity="center_horizontal|center_vertical" />
 
 
 

@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Quiz {
-
-    private String title;
+public class Quiz extends AbstractActivity {
 
     private List<Exercise> exercises;
     private List<Integer> answers;
@@ -97,5 +95,15 @@ public class Quiz {
             text.append("\n");
         }
         return text.toString();
+    }
+
+    @Override
+    public String getTypeName() {
+        return "Exercício " + super.getId();
+    }
+
+    @Override
+    public AbstractActivity clone() {
+        return new Quiz(this.title, this.exercises);
     }
 }
