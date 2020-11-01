@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.ActivityCardAdapter;
 import com.ihc.toddler.entity.AbstractActivity;
+import com.ihc.toddler.entity.Content;
 import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.repository.ContentRepository;
 import com.ihc.toddler.repository.QuizRepository;
@@ -56,26 +57,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private List<AbstractActivity>  populateActivities() {
+        List<Content> contents = ContentRepository.getContents();
+        List<Quiz> quizes = QuizRepository.getQuizes();
         List<AbstractActivity> activities = new ArrayList<>();
-        AbstractActivity quiz = QuizRepository.getQuiz();
-        AbstractActivity content = ContentRepository.getContent();
-        int contentCounter = 1, quizCounter = 1;
-        content.setId(contentCounter++);
-        activities.add(content);
-        for (int i = 0; i < 5; i ++) {
-            int random = new Random().nextInt(10);
-            if (random % 2 == 0) {
-                AbstractActivity cloneQuiz = quiz.clone();
-                cloneQuiz.setId(quizCounter++);
-                activities.add(cloneQuiz);
-            } else {
-                AbstractActivity cloneContent = content.clone();
-                cloneContent.setId(contentCounter++);
-                activities.add(cloneContent);
-            }
-        }
-        quiz.setId(quizCounter);
-        activities.add(quiz);
+        activities.addAll(contents);
+        activities.addAll(quizes);
         return activities;
     }
 }

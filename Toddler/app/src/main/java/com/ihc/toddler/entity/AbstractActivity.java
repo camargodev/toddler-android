@@ -2,7 +2,7 @@ package com.ihc.toddler.entity;
 
 public abstract class AbstractActivity {
 
-    private int id;
+    protected int id;
     protected String title;
     protected Subject subject;
 

@@ -93,9 +93,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
                 public void onClick(View v) {
                     AbstractActivity activity = activities.get(getAdapterPosition());
                     if (activity instanceof Quiz) {
-                        Quiz quiz = QuizRepository.getQuiz();
-                        QuizManager manager = QuizManager.getInstance(quiz);
-
+                        QuizManager manager = QuizManager.getInstance((Quiz) activity);
                         Exercise currentExercise = manager.getCurrentExercise();
                         ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);
                         Intent firstQuestion = exerciseView.getIntent(v.getContext());

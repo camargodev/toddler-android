@@ -13,6 +13,11 @@ public class Quiz extends AbstractActivity {
     public static final Integer BLANK_ANSWER = 0;
     public static final String BLANK_ANSWER_TEXT = "Sem Resposta :|";
 
+    public Quiz(int id, Quiz quiz) {
+        this(quiz.title, quiz.exercises);
+        super.id = id;
+    }
+
     public Quiz(String title, List<Exercise> exercises) {
         this.title = title;
         this.exercises = exercises;
