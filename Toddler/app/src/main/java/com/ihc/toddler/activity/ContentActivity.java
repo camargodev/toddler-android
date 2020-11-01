@@ -3,26 +3,18 @@ package com.ihc.toddler.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.ContentPart;
-import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.manager.ColorManager;
 import com.ihc.toddler.manager.ContentManager;
-import com.ihc.toddler.manager.QuizManager;
-import com.ihc.toddler.view.ExerciseView;
-import com.ihc.toddler.view.ExerciseViewFactory;
-
-import java.util.Locale;
+import com.ihc.toddler.persistence.ActivityTracker;
 
 public class ContentActivity extends GenericActivity {
 
@@ -67,6 +59,7 @@ public class ContentActivity extends GenericActivity {
                     .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             Intent resultsIntent = new Intent(getApplicationContext(), MainActivity.class);
+                            ActivityTracker.getInstance().addActivity(contentManager.getContent());
                             finish();
                             startActivity(resultsIntent);
                         }

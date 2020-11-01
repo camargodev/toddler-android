@@ -56,4 +56,8 @@ public class ContentManager {
         return this.currentPart + 1;
     }
 
+    public Content getContent() {
+        return content;
+    }
+
 }

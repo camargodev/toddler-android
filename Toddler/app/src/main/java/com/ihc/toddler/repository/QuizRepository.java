@@ -20,7 +20,7 @@ public class QuizRepository {
     private static int id = 0;
 
     public static List<Quiz> getQuizes() {
-        return Arrays.asList(new Quiz(++id, getSyllableSeparationQuiz()), new Quiz(++id, getWordTypesQuiz()));
+        return Arrays.asList(new Quiz(1, getSyllableSeparationQuiz()), new Quiz(2, getWordTypesQuiz()));
     }
 
     private static Quiz getSyllableSeparationQuiz() {

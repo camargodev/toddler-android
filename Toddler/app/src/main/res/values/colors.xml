@@ -18,4 +18,6 @@
     <color name="wrong">#FF897F</color>
     <color name="notAnswered">#989898</color>
 
+    <color name="gray">#989898</color>
+
 </resources>

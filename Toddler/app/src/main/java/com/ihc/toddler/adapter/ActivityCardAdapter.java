@@ -2,18 +2,12 @@ package com.ihc.toddler.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,7 +23,7 @@ import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.manager.SpeechManager;
-import com.ihc.toddler.repository.QuizRepository;
+import com.ihc.toddler.persistence.ActivityTracker;
 import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
 
@@ -62,12 +56,15 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
         AbstractActivity activity = activities.get(position);
         int color = ContextCompat.getColor(originScreen, getRandomColorId());
 
-        holder.topPart.setBackgroundColor(color);
         holder.title.setText(activity.getTitle());
         holder.type.setText(activity.getTypeName());
         if (activity instanceof Quiz) {
             holder.icon.setBackgroundResource(R.drawable.homework);
+        } else {
+            if (ActivityTracker.getInstance().isActivityConsumed((Content) activity))
+                color = ContextCompat.getColor(originScreen, R.color.gray);
         }
+        holder.topPart.setBackgroundColor(color);
 
     }
 

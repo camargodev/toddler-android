@@ -7,6 +7,11 @@ public abstract class Award {
     private String description;
     private Tier tier;
 
+    public Award(int id, Award award) {
+        this(award.title, award.description, award.tier);
+        this.id = id;
+    }
+
     public Award(String title, String description, Tier tier) {
         this.title = title;
         this.description = description;

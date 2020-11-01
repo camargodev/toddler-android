@@ -13,10 +13,8 @@ import java.util.List;
 
 public class ContentRepository {
 
-    private static int id = 0;
-
     public static List<Content> getContents() {
-        return Arrays.asList(new Content(++id, getSyllableSeparationContent()), new Content(++id, getWordTypeContent()));
+        return Arrays.asList(new Content(1, getSyllableSeparationContent()), new Content(2, getWordTypeContent()));
     }
 
     private static Content getSyllableSeparationContent() {

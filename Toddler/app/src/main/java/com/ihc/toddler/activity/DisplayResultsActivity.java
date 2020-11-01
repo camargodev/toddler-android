@@ -21,6 +21,7 @@ import com.ihc.toddler.entity.TrueOrFalseExercise;
 import com.ihc.toddler.entity.awards.FirstQuizAnswered;
 import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.persistence.ActivityTracker;
 import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
 
@@ -41,6 +42,7 @@ public class DisplayResultsActivity extends GenericActivity {
         mapLayout();
 
         AwardManager.getInstance().addAward(new FirstQuizAnswered());
+        ActivityTracker.getInstance().addActivity(quiz);
 
         quizTitle.setText(quiz.getTitle());
         message.setText(getMessage());
