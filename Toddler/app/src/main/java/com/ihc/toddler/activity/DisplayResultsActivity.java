@@ -61,6 +61,9 @@ public class DisplayResultsActivity extends GenericActivity {
 
     public void exerciseAction(View view) {
         if (isFinished()) {
+            Intent awardsIntent = new Intent(this, DisplayAwardsActivity.class);
+            startActivity(awardsIntent);
+            this.overridePendingTransition(0, 0);
             finish();
         } else {
             Exercise lastExercise = QuizManager.getInstance().getCurrentExercise();

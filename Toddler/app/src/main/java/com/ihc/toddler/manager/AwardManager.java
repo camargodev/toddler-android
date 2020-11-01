@@ -17,7 +17,7 @@ public class AwardManager {
 
     private AwardValidator firstQuizAwardValidator = new FirstQuizAnsweredValidator();
 
-    private  AwardManager() {}
+    private AwardManager() {}
 
     public static AwardManager getInstance() {
         return manager;
