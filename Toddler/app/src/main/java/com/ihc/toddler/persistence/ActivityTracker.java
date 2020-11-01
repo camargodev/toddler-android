@@ -4,18 +4,16 @@ import com.ihc.toddler.entity.AbstractActivity;
 import com.ihc.toddler.entity.Content;
 import com.ihc.toddler.entity.Quiz;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class ActivityTracker {
 
     private static ActivityTracker activityTracker = new ActivityTracker();
 
-    private ActivityTracker() {}
+    protected ActivityTracker() {}
 
-    private HashMap<Integer, Content> contents = new HashMap<>();
-    private HashMap<Integer, Quiz> quizes = new HashMap<>();
+    protected static HashMap<Integer, Content> contents = new HashMap<>();
+    protected static HashMap<Integer, Quiz> quizes = new HashMap<>();
 
     public static ActivityTracker getInstance() {
         return activityTracker;

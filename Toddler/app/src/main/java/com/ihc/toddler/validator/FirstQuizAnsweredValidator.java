@@ -1,13 +1,11 @@
 package com.ihc.toddler.validator;
 
+import com.ihc.toddler.persistence.ActivityDataConsumer;
+import com.ihc.toddler.persistence.ActivityTracker;
+
 public class FirstQuizAnsweredValidator implements AwardValidator {
-
-    private boolean firstQuiz = true;
-
     @Override
     public boolean shouldAddAward() {
-        boolean savedFirst = firstQuiz;
-        firstQuiz = false;
-        return savedFirst;
+        return ActivityDataConsumer.getAllConsumedQuizes().size() == 0;
     }
 }
