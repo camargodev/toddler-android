@@ -7,18 +7,18 @@ public abstract class Award {
     private int id;
     private String title;
     private String description;
-    private Tier tier;
+    private AwardTier awardTier;
     private AwardValidator validator;
 
     public Award(int id, Award award) {
-        this(award.title, award.description, award.tier, award.validator);
+        this(award.title, award.description, award.awardTier, award.validator);
         this.id = id;
     }
 
-    public Award(String title, String description, Tier tier, AwardValidator validator) {
+    public Award(String title, String description, AwardTier awardTier, AwardValidator validator) {
         this.title = title;
         this.description = description;
-        this.tier = tier;
+        this.awardTier = awardTier;
         this.validator = validator;
     }
 
@@ -46,12 +46,12 @@ public abstract class Award {
         this.title = title;
     }
 
-    public Tier getTier() {
-        return tier;
+    public AwardTier getAwardTier() {
+        return awardTier;
     }
 
-    public void setTier(Tier tier) {
-        this.tier = tier;
+    public void setAwardTier(AwardTier awardTier) {
+        this.awardTier = awardTier;
     }
 
     public boolean isAccomplished() {

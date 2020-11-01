@@ -23,18 +23,10 @@ public class AwardManager {
     }
 
     public void addAward(Award award) {
-        if (shouldAddAward(award))
-            conqueredAwards.add(award);
+        conqueredAwards.add(award);
     }
 
     public List<Award> getConqueredAwards() {
         return conqueredAwards;
-    }
-
-    public boolean shouldAddAward(Award award) {
-        AwardValidator validator = new NullValidator();
-        if (award instanceof FirstQuizAnswered)
-            validator = firstQuizAwardValidator;
-        return validator.shouldAddAward();
     }
 }

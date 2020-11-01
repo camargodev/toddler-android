@@ -3,8 +3,7 @@ package com.ihc.toddler.entity.awards;
 import com.ihc.toddler.entity.Award;
 import com.ihc.toddler.validator.FiveQuestionsCorrectValidator;
 
-import static com.ihc.toddler.entity.Tier.GOLD;
-import static com.ihc.toddler.entity.Tier.SILVER;
+import static com.ihc.toddler.entity.AwardTier.GOLD;
 
 public class FiveQuestionsCorrect extends Award {
     public FiveQuestionsCorrect() {

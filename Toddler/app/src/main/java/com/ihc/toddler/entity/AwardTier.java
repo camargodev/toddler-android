@@ -1,6 +1,9 @@
 package com.ihc.toddler.entity;
 
-public enum Tier {
+import java.util.Arrays;
+import java.util.List;
+
+public enum AwardTier {
 
     SILVER,
     GOLD,
