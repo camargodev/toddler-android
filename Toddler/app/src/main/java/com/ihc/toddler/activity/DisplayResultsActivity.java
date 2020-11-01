@@ -1,5 +1,6 @@
 package com.ihc.toddler.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -43,13 +44,11 @@ public class DisplayResultsActivity extends GenericActivity {
 
         AwardManager.getInstance().addAward(new FirstQuizAnswered());
         ActivityTracker.getInstance().addActivity(quiz);
+        quiz.submitQuiz();
 
         quizTitle.setText(quiz.getTitle());
         message.setText(getMessage());
-        if (isFinished())
-            button.setBackgroundResource(R.drawable.next);
-        else
-            button.setBackgroundResource(R.drawable.prev);
+        button.setBackgroundResource(R.drawable.next);
 
         RecyclerView recyclerView = findViewById(R.id.results_recycler_view);
 
@@ -67,37 +66,15 @@ public class DisplayResultsActivity extends GenericActivity {
     }
 
     public void exerciseAction(View view) {
-        if (isFinished()) {
-            Intent awardsIntent = new Intent(this, DisplayAwardsActivity.class);
-            startActivity(awardsIntent);
-            this.overridePendingTransition(0, 0);
-            finish();
-        } else {
-            Exercise lastExercise = QuizManager.getInstance().getCurrentExercise();
-            ExerciseView lastExerciseView = ExerciseViewFactory.make(lastExercise);
-            Intent lastExerciseIntent = lastExerciseView.getIntent(this);
-            finish();
-            startActivity(lastExerciseIntent);
-            this.overridePendingTransition(0, 0);
-        }
-    }
-
-    private boolean isFinished() {
-        return quiz.getAnsweredCount() == quiz.getNumberOfExercises();
+        Intent awardsIntent = new Intent(this, DisplayAwardsActivity.class);
+        startActivity(awardsIntent);
+        this.overridePendingTransition(0, 0);
+        finish();
     }
 
     private String getMessage() {
-        double grade;
-        int correct = 0;
-        for (int i = 0; i < quiz.getNumberOfExercises(); i++) {
-            Exercise exercise = quiz.getExercises().get(i);
-            Integer selectedAnswer = quiz.getAnswers().get(i);
-            if (exercise.getAnswer() == selectedAnswer) {
-                correct += 1;
-            }
-        }
-        grade = ((double) correct/ quiz.getNumberOfExercises()) * 10;
-        String stringGrade = String.format("%.2f", grade);
+        double grade = ((double) quiz.getCorrectCount() / quiz.getNumberOfExercises()) * 10;
+        @SuppressLint("DefaultLocale") String stringGrade = String.format("%.2f", grade);
         return "Sua nota: " + stringGrade + "/10";
     }
 

@@ -10,6 +10,8 @@ public class Quiz extends AbstractActivity {
     private List<Integer> answers;
     private int answeredCount = 0;
 
+    private int correctCount = 0, wrongCount = 0;
+
     public static final Integer BLANK_ANSWER = 0;
     public static final String BLANK_ANSWER_TEXT = "Sem Resposta :|";
 
@@ -62,6 +64,18 @@ public class Quiz extends AbstractActivity {
         answers.set(exerciseIndex, answer);
     }
 
+    public void submitQuiz() {
+        for (int i = 0; i < exercises.size(); i++) {
+            if (exercises.get(i).getAnswer() == answers.get(i)) {
+                exercises.get(i).setStatus(ExerciseStatus.CORRECT);
+                this.correctCount += 1;
+            } else {
+                exercises.get(i).setStatus(ExerciseStatus.WRONG);
+                this.wrongCount += 1;
+            }
+        }
+    }
+
     public void clearAnswer(int exerciseIndex) {
         if (isExerciseAnswered(exerciseIndex))
             answeredCount -= 1;
@@ -78,6 +92,14 @@ public class Quiz extends AbstractActivity {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getCorrectCount() {
+        return correctCount;
+    }
+
+    public int getWrongCount() {
+        return wrongCount;
     }
 
     @Override

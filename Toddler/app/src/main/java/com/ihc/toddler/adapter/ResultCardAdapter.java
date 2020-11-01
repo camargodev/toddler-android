@@ -19,6 +19,7 @@ import com.ihc.toddler.activity.ContentActivity;
 import com.ihc.toddler.entity.AbstractActivity;
 import com.ihc.toddler.entity.Content;
 import com.ihc.toddler.entity.Exercise;
+import com.ihc.toddler.entity.ExerciseStatus;
 import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.manager.QuizManager;
@@ -59,12 +60,12 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
         String questionHeader = (position+1) + ": "+ exercise.getQuestion().replace("\n", " ");
         holder.number.setText(questionHeader);
 
-        if (selectedAnswer.equals(Quiz.BLANK_ANSWER)) {
+        if (exercise.getStatus().equals(ExerciseStatus.NOT_ANSWERED)) {
             int color = ContextCompat.getColor(originScreen, R.color.notAnswered);
             holder.topPart.setBackgroundColor(color);
             holder.emoticon.setText(":|");
             holder.description.setText("Não respondido ");
-        } else if (selectedAnswer.equals(exercise.getAnswer())) {
+        } else if (exercise.getStatus().equals(ExerciseStatus.CORRECT)) {
             int color = ContextCompat.getColor(originScreen, R.color.correct);
             holder.topPart.setBackgroundColor(color);
             holder.emoticon.setText(":)");

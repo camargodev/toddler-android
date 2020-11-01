@@ -8,6 +8,7 @@ public abstract class Exercise {
     protected int numberOfAnswers;
     protected List<String> answers;
     protected int answer;
+    protected ExerciseStatus status = ExerciseStatus.NOT_ANSWERED;
 
     public Exercise(String question, int numberOfAnswers, List<String> answers, int answer) {
         super();
@@ -41,4 +42,11 @@ public abstract class Exercise {
         this.answers = answers;
     }
 
+    public ExerciseStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(ExerciseStatus status) {
+        this.status = status;
+    }
 }
