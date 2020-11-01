@@ -10,7 +10,7 @@
     android:layout_height="120dp">
 
     <FrameLayout
-        android:id="@+id/exercise_top_part"
+        android:id="@+id/award_background"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:background="@color/colorPrimaryDark"

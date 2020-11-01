@@ -21,9 +21,11 @@ import com.ihc.toddler.entity.Award;
 import com.ihc.toddler.entity.Content;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.Quiz;
+import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.manager.SpeechManager;
+import com.ihc.toddler.persistence.ActivityTracker;
 import com.ihc.toddler.repository.AwardRepository;
 import com.ihc.toddler.repository.QuizRepository;
 import com.ihc.toddler.view.ExerciseView;
@@ -36,9 +38,11 @@ import static com.ihc.toddler.manager.ColorManager.getRandomColorId;
 public class AwardCardAdapter extends RecyclerView.Adapter<AwardCardAdapter.AwardViewHolder> {
 
     List<Award> awards;
+    Context originScreen;
 
-    public AwardCardAdapter() {
+    public AwardCardAdapter(Context originScreen) {
         this.awards = AwardRepository.getAll();
+        this.originScreen = originScreen;
     }
 
     @NonNull
@@ -52,7 +56,11 @@ public class AwardCardAdapter extends RecyclerView.Adapter<AwardCardAdapter.Awar
     @Override
     public void onBindViewHolder(@NonNull AwardViewHolder holder, int position) {
         Award award = awards.get(position);
-        holder.awardTitle.setText(award.getDescription());
+        holder.awardTitle.setText(award.getTitle());
+        int color = ContextCompat.getColor(originScreen, R.color.gray);
+        if (AwardManager.getInstance().isAwardAccomplished(award.getId()))
+            color = ContextCompat.getColor(originScreen, getRandomColorId());
+        holder.awardBackground.setBackgroundColor(color);
     }
 
     @Override
@@ -62,9 +70,11 @@ public class AwardCardAdapter extends RecyclerView.Adapter<AwardCardAdapter.Awar
 
     static class AwardViewHolder extends RecyclerView.ViewHolder {
         TextView awardTitle;
+        FrameLayout awardBackground;
         public AwardViewHolder(View itemView) {
             super(itemView);
             awardTitle = itemView.findViewById(R.id.award_title);
+            awardBackground = itemView.findViewById(R.id.award_background);
         }
     }
 }

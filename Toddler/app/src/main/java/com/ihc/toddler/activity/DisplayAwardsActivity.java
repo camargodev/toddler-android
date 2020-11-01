@@ -29,7 +29,7 @@ public class DisplayAwardsActivity extends GenericActivity {
 
         RecyclerView recyclerView = findViewById(R.id.awards_recycler_view);
 
-        AwardCardAdapter activityCardAdapter = new AwardCardAdapter();
+        AwardCardAdapter activityCardAdapter = new AwardCardAdapter(this);
 
         RecyclerView.LayoutManager manager = new GridLayoutManager(this, 4);
         recyclerView.setLayoutManager(manager);
