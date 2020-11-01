@@ -25,7 +25,11 @@ import android.os.Build;
 import android.speech.tts.TextToSpeech;
 
 public class MainActivity extends AppCompatActivity {
+
     protected TextToSpeech textToSpeech;
+    private static List<AbstractActivity> activities;
+    private RecyclerView recyclerView;
+
 
     @TargetApi(Build.VERSION_CODES.O)
     @Override
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView = findViewById(R.id.recycler_view);
 
         if (getSupportActionBar() != null)
             getSupportActionBar().hide();
@@ -47,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
         });
         textToSpeech.setSpeechRate(0.8f);
 
+        activities = populateActivities();
 
-        List<AbstractActivity> activities = populateActivities();
         ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, this, textToSpeech);
 
         RecyclerView.LayoutManager manager = new GridLayoutManager(this, 2);
@@ -56,7 +60,18 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(activityCardAdapter);
     }
 
-    private List<AbstractActivity>  populateActivities() {
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, this, textToSpeech);
+
+        RecyclerView.LayoutManager manager = new GridLayoutManager(this, 2);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(activityCardAdapter);
+    }
+
+    private List<AbstractActivity> populateActivities() {
         List<Content> contents = ContentRepository.getContents();
         List<Quiz> quizes = QuizRepository.getQuizes();
         List<AbstractActivity> activities = new ArrayList<>();
