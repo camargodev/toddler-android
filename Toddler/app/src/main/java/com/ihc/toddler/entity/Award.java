@@ -1,21 +1,25 @@
 package com.ihc.toddler.entity;
 
+import com.ihc.toddler.validator.AwardValidator;
+
 public abstract class Award {
 
     private int id;
     private String title;
     private String description;
     private Tier tier;
+    private AwardValidator validator;
 
     public Award(int id, Award award) {
-        this(award.title, award.description, award.tier);
+        this(award.title, award.description, award.tier, award.validator);
         this.id = id;
     }
 
-    public Award(String title, String description, Tier tier) {
+    public Award(String title, String description, Tier tier, AwardValidator validator) {
         this.title = title;
         this.description = description;
         this.tier = tier;
+        this.validator = validator;
     }
 
     public int getId() {
@@ -48,5 +52,9 @@ public abstract class Award {
 
     public void setTier(Tier tier) {
         this.tier = tier;
+    }
+
+    public boolean isAccomplished() {
+        return validator.shouldAddAward();
     }
 }
