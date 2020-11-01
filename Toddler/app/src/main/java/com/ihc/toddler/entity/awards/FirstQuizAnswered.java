@@ -6,7 +6,7 @@ import com.ihc.toddler.validator.FirstQuizAnsweredValidator;
 import static com.ihc.toddler.entity.AwardTier.SILVER;
 
 public class FirstQuizAnswered extends Award {
-    public FirstQuizAnswered() {
-        super("Primeiro Quiz", "Parabéns! Você respondeu seu primeiro quiz.", SILVER, new FirstQuizAnsweredValidator());
+    public FirstQuizAnswered(int id) {
+        super(id,"Primeiro Quiz", "Parabéns! Você respondeu seu primeiro quiz.", SILVER, new FirstQuizAnsweredValidator());
     }
 }

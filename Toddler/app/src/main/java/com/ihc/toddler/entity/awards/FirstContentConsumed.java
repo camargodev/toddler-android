@@ -6,7 +6,7 @@ import com.ihc.toddler.validator.FirstContentConsumedValidator;
 import static com.ihc.toddler.entity.AwardTier.SILVER;
 
 public class FirstContentConsumed extends Award {
-    public FirstContentConsumed() {
-        super("Primeira Aula", "Parabéns! Você assistiu sua primeira aula.", SILVER, new FirstContentConsumedValidator());
+    public FirstContentConsumed(int id) {
+        super(id,"Primeira Aula", "Parabéns! Você assistiu sua primeira aula.", SILVER, new FirstContentConsumedValidator());
     }
 }

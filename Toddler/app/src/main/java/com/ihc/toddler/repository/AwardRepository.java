@@ -8,21 +8,16 @@ import com.ihc.toddler.entity.awards.FiveQuestionsCorrect;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 public class AwardRepository {
 
-    private static List<Award> awardList;
-    private static HashMap<AwardTier, List<Award>> awardsByTier = new HashMap<>();
+    protected static final Integer FIRST_CONTENT_AWARD = 1, FIRST_QUIZ_AWARD = 2, FIVE_QUESTIONS_CORRECT_AWARD = 3;
+
+    protected static List<Award> awardList;
 
     static {
-        awardList = Arrays.asList(new FirstContentConsumed(), new FirstQuizAnswered(), new FiveQuestionsCorrect());
-        for (AwardTier tier : AwardTier.values())
-            awardsByTier.put(tier, new ArrayList<Award>());
-        for (Award award : awardList)
-            Objects.requireNonNull(awardsByTier.get(award.getAwardTier())).add(award);
+        awardList = Arrays.asList(new FirstContentConsumed(FIRST_CONTENT_AWARD), new FirstQuizAnswered(FIRST_QUIZ_AWARD), new FiveQuestionsCorrect(FIVE_QUESTIONS_CORRECT_AWARD));
     }
 
     public static List<Award> getAll() {
@@ -30,7 +25,11 @@ public class AwardRepository {
     }
 
     public static List<Award> getByTier(AwardTier tier) {
-        return awardsByTier.get(tier);
+        List<Award> awardsByTier = new ArrayList<>();
+        for (Award award : awardList)
+            if (award.getAwardTier().equals(tier))
+                awardsByTier.add(award);
+        return awardsByTier;
     }
 
 

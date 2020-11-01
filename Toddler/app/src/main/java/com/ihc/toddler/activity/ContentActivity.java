@@ -12,9 +12,11 @@ import androidx.appcompat.content.res.AppCompatResources;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.ContentPart;
+import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.ColorManager;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.persistence.ActivityTracker;
+import com.ihc.toddler.repository.AwardRepository;
 
 public class ContentActivity extends GenericActivity {
 
@@ -59,6 +61,7 @@ public class ContentActivity extends GenericActivity {
                     .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             Intent resultsIntent = new Intent(getApplicationContext(), MainActivity.class);
+                            AwardManager.getInstance().triggerContentAwardsValidations();
                             ActivityTracker.getInstance().addActivity(contentManager.getContent());
                             finish();
                             startActivity(resultsIntent);

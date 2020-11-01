@@ -6,7 +6,7 @@ import com.ihc.toddler.validator.FiveQuestionsCorrectValidator;
 import static com.ihc.toddler.entity.AwardTier.GOLD;
 
 public class FiveQuestionsCorrect extends Award {
-    public FiveQuestionsCorrect() {
-        super("5 Acertos", "Parabéns! Você já acertou 5 questões.", GOLD, new FiveQuestionsCorrectValidator());
+    public FiveQuestionsCorrect(int id) {
+        super(id,"5 Acertos", "Parabéns! Você já acertou 5 questões.", GOLD, new FiveQuestionsCorrectValidator());
     }
 }

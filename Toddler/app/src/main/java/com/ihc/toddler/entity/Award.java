@@ -9,13 +9,10 @@ public abstract class Award {
     private String description;
     private AwardTier awardTier;
     private AwardValidator validator;
+    private boolean isAccomplished;
 
-    public Award(int id, Award award) {
-        this(award.title, award.description, award.awardTier, award.validator);
+    public Award(int id, String title, String description, AwardTier awardTier, AwardValidator validator) {
         this.id = id;
-    }
-
-    public Award(String title, String description, AwardTier awardTier, AwardValidator validator) {
         this.title = title;
         this.description = description;
         this.awardTier = awardTier;
@@ -34,27 +31,23 @@ public abstract class Award {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public AwardTier getAwardTier() {
         return awardTier;
     }
 
-    public void setAwardTier(AwardTier awardTier) {
-        this.awardTier = awardTier;
+    public boolean isAchievable() {
+        return validator.shouldAddAward();
     }
 
     public boolean isAccomplished() {
-        return validator.shouldAddAward();
+        return isAccomplished;
+    }
+
+    public void setAccomplished(boolean accomplished) {
+        isAccomplished = accomplished;
     }
 }

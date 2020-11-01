@@ -1,20 +1,11 @@
 package com.ihc.toddler.manager;
 
 import com.ihc.toddler.entity.Award;
-import com.ihc.toddler.entity.awards.FirstQuizAnswered;
-import com.ihc.toddler.validator.AwardValidator;
-import com.ihc.toddler.validator.FirstQuizAnsweredValidator;
-import com.ihc.toddler.validator.NullValidator;
+import com.ihc.toddler.repository.AwardRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class AwardManager {
+public class AwardManager extends AwardRepository {
 
     private static final AwardManager manager = new AwardManager();
-    private List<Award> conqueredAwards = new ArrayList<>();
-
-    private AwardValidator firstQuizAwardValidator = new FirstQuizAnsweredValidator();
 
     private AwardManager() {}
 
@@ -22,11 +13,26 @@ public class AwardManager {
         return manager;
     }
 
-    public void addAward(Award award) {
-        conqueredAwards.add(award);
+    public void triggerContentAwardsValidations() {
+        addAwardIfValid(FIRST_CONTENT_AWARD);
     }
 
-    public List<Award> getConqueredAwards() {
-        return conqueredAwards;
+    public void triggerQuizAwardsValidations() {
+        addAwardIfValid(FIRST_QUIZ_AWARD);
+        addAwardIfValid(FIVE_QUESTIONS_CORRECT_AWARD);
     }
+
+    public boolean isAwardAccomplished(Integer awardId) {
+        for (Award award : awardList)
+            if (award.getId() == awardId)
+                return award.isAccomplished();
+        return false;
+    }
+
+    private void addAwardIfValid(Integer awardId) {
+        for (Award award : awardList)
+            if (award.getId() == awardId && award.isAchievable())
+                award.setAccomplished(true);
+    }
+
 }

@@ -24,6 +24,7 @@ import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.manager.SpeechManager;
+import com.ihc.toddler.repository.AwardRepository;
 import com.ihc.toddler.repository.QuizRepository;
 import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
@@ -36,8 +37,8 @@ public class AwardCardAdapter extends RecyclerView.Adapter<AwardCardAdapter.Awar
 
     List<Award> awards;
 
-    public AwardCardAdapter(List<Award> awards) {
-        this.awards = awards;
+    public AwardCardAdapter() {
+        this.awards = AwardRepository.getAll();
     }
 
     @NonNull

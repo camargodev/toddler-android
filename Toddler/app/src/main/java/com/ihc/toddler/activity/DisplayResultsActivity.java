@@ -23,6 +23,7 @@ import com.ihc.toddler.entity.awards.FirstQuizAnswered;
 import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.persistence.ActivityTracker;
+import com.ihc.toddler.repository.AwardRepository;
 import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
 
@@ -42,7 +43,7 @@ public class DisplayResultsActivity extends GenericActivity {
         setContentView(R.layout.results_display_activity);
         mapLayout();
 
-        AwardManager.getInstance().addAward(new FirstQuizAnswered());
+        AwardManager.getInstance().triggerQuizAwardsValidations();
         ActivityTracker.getInstance().addActivity(quiz);
         quiz.submitQuiz();
 
