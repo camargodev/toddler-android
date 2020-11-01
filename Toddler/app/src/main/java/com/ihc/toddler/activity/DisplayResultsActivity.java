@@ -18,6 +18,8 @@ import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.MultipleChoiceExercise;
 import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.entity.TrueOrFalseExercise;
+import com.ihc.toddler.entity.awards.FirstQuizAnswered;
+import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
@@ -37,6 +39,9 @@ public class DisplayResultsActivity extends GenericActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.results_display_activity);
         mapLayout();
+
+        AwardManager.getInstance().addAward(new FirstQuizAnswered());
+
         quizTitle.setText(quiz.getTitle());
         message.setText(getMessage());
         if (isFinished())
