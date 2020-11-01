@@ -19,7 +19,7 @@ public class ActivityTracker {
         return activityTracker;
     }
 
-    public void addActivity(AbstractActivity activity) {
+    public void persistActivity(AbstractActivity activity) {
         if (isActivityConsumed(activity))
             return;
         if (activity instanceof Quiz)

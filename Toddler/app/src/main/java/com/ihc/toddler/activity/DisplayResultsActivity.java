@@ -7,29 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ihc.toddler.R;
-import com.ihc.toddler.adapter.ActivityCardAdapter;
 import com.ihc.toddler.adapter.ResultCardAdapter;
-import com.ihc.toddler.entity.AbstractActivity;
-import com.ihc.toddler.entity.Exercise;
-import com.ihc.toddler.entity.MultipleChoiceExercise;
 import com.ihc.toddler.entity.Quiz;
-import com.ihc.toddler.entity.TrueOrFalseExercise;
-import com.ihc.toddler.entity.awards.FirstQuizAnswered;
 import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.persistence.ActivityTracker;
-import com.ihc.toddler.repository.AwardRepository;
-import com.ihc.toddler.view.ExerciseView;
-import com.ihc.toddler.view.ExerciseViewFactory;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class DisplayResultsActivity extends GenericActivity {
 
@@ -43,9 +29,10 @@ public class DisplayResultsActivity extends GenericActivity {
         setContentView(R.layout.results_display_activity);
         mapLayout();
 
-        AwardManager.getInstance().triggerQuizAwardsValidations();
-        ActivityTracker.getInstance().addActivity(quiz);
+        ActivityTracker.getInstance().persistActivity(quiz);
         quiz.submitQuiz();
+
+        AwardManager.getInstance().triggerQuizAwardsValidations();
 
         quizTitle.setText(quiz.getTitle());
         message.setText(getMessage());
