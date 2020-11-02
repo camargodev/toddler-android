@@ -61,7 +61,7 @@ public class ContentActivity extends GenericActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             Intent resultsIntent = new Intent(getApplicationContext(), MainActivity.class);
                             ActivityTracker.getInstance().persistActivity(contentManager.getContent());
-                            AwardManager.getInstance().triggerContentAwardsValidations();
+                            AwardManager.getInstance().triggerAwardValidations();
                             finish();
                             startActivity(resultsIntent);
                         }

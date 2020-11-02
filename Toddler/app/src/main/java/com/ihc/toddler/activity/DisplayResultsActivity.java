@@ -32,7 +32,7 @@ public class DisplayResultsActivity extends GenericActivity {
         ActivityTracker.getInstance().persistActivity(quiz);
         quiz.submitQuiz();
 
-        AwardManager.getInstance().triggerQuizAwardsValidations();
+        AwardManager.getInstance().triggerAwardValidations();
 
         quizTitle.setText(quiz.getTitle());
         message.setText(getMessage());

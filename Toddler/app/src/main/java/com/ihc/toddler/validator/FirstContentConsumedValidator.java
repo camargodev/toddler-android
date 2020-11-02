@@ -8,6 +8,6 @@ public class FirstContentConsumedValidator implements AwardValidator {
 
     @Override
     public boolean shouldAddAward() {
-        return ActivityDataConsumer.getAllConsumedContents().size() <= FIRST;
+        return ActivityDataConsumer.getAllConsumedContents().size() == FIRST;
     }
 }

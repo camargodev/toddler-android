@@ -8,6 +8,6 @@ public class FirstQuizAnsweredValidator implements AwardValidator {
 
     @Override
     public boolean shouldAddAward() {
-        return ActivityDataConsumer.getAllConsumedQuizes().size() <= FIRST;
+        return ActivityDataConsumer.getAllConsumedQuizes().size() == FIRST;
     }
 }

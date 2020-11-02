@@ -20,17 +20,16 @@ public class AwardManager extends AwardRepository {
         return manager;
     }
 
-    public void triggerContentAwardsValidations() {
-        addAwardIfValid(FIRST_CONTENT_AWARD);
-    }
-
-    public void triggerQuizAwardsValidations() {
-        addAwardIfValid(FIRST_QUIZ_AWARD);
-        addAwardIfValid(FIVE_QUESTIONS_CORRECT_AWARD);
+    public void triggerAwardValidations() {
+        for (Award award : getAll())
+            if (award.isAchievable() && !award.isAccomplished()) {
+                award.setAccomplished(true);
+                awardsToNotify.add(award.getId());
+            }
     }
 
     public boolean isAwardAccomplished(Integer awardId) {
-        for (Award award : awardList)
+        for (Award award : getAll())
             if (award.getId() == awardId)
                 return award.isAccomplished();
         return false;
@@ -43,13 +42,5 @@ public class AwardManager extends AwardRepository {
         awardsToNotify.clear();
     }
 
-    private void addAwardIfValid(Integer awardId) {
-        for (Award award : awardList) {
-            if (award.getId() == awardId && award.isAchievable() && !award.isAccomplished()) {
-                award.setAccomplished(true);
-                awardsToNotify.add(awardId);
-            }
-        }
-    }
 
 }
