@@ -14,18 +14,20 @@ import android.widget.TextView;
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.NavigationDrawerLine;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class DrawerItemCustomAdapter extends ArrayAdapter<NavigationDrawerLine> {
 
     private Context context;
-    private int layoutResourceId;
+    private int firstLayoutResourceId, layoutResourceId;
     private NavigationDrawerLine[] navigationDrawerLines;
 
     public DrawerItemCustomAdapter(Context context, int layoutResourceId, NavigationDrawerLine[] navigationDrawerLines) {
+       this(context, layoutResourceId, layoutResourceId, navigationDrawerLines);
+    }
+
+    public DrawerItemCustomAdapter(Context context, int firstLayoutResourceId, int layoutResourceId, NavigationDrawerLine[] navigationDrawerLines) {
         super(context, layoutResourceId, navigationDrawerLines);
         this.context = context;
+        this.firstLayoutResourceId = firstLayoutResourceId;
         this.layoutResourceId = layoutResourceId;
         this.navigationDrawerLines = navigationDrawerLines;
     }
@@ -37,8 +39,11 @@ public class DrawerItemCustomAdapter extends ArrayAdapter<NavigationDrawerLine> 
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View listViewItem = inflater.inflate(layoutResourceId, parent, false);
 
-        ImageView imageViewIcon = listViewItem.findViewById(R.id.imageViewIcon);
-        TextView textViewName = listViewItem.findViewById(R.id.textViewName);
+        if (position == 0)
+            listViewItem = inflater.inflate(firstLayoutResourceId, parent, false);
+
+        ImageView imageViewIcon = listViewItem.findViewById(R.id.nav_drawer_item_logo);
+        TextView textViewName = listViewItem.findViewById(R.id.nav_drawer_item_name);
 
         NavigationDrawerLine folder = navigationDrawerLines[position];
 

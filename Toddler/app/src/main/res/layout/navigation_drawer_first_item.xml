@@ -2,13 +2,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="120dp"
     android:background="?android:attr/activatedBackgroundIndicator"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:backgroundTint="@color/colorPrimaryDark"
     android:padding="10dp" >
 
     <ImageView
-        android:id="@+id/imageViewIcon"
+        android:id="@+id/nav_drawer_item_logo"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentStart="true"
@@ -17,15 +18,30 @@
         tools:ignore="RtlSymmetry" />
 
     <TextView
-        android:id="@+id/textViewName"
+        android:id="@+id/nav_drawer_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@id/imageViewIcon"
+        android:layout_toEndOf="@id/nav_drawer_item_logo"
         android:paddingEnd="10dp"
         android:text="Item Name"
-        android:textColor="@android:color/black"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@android:color/white"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        tools:ignore="RtlSymmetry" />
+
+    <TextView
+        android:id="@+id/nav_drawer_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/nav_drawer_item_name"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:paddingEnd="10dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="TEST"
+        android:textAppearance="?android:attr/textAppearanceListItemSmall"
+        android:textColor="@android:color/holo_red_light"
         tools:ignore="RtlSymmetry" />
 
 </RelativeLayout>
