@@ -23,6 +23,7 @@
         <activity android:name=".activity.ContentActivity"/>
         <activity android:name=".activity.ContentEndActivity"/>
         <activity android:name=".activity.DisplayAwardsActivity"/>
+        <activity android:name=".activity.DisplayActivitiesActivity"/>
     </application>
 
 </manifest>

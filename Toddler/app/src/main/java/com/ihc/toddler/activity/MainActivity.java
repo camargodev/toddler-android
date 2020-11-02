@@ -1,82 +1,131 @@
 package com.ihc.toddler.activity;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.ihc.toddler.R;
-import com.ihc.toddler.adapter.ActivityCardAdapter;
-import com.ihc.toddler.entity.AbstractActivity;
-import com.ihc.toddler.entity.Content;
-import com.ihc.toddler.entity.Quiz;
-import com.ihc.toddler.repository.ContentRepository;
-import com.ihc.toddler.repository.QuizRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
-import java.util.Random;
-
-import android.annotation.TargetApi;
-import android.os.Build;
-import android.speech.tts.TextToSpeech;
+import com.ihc.toddler.adapter.DrawerItemCustomAdapter;
+import com.ihc.toddler.entity.DataModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    protected TextToSpeech textToSpeech;
-    private static List<AbstractActivity> activities;
-    private RecyclerView recyclerView;
+    private String[] mNavigationDrawerItemTitles;
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    Toolbar toolbar;
+    private CharSequence mDrawerTitle;
+    private CharSequence mTitle;
+    ActionBarDrawerToggle mDrawerToggle;
 
-
-    @TargetApi(Build.VERSION_CODES.O)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recycler_view);
+//        if (getSupportActionBar() != null)
+//            getSupportActionBar().hide();
 
-        if (getSupportActionBar() != null)
-            getSupportActionBar().hide();
+        mTitle = mDrawerTitle = getTitle();
+        mNavigationDrawerItemTitles= getResources().getStringArray(R.array.navigation_drawer_items_array);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
-        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if(status != TextToSpeech.ERROR)
-                    textToSpeech.setLanguage(new Locale("pt", "BR"));
-            }
-        });
-        textToSpeech.setSpeechRate(0.8f);
+        setupToolbar();
 
-        activities = populateActivities();
+        DataModel[] drawerItem = new DataModel[2];
 
-        ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, this, textToSpeech);
+        drawerItem[0] = new DataModel(R.drawable.book, "Connect");
+        drawerItem[1] = new DataModel(R.drawable.book, "Fixtures");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
-        RecyclerView.LayoutManager manager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(activityCardAdapter);
+        DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.list_view_item_row, drawerItem);
+        mDrawerList.setAdapter(adapter);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        setupDrawerToggle();
+
+    }
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+        }
+
+    }
+
+    private void selectItem(int position) {
+
+        Fragment fragment = null;
+
+        switch (position) {
+            case 0:
+            case 1:
+                fragment = new DisplayActivitiesActivity();
+                break;
+            default:
+                break;
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            setTitle(mNavigationDrawerItemTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+
+        } else {
+            Log.e("MainActivity", "Error in creating fragment");
+        }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-        ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, this, textToSpeech);
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
 
-        RecyclerView.LayoutManager manager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(activityCardAdapter);
+        return super.onOptionsItemSelected(item);
     }
 
-    private List<AbstractActivity> populateActivities() {
-        List<Content> contents = ContentRepository.getContents();
-        List<Quiz> quizes = QuizRepository.getQuizes();
-        List<AbstractActivity> activities = new ArrayList<>();
-        activities.addAll(contents);
-        activities.addAll(quizes);
-        return activities;
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getSupportActionBar().setTitle(mTitle);
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        mDrawerToggle.syncState();
+    }
+
+    void setupToolbar(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    void setupDrawerToggle(){
+        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,toolbar,R.string.app_name, R.string.app_name);
+        //This is necessary to change the icon of the Drawer Toggle upon state change.
+        mDrawerToggle.syncState();
     }
 }
