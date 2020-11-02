@@ -1,7 +1,5 @@
 package com.ihc.toddler.fragment;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
@@ -10,7 +8,6 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,26 +21,27 @@ import com.ihc.toddler.repository.ContentRepository;
 import com.ihc.toddler.repository.QuizRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class DisplayActivitiesFragment extends Fragment {
 
     protected TextToSpeech textToSpeech;
-    private static List<AbstractActivity> activities;
-    private RecyclerView recyclerView;
+    private RecyclerView moreActivitiesView, nextActivityView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activies_display_activity, container, false);
+        return inflater.inflate(R.layout.activies_display_fragment, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.recycler_view);
+        moreActivitiesView = view.findViewById(R.id.more_activities_view);
+        nextActivityView = view.findViewById(R.id.next_activity_view);
 
         textToSpeech = new TextToSpeech(view.getContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -59,13 +57,19 @@ public class DisplayActivitiesFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        activities = populateActivities();
+        List<AbstractActivity> activities = populateActivities();
 
-        ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, getActivity(), textToSpeech);
+        ActivityCardAdapter moreActivitiesCardAdapter = new ActivityCardAdapter(activities, getActivity(), textToSpeech);
+        ActivityCardAdapter nextActivityCardAdapter = new ActivityCardAdapter(Collections.singletonList(activities.get(0)), getActivity(), textToSpeech);
 
-        RecyclerView.LayoutManager manager = new GridLayoutManager(getActivity(), 2);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(activityCardAdapter);
+        RecyclerView.LayoutManager moreActivitiesManager = new GridLayoutManager(getActivity(), 2);
+        RecyclerView.LayoutManager nextActivityManager = new GridLayoutManager(getActivity(), 1);
+
+        moreActivitiesView.setLayoutManager(moreActivitiesManager);
+        moreActivitiesView.setAdapter(moreActivitiesCardAdapter);
+
+        nextActivityView.setLayoutManager(nextActivityManager);
+        nextActivityView.setAdapter(nextActivityCardAdapter);
     }
 
     private List<AbstractActivity> populateActivities() {

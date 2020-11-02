@@ -57,7 +57,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
         int color = ContextCompat.getColor(originScreen, getRandomColorId());
 
         holder.title.setText(activity.getTitle());
-        holder.type.setText(activity.getTypeName());
+//        holder.type.setText(activity.getTypeName());
         if (activity instanceof Quiz) {
             holder.icon.setBackgroundResource(R.drawable.homework);
         }
