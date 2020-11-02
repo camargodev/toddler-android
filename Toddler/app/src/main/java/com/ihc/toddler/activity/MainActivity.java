@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentManager;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.DrawerItemCustomAdapter;
+import com.ihc.toddler.fragment.DisplayContentFragment;
+import com.ihc.toddler.fragment.DisplayExerciseFragment;
 import com.ihc.toddler.navdrawer.NavigationDrawerGenericItem;
 import com.ihc.toddler.navdrawer.NavigationDrawerLine;
 import com.ihc.toddler.fragment.DisplayActivitiesFragment;
@@ -35,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
-    private static final int PROFILE = 0, ACTIVITIES = 1, AWARDS = 2;
+    private static final int PROFILE = 0, CONTENTS = 1, EXERCISES = 2, AWARDS = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         mapLayout();
         setupNavigationDrawer(buildNavigationDrawerLineArray());
-        selectItem(ACTIVITIES);
+        selectItem(CONTENTS);
     }
 
     @Override
@@ -92,8 +94,10 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
 
         switch (position) {
-            case ACTIVITIES:
-                fragment = new DisplayActivitiesFragment(); break;
+            case CONTENTS:
+                fragment = new DisplayContentFragment(); break;
+            case EXERCISES:
+                fragment = new DisplayExerciseFragment(); break;
             case AWARDS:
                 fragment = new DisplayAwardsFragment(); break;
             default: break;
@@ -131,7 +135,8 @@ public class MainActivity extends AppCompatActivity {
     private NavigationDrawerGenericItem[] buildNavigationDrawerLineArray() {
         List<NavigationDrawerGenericItem> lines = new ArrayList<>();
         lines.add(new NavigationDrawerProfile(R.drawable.unselected_button, navigationDrawerItemTitles[PROFILE]));
-        lines.add(new NavigationDrawerLine(R.drawable.book, navigationDrawerItemTitles[ACTIVITIES]));
+        lines.add(new NavigationDrawerLine(R.drawable.book, navigationDrawerItemTitles[CONTENTS]));
+        lines.add(new NavigationDrawerLine(R.drawable.book, navigationDrawerItemTitles[EXERCISES]));
         lines.add(new NavigationDrawerLine(R.drawable.homework, navigationDrawerItemTitles[AWARDS]));
 
         NavigationDrawerGenericItem[] array = new NavigationDrawerGenericItem[lines.size()];

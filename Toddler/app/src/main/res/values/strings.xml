@@ -21,7 +21,8 @@
 
     <string-array name="navigation_drawer_items_array">
         <item>Luana</item>
-        <item>Atividades</item>
+        <item>Aulas</item>
+        <item>Exercícios</item>
         <item>Conquistas</item>
     </string-array>
 

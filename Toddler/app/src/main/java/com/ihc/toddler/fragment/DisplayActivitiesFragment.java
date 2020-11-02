@@ -29,27 +29,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
-public class DisplayActivitiesFragment extends Fragment {
+public abstract class DisplayActivitiesFragment extends Fragment {
 
     protected TextToSpeech textToSpeech;
     private RecyclerView moreActivitiesView, nextActivityView;
-    private ActivityType lastType = ActivityType.CONTENT;
-    private RelativeLayout contentFilterLayout, exerciseFilterLayout;
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activies_display_fragment, container, false);
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         moreActivitiesView = view.findViewById(R.id.more_activities_view);
         nextActivityView = view.findViewById(R.id.next_activity_view);
-
-        contentFilterLayout = view.findViewById(R.id.content_filter_layout);
-        exerciseFilterLayout = view.findViewById(R.id.exercise_filter_layout);
 
         textToSpeech = new TextToSpeech(view.getContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -59,22 +48,6 @@ public class DisplayActivitiesFragment extends Fragment {
             }
         });
         textToSpeech.setSpeechRate(0.8f);
-
-        contentFilterLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lastType = ActivityType.CONTENT;
-                populateCardView();
-            }
-        });
-
-        exerciseFilterLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lastType = ActivityType.EXERCISE;
-                populateCardView();
-            }
-        });
     }
 
     @Override
@@ -83,18 +56,10 @@ public class DisplayActivitiesFragment extends Fragment {
         populateCardView();
     }
 
-    private List<AbstractActivity> getActivities(ActivityType type) {
-        List<AbstractActivity> activities = new ArrayList<>();
-        if (type == ActivityType.CONTENT) {
-            activities.addAll(ContentRepository.getContents());
-        } else {
-            activities.addAll(QuizRepository.getQuizes());
-        }
-        return activities;
-    }
+    protected abstract List<AbstractActivity> getActivities();
 
     private void populateCardView() {
-        List<AbstractActivity> activities = getActivities(lastType);
+        List<AbstractActivity> activities = getActivities();
 
         ActivityCardAdapter moreActivitiesCardAdapter = new ActivityCardAdapter(activities, getActivity(), textToSpeech);
         ActivityCardAdapter nextActivityCardAdapter = new ActivityCardAdapter(Collections.singletonList(activities.get(0)), getActivity(), textToSpeech);
