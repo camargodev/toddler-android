@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:showIn = "@layout/activity_main"
     android:background="@color/cadsBgColor"
-    tools:context = ".activity.DisplayActivitiesFragment">
+    tools:context = ".fragment.DisplayActivitiesFragment">
 
     <ImageView
         android:id="@+id/main_small_logo"

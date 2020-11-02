@@ -1,4 +1,4 @@
-package com.ihc.toddler.activity;
+package com.ihc.toddler.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;

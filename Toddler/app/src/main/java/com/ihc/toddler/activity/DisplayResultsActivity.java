@@ -54,8 +54,6 @@ public class DisplayResultsActivity extends GenericActivity {
     }
 
     public void exerciseAction(View view) {
-        Intent awardsIntent = new Intent(this, DisplayAwardsFragment.class);
-        startActivity(awardsIntent);
         this.overridePendingTransition(0, 0);
         finish();
     }

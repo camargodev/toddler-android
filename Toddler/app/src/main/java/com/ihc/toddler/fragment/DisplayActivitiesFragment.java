@@ -1,4 +1,4 @@
-package com.ihc.toddler.activity;
+package com.ihc.toddler.fragment;
 
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -34,53 +34,10 @@ public class DisplayActivitiesFragment extends Fragment {
     private static List<AbstractActivity> activities;
     private RecyclerView recyclerView;
 
-
-//    @TargetApi(Build.VERSION_CODES.O)
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activies_display_activity);
-//
-//        recyclerView = findViewById(R.id.recycler_view);
-//
-//        if (getSupportActionBar() != null)
-//            getSupportActionBar().hide();
-//
-//        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
-//            @Override
-//            public void onInit(int status) {
-//                if(status != TextToSpeech.ERROR)
-//                    textToSpeech.setLanguage(new Locale("pt", "BR"));
-//            }
-//        });
-//        textToSpeech.setSpeechRate(0.8f);
-//
-//        activities = populateActivities();
-//
-//        ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, this, textToSpeech);
-//
-//        RecyclerView.LayoutManager manager = new GridLayoutManager(this, 2);
-//        recyclerView.setLayoutManager(manager);
-//        recyclerView.setAdapter(activityCardAdapter);
-//    }
-//
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, this, textToSpeech);
-//
-//        RecyclerView.LayoutManager manager = new GridLayoutManager(this, 2);
-//        recyclerView.setLayoutManager(manager);
-//        recyclerView.setAdapter(activityCardAdapter);
-//    }
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.activies_display_activity, container, false);
-
     }
 
     @Override
@@ -96,12 +53,17 @@ public class DisplayActivitiesFragment extends Fragment {
             }
         });
         textToSpeech.setSpeechRate(0.8f);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
         activities = populateActivities();
 
-        ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, view.getContext(), textToSpeech);
+        ActivityCardAdapter activityCardAdapter = new ActivityCardAdapter(activities, getActivity(), textToSpeech);
 
-        RecyclerView.LayoutManager manager = new GridLayoutManager(view.getContext(), 2);
+        RecyclerView.LayoutManager manager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(activityCardAdapter);
     }

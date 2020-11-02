@@ -17,6 +17,8 @@ import androidx.fragment.app.FragmentManager;
 import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.DrawerItemCustomAdapter;
 import com.ihc.toddler.entity.DataModel;
+import com.ihc.toddler.fragment.DisplayActivitiesFragment;
+import com.ihc.toddler.fragment.DisplayAwardsFragment;
 
 import java.util.Objects;
 
