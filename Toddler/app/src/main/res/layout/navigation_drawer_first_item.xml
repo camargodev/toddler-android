@@ -3,45 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="120dp"
-    android:background="?android:attr/activatedBackgroundIndicator"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-    android:backgroundTint="@color/colorPrimaryDark"
+    android:background="@color/colorPrimaryDark"
+    android:clickable="false"
     android:padding="10dp" >
 
     <ImageView
-        android:id="@+id/nav_drawer_item_logo"
+        android:id="@+id/nav_drawer_profile_pic"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:paddingEnd="10dp"
         tools:ignore="RtlSymmetry" />
 
     <TextView
-        android:id="@+id/nav_drawer_item_name"
+        android:id="@+id/nav_drawer_profile_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@id/nav_drawer_item_logo"
+        android:layout_toEndOf="@id/nav_drawer_profile_pic"
         android:paddingEnd="10dp"
         android:text="Item Name"
-        android:background="@color/colorPrimaryDark"
         android:textColor="@android:color/white"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        tools:ignore="RtlSymmetry" />
-
-    <TextView
-        android:id="@+id/nav_drawer_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/nav_drawer_item_name"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="10dp"
-        android:paddingEnd="10dp"
-        android:background="@color/colorPrimaryDark"
-        android:text="TEST"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:textColor="@android:color/holo_red_light"
         tools:ignore="RtlSymmetry" />
 
 </RelativeLayout>

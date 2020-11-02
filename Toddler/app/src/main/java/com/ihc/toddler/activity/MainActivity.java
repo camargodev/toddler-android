@@ -16,10 +16,12 @@ import androidx.fragment.app.FragmentManager;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.DrawerItemCustomAdapter;
-import com.ihc.toddler.entity.NavigationDrawerLine;
+import com.ihc.toddler.navdrawer.NavigationDrawerGenericItem;
+import com.ihc.toddler.navdrawer.NavigationDrawerLine;
 import com.ihc.toddler.fragment.DisplayActivitiesFragment;
 import com.ihc.toddler.fragment.DisplayAwardsFragment;
 import com.ihc.toddler.manager.AwardManager;
+import com.ihc.toddler.navdrawer.NavigationDrawerProfile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
-    private static final int ACTIVITIES = 0, AWARDS = 1;
+    private static final int PROFILE = 0, ACTIVITIES = 1, AWARDS = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         mapLayout();
         setupNavigationDrawer(buildNavigationDrawerLineArray());
+        selectItem(ACTIVITIES);
     }
 
     @Override
@@ -60,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         navigationDrawerItemTitles = getResources().getStringArray(R.array.navigation_drawer_items_array);
     }
 
-    private void setupNavigationDrawer(NavigationDrawerLine[] lines) {
+    private void setupNavigationDrawer(NavigationDrawerGenericItem[] lines) {
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
 
         setSupportActionBar(toolbar);
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         navigationDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == PROFILE) return;
                 selectItem(position);
             }
         });
@@ -124,12 +128,13 @@ public class MainActivity extends AppCompatActivity {
         actionBarDrawerToggle.syncState();
     }
 
-    private NavigationDrawerLine[] buildNavigationDrawerLineArray() {
-        List<NavigationDrawerLine> lines = new ArrayList<>();
+    private NavigationDrawerGenericItem[] buildNavigationDrawerLineArray() {
+        List<NavigationDrawerGenericItem> lines = new ArrayList<>();
+        lines.add(new NavigationDrawerProfile(R.drawable.unselected_button, navigationDrawerItemTitles[PROFILE]));
         lines.add(new NavigationDrawerLine(R.drawable.book, navigationDrawerItemTitles[ACTIVITIES]));
         lines.add(new NavigationDrawerLine(R.drawable.homework, navigationDrawerItemTitles[AWARDS]));
 
-        NavigationDrawerLine[] array = new NavigationDrawerLine[lines.size()];
+        NavigationDrawerGenericItem[] array = new NavigationDrawerGenericItem[lines.size()];
         lines.toArray(array);
         return array;
     }

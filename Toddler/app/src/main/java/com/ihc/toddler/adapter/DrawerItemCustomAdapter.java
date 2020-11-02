@@ -12,19 +12,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ihc.toddler.R;
-import com.ihc.toddler.entity.NavigationDrawerLine;
+import com.ihc.toddler.navdrawer.NavigationDrawerGenericItem;
+import com.ihc.toddler.navdrawer.NavigationDrawerLine;
 
-public class DrawerItemCustomAdapter extends ArrayAdapter<NavigationDrawerLine> {
+import java.util.Arrays;
+
+public class DrawerItemCustomAdapter extends ArrayAdapter<NavigationDrawerGenericItem> {
 
     private Context context;
     private int firstLayoutResourceId, layoutResourceId;
-    private NavigationDrawerLine[] navigationDrawerLines;
+    private NavigationDrawerGenericItem[] navigationDrawerLines;
 
-    public DrawerItemCustomAdapter(Context context, int layoutResourceId, NavigationDrawerLine[] navigationDrawerLines) {
-       this(context, layoutResourceId, layoutResourceId, navigationDrawerLines);
-    }
+    private static final int PROFILE = 0;
 
-    public DrawerItemCustomAdapter(Context context, int firstLayoutResourceId, int layoutResourceId, NavigationDrawerLine[] navigationDrawerLines) {
+    public DrawerItemCustomAdapter(Context context, int firstLayoutResourceId, int layoutResourceId, NavigationDrawerGenericItem[] navigationDrawerLines) {
         super(context, layoutResourceId, navigationDrawerLines);
         this.context = context;
         this.firstLayoutResourceId = firstLayoutResourceId;
@@ -37,18 +38,24 @@ public class DrawerItemCustomAdapter extends ArrayAdapter<NavigationDrawerLine> 
     public View getView(int position, View convertView, ViewGroup parent) {
 
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        View listViewItem = inflater.inflate(layoutResourceId, parent, false);
+        NavigationDrawerGenericItem navigationDrawerItem = navigationDrawerLines[position];
+        View listViewItem;
 
-        if (position == 0)
+        if (position == PROFILE) {
             listViewItem = inflater.inflate(firstLayoutResourceId, parent, false);
 
-        ImageView imageViewIcon = listViewItem.findViewById(R.id.nav_drawer_item_logo);
-        TextView textViewName = listViewItem.findViewById(R.id.nav_drawer_item_name);
+            ImageView imageViewIcon = listViewItem.findViewById(R.id.nav_drawer_profile_pic);
+            TextView textViewName = listViewItem.findViewById(R.id.nav_drawer_profile_name);
 
-        NavigationDrawerLine folder = navigationDrawerLines[position];
+            navigationDrawerItem.populateScreenViews(Arrays.asList(imageViewIcon, textViewName));
+        } else {
+            listViewItem = inflater.inflate(layoutResourceId, parent, false);
 
-        imageViewIcon.setImageResource(folder.icon);
-        textViewName.setText(folder.name);
+            ImageView imageViewIcon = listViewItem.findViewById(R.id.nav_drawer_item_logo);
+            TextView textViewName = listViewItem.findViewById(R.id.nav_drawer_item_name);
+
+            navigationDrawerItem.populateScreenViews(Arrays.asList(imageViewIcon, textViewName));
+        }
 
         return listViewItem;
     }
