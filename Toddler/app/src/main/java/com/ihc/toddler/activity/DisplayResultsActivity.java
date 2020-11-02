@@ -42,7 +42,7 @@ public class DisplayResultsActivity extends GenericActivity {
 
         ResultCardAdapter activityCardAdapter = new ResultCardAdapter(quiz, this, textToSpeech);
 
-        RecyclerView.LayoutManager manager = new GridLayoutManager(this, 1);
+        RecyclerView.LayoutManager manager = new GridLayoutManager(this, 3);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(activityCardAdapter);
     }

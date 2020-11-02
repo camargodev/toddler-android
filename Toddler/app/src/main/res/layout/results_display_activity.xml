@@ -25,7 +25,7 @@
         android:id="@+id/your_answers"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Suas Respostas:"
+        android:text="Clique para descobrir o resultado"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@id/results_recycler_view"
         app:layout_constraintLeft_toLeftOf="parent"

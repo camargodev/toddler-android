@@ -28,6 +28,7 @@ import com.ihc.toddler.repository.QuizRepository;
 import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.ihc.toddler.manager.ColorManager.getRandomColorId;
@@ -37,11 +38,15 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     Quiz quiz;
     Context originScreen;
     TextToSpeech textToSpeech;
+    List<Boolean> areQuestionsRevealed;
 
     public ResultCardAdapter(Quiz quiz, Context originScreen, TextToSpeech textToSpeech) {
         this.quiz = quiz;
         this.originScreen = originScreen;
         this.textToSpeech = textToSpeech;
+        this.areQuestionsRevealed = new ArrayList<>();
+        for (int i = 0; i <quiz.getNumberOfExercises(); i++)
+            this.areQuestionsRevealed.add(false);
     }
 
     @NonNull
@@ -49,23 +54,24 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     public QuizViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_result_list_row, viewGroup, false);
-        return new QuizViewHolder(itemView, quiz, textToSpeech);
+        return new QuizViewHolder(itemView, textToSpeech);
     }
 
     @Override
     public void onBindViewHolder(@NonNull QuizViewHolder holder, int position) {
+        if (!areQuestionsRevealed.get(position)) {
+            int color = ContextCompat.getColor(originScreen, R.color.gray);
+            holder.topPart.setBackgroundColor(color);
+            return;
+        }
+
         Exercise exercise = quiz.getExercises().get(position);
         Integer selectedAnswer = quiz.getAnswers().get(position);
 
         String questionHeader = (position+1) + ": "+ exercise.getQuestion().replace("\n", " ");
         holder.number.setText(questionHeader);
 
-        if (exercise.getStatus().equals(ExerciseStatus.NOT_ANSWERED)) {
-            int color = ContextCompat.getColor(originScreen, R.color.notAnswered);
-            holder.topPart.setBackgroundColor(color);
-            holder.emoticon.setText(":|");
-            holder.description.setText("Não respondido ");
-        } else if (exercise.getStatus().equals(ExerciseStatus.CORRECT)) {
+        if (exercise.getStatus().equals(ExerciseStatus.CORRECT)) {
             int color = ContextCompat.getColor(originScreen, R.color.correct);
             holder.topPart.setBackgroundColor(color);
             holder.emoticon.setText(":)");
@@ -87,47 +93,43 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
         return quiz.getNumberOfExercises();
     }
 
-    static class QuizViewHolder extends RecyclerView.ViewHolder {
-        TextView number, description, emoticon;
+    class QuizViewHolder extends RecyclerView.ViewHolder {
+        TextView number, description, emoticon, interrogationPoint;
         FrameLayout parent, topPart;
-        public QuizViewHolder(View itemView, final Quiz quiz, final TextToSpeech textToSpeech) {
+        ImageView emoticonBackground;
+        public QuizViewHolder(View itemView, final TextToSpeech textToSpeech) {
             super(itemView);
+
             topPart = itemView.findViewById(R.id.exercise_top_part);
             number = itemView.findViewById(R.id.exercise_number);
             description = itemView.findViewById(R.id.exercise_description);
             emoticon = itemView.findViewById(R.id.small_emoticon);
+            interrogationPoint = itemView.findViewById(R.id.hidden_result_text);
+            emoticonBackground = itemView.findViewById(R.id.small_emoticon_bg);
+
+            interrogationPoint.setVisibility(View.VISIBLE);
+            emoticon.setVisibility(View.INVISIBLE);
+            description.setVisibility(View.INVISIBLE);
+            number.setVisibility(View.INVISIBLE);
+            emoticonBackground.setVisibility(View.INVISIBLE);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new SpeechManager(textToSpeech).talk(description.getText().toString());
-//                    Exercise exercise = quiz.getExercises().get(getAdapterPosition());
-//                    String  answer = quiz.getExercises().get(getAdapterPosition());
-//                    if (activity instanceof Quiz) {
-//                        Quiz quiz = QuizRepository.getQuiz();
-//                        QuizManager manager = QuizManager.getInstance(quiz);
-//
-//                        Exercise currentExercise = manager.getCurrentExercise();
-//                        ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);
-//                        Intent firstQuestion = exerciseView.getIntent(v.getContext());
-//                        v.getContext().startActivity(firstQuestion);
-//                    } else {
-//                        ContentManager.getInstance((Content) activity);
-//                        Intent firstPart = new Intent(v.getContext(), ContentActivity.class);
-//                        v.getContext().startActivity(firstPart);
-//                    }
+                    final int position = getLayoutPosition();
+                    if (!areQuestionsRevealed.get(position)) {
+                        areQuestionsRevealed.set(position, true);
+                        interrogationPoint.setVisibility(View.INVISIBLE);
+                        emoticon.setVisibility(View.VISIBLE);
+                        description.setVisibility(View.VISIBLE);
+                        number.setVisibility(View.VISIBLE);
+                        emoticonBackground.setVisibility(View.VISIBLE);
+                        notifyDataSetChanged();
+                    } else {
+                        new SpeechManager(textToSpeech).talk(description.getText().toString());
+                    }
                 }
             });
-//
-//            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    AbstractActivity activity = activities.get(getAdapterPosition());
-//                    String toTalk = activity.getTypeName() + "   " + activity.getTitle();
-//                    new SpeechManager(textToSpeech).talk(toTalk);
-//                    return false;
-//                }
-//            });
         }
     }
 }
