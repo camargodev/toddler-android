@@ -19,6 +19,7 @@ import com.ihc.toddler.adapter.DrawerItemCustomAdapter;
 import com.ihc.toddler.entity.DataModel;
 import com.ihc.toddler.fragment.DisplayActivitiesFragment;
 import com.ihc.toddler.fragment.DisplayAwardsFragment;
+import com.ihc.toddler.manager.AwardManager;
 
 import java.util.Objects;
 
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
 //        if (getSupportActionBar() != null)
 //            getSupportActionBar().hide();
+
 
         mTitle = getTitle();
         mNavigationDrawerItemTitles= getResources().getStringArray(R.array.navigation_drawer_items_array);
@@ -60,6 +62,12 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         setupDrawerToggle();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AwardManager.getInstance().notifyAward(this);
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
