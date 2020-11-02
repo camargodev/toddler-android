@@ -7,10 +7,88 @@
     android:background="@color/cadsBgColor"
     tools:context=".activity.DisplayResultsActivity">
 
+    <TextView
+        android:id="@+id/ultimate_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ultimate"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginStart="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/ultimate_awards_recycler_view"
+        android:textSize="18sp" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/awards_recycler_view"
+        android:id="@+id/ultimate_awards_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="120dp"
+        app:layout_constraintBottom_toTopOf="@id/diamond_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:scrollbars="vertical" />
+
+    <TextView
+        android:id="@+id/diamond_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Diamante"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginStart="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/diamond_awards_recycler_view"
+        android:textSize="18sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/diamond_awards_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        app:layout_constraintBottom_toTopOf="@id/gold_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:scrollbars="vertical" />
+
+    <TextView
+        android:id="@+id/gold_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ouro"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginStart="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/gold_awards_recycler_view"
+        android:textSize="18sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/gold_awards_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        app:layout_constraintBottom_toTopOf="@id/silver_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="5dp"
+        android:layout_marginStart="5dp"
+        android:scrollbars="vertical" />
+
+    <TextView
+        android:id="@+id/silver_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prata"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_marginStart="5dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/silver_awards_recycler_view"
+        android:textSize="18sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/silver_awards_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginStart="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

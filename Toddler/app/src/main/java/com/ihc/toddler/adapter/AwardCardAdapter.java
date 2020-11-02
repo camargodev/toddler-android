@@ -40,8 +40,8 @@ public class AwardCardAdapter extends RecyclerView.Adapter<AwardCardAdapter.Awar
     List<Award> awards;
     Context originScreen;
 
-    public AwardCardAdapter(Context originScreen) {
-        this.awards = AwardRepository.getAll();
+    public AwardCardAdapter(Context originScreen, List<Award> awards) {
+        this.awards = awards;
         this.originScreen = originScreen;
     }
 

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.AwardCardAdapter;
 import com.ihc.toddler.adapter.ResultCardAdapter;
+import com.ihc.toddler.entity.AwardTier;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.AwardManager;
@@ -27,13 +28,21 @@ public class DisplayAwardsActivity extends GenericActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.awards_display_activity);
+        setAwardsPerTier(R.id.silver_awards_recycler_view, AwardTier.SILVER);
+        setAwardsPerTier(R.id.gold_awards_recycler_view, AwardTier.GOLD);
+        setAwardsPerTier(R.id.diamond_awards_recycler_view, AwardTier.DIAMOND);
+        setAwardsPerTier(R.id.ultimate_awards_recycler_view, AwardTier.ULTIMATE);
+    }
 
-        RecyclerView recyclerView = findViewById(R.id.awards_recycler_view);
+    private void setAwardsPerTier(int id, AwardTier tier) {
+        RecyclerView recyclerView = findViewById(id);
 
-        AwardCardAdapter activityCardAdapter = new AwardCardAdapter(this);
+        AwardCardAdapter activityCardAdapter = new AwardCardAdapter(this, AwardRepository.getByTier(tier));
 
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(activityCardAdapter);
     }
+
+
 }
