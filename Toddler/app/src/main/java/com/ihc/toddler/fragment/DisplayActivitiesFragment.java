@@ -61,9 +61,11 @@ public abstract class DisplayActivitiesFragment extends Fragment {
 
     private void populateCardView() {
         List<AbstractActivity> activities = getSortedActivities();
+        AbstractActivity first = activities.get(0);
+        List<AbstractActivity> others = activities.subList(1, activities.size());
 
-        ActivityCardAdapter moreActivitiesCardAdapter = new ActivityCardAdapter(activities, getActivity(), textToSpeech);
-        ActivityCardAdapter nextActivityCardAdapter = new ActivityCardAdapter(Collections.singletonList(activities.get(0)), getActivity(), textToSpeech);
+        ActivityCardAdapter moreActivitiesCardAdapter = new ActivityCardAdapter(others, getActivity(), textToSpeech);
+        ActivityCardAdapter nextActivityCardAdapter = new ActivityCardAdapter(Collections.singletonList(first), getActivity(), textToSpeech);
 
         RecyclerView.LayoutManager moreActivitiesManager = new GridLayoutManager(getActivity(), 2);
         RecyclerView.LayoutManager nextActivityManager = new GridLayoutManager(getActivity(), 1);
