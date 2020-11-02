@@ -13,6 +13,7 @@ public class Content extends AbstractActivity {
 
     public Content(String title, List<ContentPart> parts) {
         super();
+        super.type = ActivityType.CONTENT;
         super.title = title;
         this.parts = parts;
     }

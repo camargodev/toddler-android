@@ -4,6 +4,7 @@ public abstract class AbstractActivity {
 
     protected int id;
     protected String title;
+    protected ActivityType type;
     protected Subject subject;
 
     public int getId() {
@@ -33,4 +34,8 @@ public abstract class AbstractActivity {
     public abstract String getTypeName();
 
     public abstract AbstractActivity clone();
+
+    public ActivityType getType() {
+        return type;
+    }
 }

@@ -21,6 +21,7 @@ public class Quiz extends AbstractActivity {
     }
 
     public Quiz(String title, List<Exercise> exercises) {
+        super.type = ActivityType.EXERCISE;
         this.title = title;
         this.exercises = exercises;
         this.answers = new ArrayList<>((Collections.nCopies(exercises.size(), BLANK_ANSWER)));

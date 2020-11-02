@@ -1,10 +1,12 @@
 package com.ihc.toddler.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.ActivityCardAdapter;
 import com.ihc.toddler.entity.AbstractActivity;
+import com.ihc.toddler.entity.ActivityType;
 import com.ihc.toddler.entity.Content;
 import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.repository.ContentRepository;
@@ -30,6 +33,8 @@ public class DisplayActivitiesFragment extends Fragment {
 
     protected TextToSpeech textToSpeech;
     private RecyclerView moreActivitiesView, nextActivityView;
+    private ActivityType lastType = ActivityType.CONTENT;
+    private RelativeLayout contentFilterLayout, exerciseFilterLayout;
 
     @Nullable
     @Override
@@ -43,6 +48,9 @@ public class DisplayActivitiesFragment extends Fragment {
         moreActivitiesView = view.findViewById(R.id.more_activities_view);
         nextActivityView = view.findViewById(R.id.next_activity_view);
 
+        contentFilterLayout = view.findViewById(R.id.content_filter_layout);
+        exerciseFilterLayout = view.findViewById(R.id.exercise_filter_layout);
+
         textToSpeech = new TextToSpeech(view.getContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -51,13 +59,42 @@ public class DisplayActivitiesFragment extends Fragment {
             }
         });
         textToSpeech.setSpeechRate(0.8f);
+
+        contentFilterLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lastType = ActivityType.CONTENT;
+                populateCardView();
+            }
+        });
+
+        exerciseFilterLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lastType = ActivityType.EXERCISE;
+                populateCardView();
+            }
+        });
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        populateCardView();
+    }
 
-        List<AbstractActivity> activities = populateActivities();
+    private List<AbstractActivity> getActivities(ActivityType type) {
+        List<AbstractActivity> activities = new ArrayList<>();
+        if (type == ActivityType.CONTENT) {
+            activities.addAll(ContentRepository.getContents());
+        } else {
+            activities.addAll(QuizRepository.getQuizes());
+        }
+        return activities;
+    }
+
+    private void populateCardView() {
+        List<AbstractActivity> activities = getActivities(lastType);
 
         ActivityCardAdapter moreActivitiesCardAdapter = new ActivityCardAdapter(activities, getActivity(), textToSpeech);
         ActivityCardAdapter nextActivityCardAdapter = new ActivityCardAdapter(Collections.singletonList(activities.get(0)), getActivity(), textToSpeech);
@@ -70,14 +107,6 @@ public class DisplayActivitiesFragment extends Fragment {
 
         nextActivityView.setLayoutManager(nextActivityManager);
         nextActivityView.setAdapter(nextActivityCardAdapter);
-    }
 
-    private List<AbstractActivity> populateActivities() {
-        List<Content> contents = ContentRepository.getContents();
-        List<Quiz> quizes = QuizRepository.getQuizes();
-        List<AbstractActivity> activities = new ArrayList<>();
-        activities.addAll(contents);
-        activities.addAll(quizes);
-        return activities;
     }
 }
