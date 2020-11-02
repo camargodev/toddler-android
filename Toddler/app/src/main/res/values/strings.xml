@@ -20,9 +20,8 @@
     <string name="appbar_scrolling_view_behavior">Teste</string>
 
     <string-array name="navigation_drawer_items_array">
-        <item>Connect</item>
-        <item>Fixtures</item>
-        <item>Table</item>
+        <item>Atividades</item>
+        <item>Conquistas</item>
     </string-array>
 
 </resources>
