@@ -57,16 +57,67 @@
         android:layout_marginStart="40dp"
         android:scrollbars="vertical" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/more_activities_text"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:textSize="20sp"-->
-<!--        android:textColor="@color/matteBlack"-->
-<!--        android:text="Mais atividades"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/more_activities_view" />-->
+
+    <RelativeLayout
+        android:id="@+id/content_filter_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="70dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/more_activities_view">
+
+        <ImageView
+            android:id="@+id/content_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:background="@drawable/book" />
+
+        <TextView
+            android:id="@+id/more_content_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/matteBlack"
+            android:text="Aulas"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/content_logo"
+            android:gravity="center"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/exercise_filter_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/more_activities_view">
+
+        <ImageView
+            android:id="@+id/exercise_logo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/homework"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true" />
+
+        <TextView
+            android:id="@+id/more_exercises_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_marginTop="3dp"
+            android:textColor="@color/matteBlack"
+            android:text="Exercícios"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/exercise_logo"
+            android:gravity="center"/>
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/more_activities_view"
@@ -80,4 +131,4 @@
         android:layout_marginStart="5dp"
         android:scrollbars="vertical" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
