@@ -59,6 +59,8 @@ public abstract class GenericExerciseActivity extends GenericActivity {
         exerciseView.mapQuestion(question);
 
         question.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
+        nextButton.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
+        previousButton.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
 
 //        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
 //            @Override

@@ -22,6 +22,7 @@ public class ContentActivity extends GenericActivity {
     protected TextView contentTextView, currentPartTextView;
     protected Button nextButton, previousButton, titleButton;
     protected ContentManager contentManager = ContentManager.getInstance();
+    private int selectedColor = ColorManager.getRandomColorId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +37,9 @@ public class ContentActivity extends GenericActivity {
         titleButton.setText(currentPart.getTitle());
         contentTextView.setText(currentPart.getText());
 
-        titleButton.setBackgroundTintList(AppCompatResources.getColorStateList(this, ColorManager.getRandomColorId()));
+        titleButton.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
+        nextButton.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
+        previousButton.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
     }
 
     protected void hidePreviousButton() {
