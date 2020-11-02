@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ihc.toddler.R;
@@ -31,7 +32,7 @@ public class DisplayAwardsActivity extends GenericActivity {
 
         AwardCardAdapter activityCardAdapter = new AwardCardAdapter(this);
 
-        RecyclerView.LayoutManager manager = new GridLayoutManager(this, 4);
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(activityCardAdapter);
     }
