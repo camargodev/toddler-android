@@ -16,67 +16,71 @@ import androidx.fragment.app.FragmentManager;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.DrawerItemCustomAdapter;
-import com.ihc.toddler.entity.DataModel;
+import com.ihc.toddler.entity.NavigationDrawerLine;
 import com.ihc.toddler.fragment.DisplayActivitiesFragment;
 import com.ihc.toddler.fragment.DisplayAwardsFragment;
 import com.ihc.toddler.manager.AwardManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String[] mNavigationDrawerItemTitles;
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    Toolbar toolbar;
-    private CharSequence mTitle;
-    ActionBarDrawerToggle mDrawerToggle;
+    private String[] navigationDrawerItemTitles;
+    private DrawerLayout drawerLayout;
+    private ListView navigationDrawerListView;
+    private Toolbar toolbar;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
+
+    private static final int ACTIVITIES = 0, AWARDS = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        if (getSupportActionBar() != null)
-//            getSupportActionBar().hide();
-
-
-        mTitle = getTitle();
-        mNavigationDrawerItemTitles= getResources().getStringArray(R.array.navigation_drawer_items_array);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-        setupToolbar();
-
-        DataModel[] drawerItem = new DataModel[2];
-
-        drawerItem[0] = new DataModel(R.drawable.book, "Atividades");
-        drawerItem[1] = new DataModel(R.drawable.book, "Conquistas");
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.list_view_item_row, drawerItem);
-        mDrawerList.setAdapter(adapter);
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        setupDrawerToggle();
-
+        mapLayout();
+        setupNavigationDrawer(buildNavigationDrawerLineArray());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         AwardManager.getInstance().notifyAward(this);
+        selectItem(0);
     }
 
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+    private void mapLayout() {
+        drawerLayout = findViewById(R.id.drawer_layout);
+        navigationDrawerListView = findViewById(R.id.left_drawer);
+        toolbar = findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.drawer_layout);
 
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
+        navigationDrawerItemTitles = getResources().getStringArray(R.array.navigation_drawer_items_array);
+    }
+
+    private void setupNavigationDrawer(NavigationDrawerLine[] lines) {
+        drawerLayout.setDrawerListener(actionBarDrawerToggle);
+
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+            getSupportActionBar().setHomeButtonEnabled(true);
         }
 
+        DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.list_view_item_row, lines);
+        navigationDrawerListView.setAdapter(adapter);
+        navigationDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                selectItem(position);
+            }
+        });
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
+        actionBarDrawerToggle.syncState();
     }
 
     private void selectItem(int position) {
@@ -84,61 +88,49 @@ public class MainActivity extends AppCompatActivity {
         Fragment fragment = null;
 
         switch (position) {
-            case 0:
-                fragment = new DisplayActivitiesFragment();
-                break;
-            case 1:
-                fragment = new DisplayAwardsFragment();
-                break;
-            default:
-                break;
+            case ACTIVITIES:
+                fragment = new DisplayActivitiesFragment(); break;
+            case AWARDS:
+                fragment = new DisplayAwardsFragment(); break;
+            default: break;
         }
 
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
-            mDrawerList.setItemChecked(position, true);
-            mDrawerList.setSelection(position);
-            setTitle(mNavigationDrawerItemTitles[position]);
-            mDrawerLayout.closeDrawer(mDrawerList);
-
-        } else {
-            Log.e("MainActivity", "Error in creating fragment");
+            navigationDrawerListView.setItemChecked(position, true);
+            navigationDrawerListView.setSelection(position);
+            setTitle(navigationDrawerItemTitles[position]);
+            drawerLayout.closeDrawer(navigationDrawerListView);
         }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (actionBarDrawerToggle.onOptionsItemSelected(item))
             return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void setTitle(CharSequence title) {
-        mTitle = title;
-        getSupportActionBar().setTitle(mTitle);
+        Objects.requireNonNull(getSupportActionBar()).setTitle(title);
     }
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+        actionBarDrawerToggle.syncState();
     }
 
-    void setupToolbar(){
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
+    private NavigationDrawerLine[] buildNavigationDrawerLineArray() {
+        List<NavigationDrawerLine> lines = new ArrayList<>();
+        lines.add(new NavigationDrawerLine(R.drawable.book, navigationDrawerItemTitles[ACTIVITIES]));
+        lines.add(new NavigationDrawerLine(R.drawable.homework, navigationDrawerItemTitles[AWARDS]));
 
-    void setupDrawerToggle(){
-        mDrawerToggle = new ActionBarDrawerToggle(this,mDrawerLayout,toolbar,R.string.app_name, R.string.app_name);
-        //This is necessary to change the icon of the Drawer Toggle upon state change.
-        mDrawerToggle.syncState();
+        NavigationDrawerLine[] array = new NavigationDrawerLine[lines.size()];
+        lines.toArray(array);
+        return array;
     }
 }

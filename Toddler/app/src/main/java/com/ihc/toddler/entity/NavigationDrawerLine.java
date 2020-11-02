@@ -1,12 +1,12 @@
 package com.ihc.toddler.entity;
 
-public class DataModel {
+public class NavigationDrawerLine {
 
     public int icon;
     public String name;
 
     // Constructor.
-    public DataModel(int icon, String name) {
+    public NavigationDrawerLine(int icon, String name) {
 
         this.icon = icon;
         this.name = name;
