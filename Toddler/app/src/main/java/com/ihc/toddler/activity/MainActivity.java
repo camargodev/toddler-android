@@ -136,8 +136,8 @@ public class MainActivity extends AppCompatActivity {
         List<NavigationDrawerGenericItem> lines = new ArrayList<>();
         lines.add(new NavigationDrawerProfile(R.drawable.unselected_button, navigationDrawerItemTitles[PROFILE]));
         lines.add(new NavigationDrawerLine(R.drawable.book, navigationDrawerItemTitles[CONTENTS]));
-        lines.add(new NavigationDrawerLine(R.drawable.book, navigationDrawerItemTitles[EXERCISES]));
-        lines.add(new NavigationDrawerLine(R.drawable.homework, navigationDrawerItemTitles[AWARDS]));
+        lines.add(new NavigationDrawerLine(R.drawable.homework, navigationDrawerItemTitles[EXERCISES]));
+        lines.add(new NavigationDrawerLine(R.drawable.gold_achieved, navigationDrawerItemTitles[AWARDS]));
 
         NavigationDrawerGenericItem[] array = new NavigationDrawerGenericItem[lines.size()];
         lines.toArray(array);

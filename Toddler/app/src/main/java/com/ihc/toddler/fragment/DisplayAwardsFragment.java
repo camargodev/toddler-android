@@ -27,10 +27,10 @@ public class DisplayAwardsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setAwardsPerTier(view, R.id.bronze_awards_recycler_view, AwardTier.BRONZE);
         setAwardsPerTier(view, R.id.silver_awards_recycler_view, AwardTier.SILVER);
         setAwardsPerTier(view, R.id.gold_awards_recycler_view, AwardTier.GOLD);
         setAwardsPerTier(view, R.id.diamond_awards_recycler_view, AwardTier.DIAMOND);
-        setAwardsPerTier(view, R.id.ultimate_awards_recycler_view, AwardTier.ULTIMATE);
     }
 
     private void setAwardsPerTier(@NonNull View view, int id, AwardTier tier) {

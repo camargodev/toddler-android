@@ -7,31 +7,42 @@
     android:layout_marginTop="10dp"
     android:layout_marginStart="7dp"
     android:layout_marginEnd="7dp"
+    card_view:cardElevation="0dp"
     android:layout_height="110dp">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/award_background"
         android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:background="@color/gray"
-        android:orientation="horizontal">
+        android:layout_height="110dp">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/award_logo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/normal_not_achieved" />
+
+        <TextView
+            android:id="@+id/award_title"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_gravity="bottom">
+            android:layout_height="wrap_content"
+            android:text="Título da conquista"
+            android:textColor="@color/matteBlack"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
+            card_view:layout_constraintTop_toBottomOf="@id/award_logo"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintLeft_toLeftOf="parent"/>
 
-            <TextView
-                android:id="@+id/award_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Você conquistou tal coisa"
-                android:textColor="#FFF"
-                android:gravity="center"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 <!--    <FrameLayout-->
 <!--        android:id="@+id/parent"-->
 <!--        android:layout_width="match_parent"-->

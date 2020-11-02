@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -57,10 +58,14 @@ public class AwardCardAdapter extends RecyclerView.Adapter<AwardCardAdapter.Awar
     public void onBindViewHolder(@NonNull AwardViewHolder holder, int position) {
         Award award = awards.get(position);
         holder.awardTitle.setText(award.getTitle());
-        int color = ContextCompat.getColor(originScreen, R.color.gray);
-        if (AwardManager.getInstance().isAwardAccomplished(award.getId()))
-            color = ContextCompat.getColor(originScreen, getRandomColorId());
-        holder.awardBackground.setBackgroundColor(color);
+//        int color = ContextCompat.getColor(originScreen, R.color.gray);
+        if (AwardManager.getInstance().isAwardAccomplished(award.getId())) {
+//            color = ContextCompat.getColor(originScreen, getRandomColorId());
+            holder.awardIcon.setBackgroundResource(award.getAwardTier().getAchievedIconId());
+        } else {
+            holder.awardIcon.setBackgroundResource(award.getAwardTier().getNotAchievedIconId());
+        }
+//        holder.background.setBackgroundColor(color);
     }
 
     @Override
@@ -70,11 +75,13 @@ public class AwardCardAdapter extends RecyclerView.Adapter<AwardCardAdapter.Awar
 
     static class AwardViewHolder extends RecyclerView.ViewHolder {
         TextView awardTitle;
-        FrameLayout awardBackground;
+        ImageView awardIcon;
+        ConstraintLayout background;
         public AwardViewHolder(View itemView) {
             super(itemView);
             awardTitle = itemView.findViewById(R.id.award_title);
-            awardBackground = itemView.findViewById(R.id.award_background);
+            awardIcon = itemView.findViewById(R.id.award_logo);
+            background = itemView.findViewById(R.id.award_background);
         }
     }
 }
