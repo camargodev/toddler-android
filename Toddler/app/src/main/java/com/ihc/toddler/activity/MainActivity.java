@@ -18,13 +18,14 @@ import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.DrawerItemCustomAdapter;
 import com.ihc.toddler.entity.DataModel;
 
+import java.util.Objects;
+
 public class MainActivity extends AppCompatActivity {
 
     private String[] mNavigationDrawerItemTitles;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     Toolbar toolbar;
-    private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     ActionBarDrawerToggle mDrawerToggle;
 
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 //        if (getSupportActionBar() != null)
 //            getSupportActionBar().hide();
 
-        mTitle = mDrawerTitle = getTitle();
+        mTitle = getTitle();
         mNavigationDrawerItemTitles= getResources().getStringArray(R.array.navigation_drawer_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
@@ -45,9 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
         DataModel[] drawerItem = new DataModel[2];
 
-        drawerItem[0] = new DataModel(R.drawable.book, "Connect");
-        drawerItem[1] = new DataModel(R.drawable.book, "Fixtures");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        drawerItem[0] = new DataModel(R.drawable.book, "Atividades");
+        drawerItem[1] = new DataModel(R.drawable.book, "Conquistas");
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(true);
 
         DrawerItemCustomAdapter adapter = new DrawerItemCustomAdapter(this, R.layout.list_view_item_row, drawerItem);
@@ -74,8 +75,10 @@ public class MainActivity extends AppCompatActivity {
 
         switch (position) {
             case 0:
+                fragment = new DisplayActivitiesFragment();
+                break;
             case 1:
-                fragment = new DisplayActivitiesActivity();
+                fragment = new DisplayAwardsFragment();
                 break;
             default:
                 break;

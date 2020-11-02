@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class DisplayActivitiesActivity extends Fragment {
+public class DisplayActivitiesFragment extends Fragment {
 
     protected TextToSpeech textToSpeech;
     private static List<AbstractActivity> activities;
