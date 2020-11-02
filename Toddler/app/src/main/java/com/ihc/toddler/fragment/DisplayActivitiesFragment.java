@@ -20,6 +20,7 @@ import com.ihc.toddler.entity.AbstractActivity;
 import com.ihc.toddler.entity.ActivityType;
 import com.ihc.toddler.entity.Content;
 import com.ihc.toddler.entity.Quiz;
+import com.ihc.toddler.persistence.ActivityTracker;
 import com.ihc.toddler.repository.ContentRepository;
 import com.ihc.toddler.repository.QuizRepository;
 
@@ -59,7 +60,7 @@ public abstract class DisplayActivitiesFragment extends Fragment {
     protected abstract List<AbstractActivity> getActivities();
 
     private void populateCardView() {
-        List<AbstractActivity> activities = getActivities();
+        List<AbstractActivity> activities = getSortedActivities();
 
         ActivityCardAdapter moreActivitiesCardAdapter = new ActivityCardAdapter(activities, getActivity(), textToSpeech);
         ActivityCardAdapter nextActivityCardAdapter = new ActivityCardAdapter(Collections.singletonList(activities.get(0)), getActivity(), textToSpeech);
@@ -72,6 +73,17 @@ public abstract class DisplayActivitiesFragment extends Fragment {
 
         nextActivityView.setLayoutManager(nextActivityManager);
         nextActivityView.setAdapter(nextActivityCardAdapter);
+    }
 
+    private List<AbstractActivity> getSortedActivities() {
+        List<AbstractActivity> sortedActivities = new ArrayList<>();
+        List<AbstractActivity> activities = getActivities();
+        for (AbstractActivity activity : activities)
+            if (!ActivityTracker.getInstance().isActivityConsumed(activity))
+                sortedActivities.add(activity);
+        for (AbstractActivity activity : activities)
+            if (ActivityTracker.getInstance().isActivityConsumed(activity))
+                sortedActivities.add(activity);
+        return sortedActivities;
     }
 }
