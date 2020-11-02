@@ -14,7 +14,11 @@ import java.util.List;
 public class ContentRepository {
 
     public static List<Content> getContents() {
-        return Arrays.asList(new Content(1, getSyllableSeparationContent()), new Content(2, getWordTypeContent()));
+        return Arrays.asList(new Content(1, getSyllableSeparationContent()),
+                new Content(2, getWordTypeContent1()),
+                new Content(3, getWordTypeContent2()),
+                new Content(4, getWordTypeContent3()),
+                new Content(5, getWordTypeContent4()));
     }
 
     private static Content getSyllableSeparationContent() {
@@ -31,7 +35,7 @@ public class ContentRepository {
         return new Content("Separação de sílabas", parts);
     }
 
-    private static Content getWordTypeContent() {
+    private static Content getWordTypeContent1() {
         List<ContentPart> parts = new ArrayList<>();
         parts.add(new ContentPart("Tipos de palavras" ,
                 "Podemos classificar palavras de acordo " +
@@ -39,12 +43,39 @@ public class ContentRepository {
                         "Os tipos são: monossílaba, dissílaba, trissílaba e polissílaba."));
         parts.add(new ContentPart("Monossílaba" ,
                 "É uma palavra com apenas uma sílaba.\n\nExemplo: MAR\n"));
+        return new Content("Tipos de palavras 1", parts);
+    }
+
+    private static Content getWordTypeContent2() {
+        List<ContentPart> parts = new ArrayList<>();
+        parts.add(new ContentPart("Tipos de palavras" ,
+                "Podemos classificar palavras de acordo " +
+                        "com o número de sílabas.\n" +
+                        "Os tipos são: monossílaba, dissílaba, trissílaba e polissílaba."));
         parts.add(new ContentPart("Dissílaba" ,
                 "É uma palavra com duas sílabas.\n\nExemplo: FE-LIZ\n"));
+        return new Content("Tipos de palavras 2", parts);
+    }
+
+    private static Content getWordTypeContent3() {
+        List<ContentPart> parts = new ArrayList<>();
+        parts.add(new ContentPart("Tipos de palavras" ,
+                "Podemos classificar palavras de acordo " +
+                        "com o número de sílabas.\n" +
+                        "Os tipos são: monossílaba, dissílaba, trissílaba e polissílaba."));
         parts.add(new ContentPart("Trissílaba" ,
                 "É palavra com três sílabas.\n\nExemplo: BA-TA-TA\n"));
+        return new Content("Tipos de palavras 3", parts);
+    }
+
+    private static Content getWordTypeContent4() {
+        List<ContentPart> parts = new ArrayList<>();
+        parts.add(new ContentPart("Tipos de palavras" ,
+                "Podemos classificar palavras de acordo " +
+                        "com o número de sílabas.\n" +
+                        "Os tipos são: monossílaba, dissílaba, trissílaba e polissílaba."));
         parts.add(new ContentPart("Polissílaba" ,
                 "É uma palavra com 4 ou mais sílabas.\n\nExemplo: BRA-SI-LEI-RO"));
-        return new Content("Tipos de Palavras", parts);
+        return new Content("Tipos de palavras 4", parts);
     }
 }
