@@ -10,70 +10,72 @@
     android:layout_height="120dp">
 
     <RelativeLayout
+        android:id="@+id/result_background"
         android:layout_width="match_parent"
+        android:background="@color/colorPrimaryDark"
         android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/exercise_top_part"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimaryDark"
-            android:orientation="horizontal">
+<!--        <FrameLayout-->
+<!--            android:id="@+id/exercise_top_part"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/colorPrimaryDark"-->
+<!--            android:orientation="horizontal">-->
 
 
-            <FrameLayout
-                android:layout_width="80dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="end">
+<!--            <FrameLayout-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_gravity="end">-->
 
-                <ImageView
-                    android:id="@+id/small_emoticon_bg"
-                    android:layout_width="60dp"
-                    android:layout_height="55dp"
-                    android:layout_gravity="end"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/quarter_circle" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/small_emoticon_bg"-->
+<!--                    android:layout_width="60dp"-->
+<!--                    android:layout_height="55dp"-->
+<!--                    android:layout_gravity="end"-->
+<!--                    android:layout_marginTop="10dp"-->
+<!--                    android:background="@drawable/quarter_circle" />-->
 
-                <TextView
-                    android:id="@+id/small_emoticon"
-                    android:layout_width="35dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_gravity="end"
-                    android:textStyle="bold"
-                    android:text=":("
-                    android:textSize="30sp"
-                    android:textColor="@color/colorPrimaryDark" />
-            </FrameLayout>
+<!--                <TextView-->
+<!--                    android:id="@+id/small_emoticon"-->
+<!--                    android:layout_width="35dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_marginTop="15dp"-->
+<!--                    android:layout_gravity="end"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:text=":("-->
+<!--                    android:textSize="30sp"-->
+<!--                    android:textColor="@color/colorPrimaryDark" />-->
+<!--            </FrameLayout>-->
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_gravity="bottom">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="55dp"-->
+<!--                android:layout_gravity="bottom">-->
 
-                <TextView
-                    android:id="@+id/exercise_description"
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    android:text="Exercício"
-                    android:textColor="#FFF"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="7dp"
-                    android:textSize="18sp" />
-            </LinearLayout>
+<!--                <TextView-->
+<!--                    android:id="@+id/exercise_description"-->
+<!--                    android:layout_width="300dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Exercício"-->
+<!--                    android:textColor="#FFF"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:layout_marginTop="7dp"-->
+<!--                    android:textSize="18sp" />-->
+<!--            </LinearLayout>-->
 
-            <TextView
-                android:id="@+id/exercise_number"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                android:textColor="#FFF"
-                android:textStyle="bold"
-                android:text="Exercício 1"
-                android:textSize="18sp" />
+<!--            <TextView-->
+<!--                android:id="@+id/exercise_number"-->
+<!--                android:layout_width="300dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:layout_marginStart="10dp"-->
+<!--                android:textColor="#FFF"-->
+<!--                android:textStyle="bold"-->
+<!--                android:text="Exercício 1"-->
+<!--                android:textSize="18sp" />-->
 
-        </FrameLayout>
+<!--        </FrameLayout>-->
 
         <TextView
             android:id="@+id/hidden_result_text"
@@ -84,6 +86,14 @@
             android:textStyle="bold"
             android:gravity="center"
             android:textSize="30sp" />
+
+        <ImageView
+            android:id="@+id/result_icon"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/correct" />
     </RelativeLayout>
 <!--    <FrameLayout-->
 <!--        android:id="@+id/parent"-->

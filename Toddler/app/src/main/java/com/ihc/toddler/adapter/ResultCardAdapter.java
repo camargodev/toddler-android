@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -61,30 +62,25 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     public void onBindViewHolder(@NonNull QuizViewHolder holder, int position) {
         if (!areQuestionsRevealed.get(position)) {
             int color = ContextCompat.getColor(originScreen, R.color.gray);
-            holder.topPart.setBackgroundColor(color);
+            holder.background.setBackgroundColor(color);
             return;
         }
 
         Exercise exercise = quiz.getExercises().get(position);
         Integer selectedAnswer = quiz.getAnswers().get(position);
 
-        String questionHeader = (position+1) + ": "+ exercise.getQuestion().replace("\n", " ");
-        holder.number.setText(questionHeader);
+        int color, icon;
 
         if (exercise.getStatus().equals(ExerciseStatus.CORRECT)) {
-            int color = ContextCompat.getColor(originScreen, R.color.correct);
-            holder.topPart.setBackgroundColor(color);
-            holder.emoticon.setText(":)");
-            String correctString = "Você acertou! A resposta é: " + exercise.getAnswers().get(exercise.getAnswer()-1);
-            holder.description.setText(correctString);
+            color = ContextCompat.getColor(originScreen, R.color.correct);
+            icon = R.drawable.correct;
         } else {
-            int color = ContextCompat.getColor(originScreen, R.color.wrong);
-            holder.topPart.setBackgroundColor(color);
-            holder.emoticon.setText(":(");
-            String incorrectString = "Poxa, você marcou " + exercise.getAnswers().get(selectedAnswer-1)
-                    +   " e o correto é " + exercise.getAnswers().get(exercise.getAnswer()-1);
-            holder.description.setText(incorrectString);
+            color = ContextCompat.getColor(originScreen, R.color.wrong);
+            icon = R.drawable.wrong;
         }
+
+        holder.background.setBackgroundColor(color);
+        holder.resultIcon.setBackgroundResource(icon);
 
     }
 
@@ -94,24 +90,18 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     }
 
     class QuizViewHolder extends RecyclerView.ViewHolder {
-        TextView number, description, emoticon, interrogationPoint;
-        FrameLayout parent, topPart;
-        ImageView emoticonBackground;
+        TextView interrogationPoint;
+        ImageView resultIcon;
+        RelativeLayout background;
         public QuizViewHolder(View itemView, final TextToSpeech textToSpeech) {
             super(itemView);
 
-            topPart = itemView.findViewById(R.id.exercise_top_part);
-            number = itemView.findViewById(R.id.exercise_number);
-            description = itemView.findViewById(R.id.exercise_description);
-            emoticon = itemView.findViewById(R.id.small_emoticon);
             interrogationPoint = itemView.findViewById(R.id.hidden_result_text);
-            emoticonBackground = itemView.findViewById(R.id.small_emoticon_bg);
+            resultIcon = itemView.findViewById(R.id.result_icon);
+            background = itemView.findViewById(R.id.result_background);
 
             interrogationPoint.setVisibility(View.VISIBLE);
-            emoticon.setVisibility(View.INVISIBLE);
-            description.setVisibility(View.INVISIBLE);
-            number.setVisibility(View.INVISIBLE);
-            emoticonBackground.setVisibility(View.INVISIBLE);
+            resultIcon.setVisibility(View.INVISIBLE);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -120,13 +110,10 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
                     if (!areQuestionsRevealed.get(position)) {
                         areQuestionsRevealed.set(position, true);
                         interrogationPoint.setVisibility(View.INVISIBLE);
-                        emoticon.setVisibility(View.VISIBLE);
-                        description.setVisibility(View.VISIBLE);
-                        number.setVisibility(View.VISIBLE);
-                        emoticonBackground.setVisibility(View.VISIBLE);
+                        resultIcon.setVisibility(View.VISIBLE);
                         notifyDataSetChanged();
                     } else {
-                        new SpeechManager(textToSpeech).talk(description.getText().toString());
+//                        new SpeechManager(textToSpeech).talk(description.getText().toString());
                     }
                 }
             });
