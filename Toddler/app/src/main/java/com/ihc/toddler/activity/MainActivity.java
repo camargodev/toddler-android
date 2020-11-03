@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
 
-    private static final int PROFILE = 0, CONTENTS = 1, EXERCISES = 2, AWARDS = 3;
+    public static final int PROFILE = 0, CONTENTS = 1, EXERCISES = 2, AWARDS = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
             default: break;
         }
 
+        setFragment(fragment, position);
+    }
+
+    public void setFragment(Fragment fragment, int position) {
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();

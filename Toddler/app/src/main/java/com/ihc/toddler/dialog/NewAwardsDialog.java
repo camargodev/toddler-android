@@ -21,6 +21,7 @@ import com.ihc.toddler.R;
 import com.ihc.toddler.activity.MainActivity;
 import com.ihc.toddler.adapter.AwardCardAdapter;
 import com.ihc.toddler.entity.Award;
+import com.ihc.toddler.fragment.DisplayAwardsFragment;
 import com.ihc.toddler.repository.AwardRepository;
 
 import java.util.List;
@@ -61,7 +62,7 @@ public class NewAwardsDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.go_to_my_awards) {
-            Toast.makeText(main, "Will go to my awards", Toast.LENGTH_SHORT).show();
+            main.setFragment(new DisplayAwardsFragment(), MainActivity.AWARDS);
             dismiss();
         }
     }
