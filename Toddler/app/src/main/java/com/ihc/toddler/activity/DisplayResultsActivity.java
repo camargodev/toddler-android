@@ -2,26 +2,32 @@ package com.ihc.toddler.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ihc.toddler.R;
+import com.ihc.toddler.adapter.OpenResultCardAdapter;
 import com.ihc.toddler.adapter.ResultCardAdapter;
 import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.persistence.ActivityTracker;
+import com.ihc.toddler.repository.QuizRepository;
 
 public class DisplayResultsActivity extends GenericActivity {
 
+    private RecyclerView openResultView;
     private TextView quizTitle, results, message;
     private Button button;
     private Quiz quiz = QuizManager.getInstance().getQuiz();
+    private OpenResultCardAdapter openResultCardAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +44,22 @@ public class DisplayResultsActivity extends GenericActivity {
         message.setText(getMessage());
         button.setBackgroundResource(R.drawable.next);
 
-        RecyclerView recyclerView = findViewById(R.id.results_recycler_view);
+        RecyclerView resultsListView = findViewById(R.id.results_recycler_view);
+
+        openResultView = findViewById(R.id.open_result_recycler_view);
+        openResultView.setVisibility(View.INVISIBLE);
 
         ResultCardAdapter activityCardAdapter = new ResultCardAdapter(quiz, this, textToSpeech);
+        openResultCardAdapter = new OpenResultCardAdapter(this);
 
-        RecyclerView.LayoutManager manager = new GridLayoutManager(this, 3);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(activityCardAdapter);
+        RecyclerView.LayoutManager resultListManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        resultsListView.setLayoutManager(resultListManager);
+        resultsListView.setAdapter(activityCardAdapter);
+
+
+        RecyclerView.LayoutManager openResultManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        openResultView.setLayoutManager(openResultManager);
+        openResultView.setAdapter(openResultCardAdapter);
     }
 
     private void mapLayout() {
@@ -70,5 +85,13 @@ public class DisplayResultsActivity extends GenericActivity {
 
     public void readResults(View view) {
         speechManager.talk(quiz.toString());
+    }
+
+    public OpenResultCardAdapter getOpenResultCardAdapter() {
+        return openResultCardAdapter;
+    }
+
+    public RecyclerView getOpenResultView() {
+        return openResultView;
     }
 }

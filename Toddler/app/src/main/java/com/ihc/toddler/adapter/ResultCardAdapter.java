@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.activity.ContentActivity;
+import com.ihc.toddler.activity.DisplayResultsActivity;
 import com.ihc.toddler.entity.AbstractActivity;
 import com.ihc.toddler.entity.Content;
 import com.ihc.toddler.entity.Exercise;
@@ -37,11 +38,11 @@ import static com.ihc.toddler.manager.ColorManager.getRandomColorId;
 public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.QuizViewHolder> {
 
     Quiz quiz;
-    Context originScreen;
+    DisplayResultsActivity originScreen;
     TextToSpeech textToSpeech;
     List<Boolean> areQuestionsRevealed;
 
-    public ResultCardAdapter(Quiz quiz, Context originScreen, TextToSpeech textToSpeech) {
+    public ResultCardAdapter(Quiz quiz, DisplayResultsActivity originScreen, TextToSpeech textToSpeech) {
         this.quiz = quiz;
         this.originScreen = originScreen;
         this.textToSpeech = textToSpeech;
@@ -55,7 +56,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     public QuizViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_result_list_row, viewGroup, false);
-        return new QuizViewHolder(itemView, textToSpeech);
+        return new QuizViewHolder(itemView, originScreen, textToSpeech);
     }
 
     @Override
@@ -95,7 +96,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
         TextView interrogationPoint, resultExerciseNumber;
         ImageView resultIcon;
         RelativeLayout background;
-        public QuizViewHolder(View itemView, final TextToSpeech textToSpeech) {
+        public QuizViewHolder(View itemView, final DisplayResultsActivity originScreen, final TextToSpeech textToSpeech) {
             super(itemView);
 
             interrogationPoint = itemView.findViewById(R.id.hidden_result_text);
@@ -118,6 +119,9 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
                     } else {
 //                        new SpeechManager(textToSpeech).talk(description.getText().toString());
                     }
+
+                    originScreen.getOpenResultCardAdapter().setOpenExercise(QuizManager.getInstance().getQuiz().getExercises().get(position));
+                    originScreen.getOpenResultCardAdapter().notifyDataSetChanged();
                 }
             });
         }
