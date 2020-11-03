@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,5 +30,11 @@ public class DisplayExerciseFragment extends DisplayActivitiesFragment {
         List<AbstractActivity> activities = new ArrayList<>();
         activities.addAll(QuizRepository.getQuizes());
         return activities;
+    }
+
+    @Override
+    protected void setTitles(TextView next, TextView more) {
+        next.setText("Próximo Exercício");
+        more.setText("Mais Exercícios");
     }
 }

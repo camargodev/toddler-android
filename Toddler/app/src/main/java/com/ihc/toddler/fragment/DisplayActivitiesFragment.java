@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -33,6 +34,7 @@ import java.util.Locale;
 public abstract class DisplayActivitiesFragment extends Fragment {
 
     protected TextToSpeech textToSpeech;
+    protected TextView nextTitle, moreTitle;
     private RecyclerView moreActivitiesView, nextActivityView;
 
     @Override
@@ -41,6 +43,11 @@ public abstract class DisplayActivitiesFragment extends Fragment {
         moreActivitiesView = view.findViewById(R.id.more_activities_view);
         nextActivityView = view.findViewById(R.id.next_activity_view);
 
+        nextTitle = view.findViewById(R.id.next_activities_title);
+        moreTitle = view.findViewById(R.id.more_activities_title);
+
+        setTitles(nextTitle, moreTitle);
+
         textToSpeech = new TextToSpeech(view.getContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -48,6 +55,7 @@ public abstract class DisplayActivitiesFragment extends Fragment {
                     textToSpeech.setLanguage(new Locale("pt", "BR"));
             }
         });
+
         textToSpeech.setSpeechRate(0.8f);
     }
 
@@ -76,6 +84,8 @@ public abstract class DisplayActivitiesFragment extends Fragment {
         nextActivityView.setLayoutManager(nextActivityManager);
         nextActivityView.setAdapter(nextActivityCardAdapter);
     }
+
+    protected abstract void setTitles(TextView next, TextView more);
 
     private List<AbstractActivity> getSortedActivities() {
         List<AbstractActivity> sortedActivities = new ArrayList<>();

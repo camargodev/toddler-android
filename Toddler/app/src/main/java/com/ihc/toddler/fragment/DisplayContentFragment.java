@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,4 +40,11 @@ public class DisplayContentFragment extends DisplayActivitiesFragment {
         activities.addAll(ContentRepository.getContents());
         return activities;
     }
+
+    @Override
+    protected void setTitles(TextView next, TextView more) {
+        next.setText("Próxima Aula");
+        more.setText("Mais Aulas");
+    }
+
 }

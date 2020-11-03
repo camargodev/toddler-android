@@ -5,130 +5,106 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:showIn = "@layout/activity_main"
-    android:background="@color/cadsBgColor"
+    android:background="@color/base"
     tools:context = ".fragment.DisplayActivitiesFragment">
 
-<!--    <ImageView-->
-<!--        android:id="@+id/main_small_logo"-->
-<!--        android:layout_width="80dp"-->
-<!--        android:layout_height="80dp"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        android:layout_marginStart="50dp"-->
-<!--        android:layout_marginTop="60dp"-->
-<!--        app:srcCompat="@drawable/small_logo"-->
-<!--        android:contentDescription="" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/exercise_number"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:textSize="24sp"-->
-<!--        android:textStyle="bold"-->
-<!--        android:textColor="@color/colorPrimaryDark"-->
-<!--        android:text="Bem-vinda, Luana"-->
-<!--        android:layout_marginStart="20dp"-->
-<!--        android:layout_marginTop="20dp"-->
-<!--        app:layout_constraintLeft_toRightOf="@id/main_small_logo"-->
-<!--        app:layout_constraintTop_toTopOf="@id/main_small_logo" />-->
-
-
-
-    <TextView
-        android:id="@+id/next_activity_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="@color/matteBlack"
-        android:text="Próxima Atividade"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/next_activity"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:background="@drawable/square"
+        android:elevation="3dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/next_activity_view" />
+        app:layout_constraintBottom_toTopOf="@id/more_activities">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/next_activity_view"
+        <ImageView
+            android:id="@+id/next_activities_marker"
+            android:layout_width="30dp"
+            android:layout_height="18dp"
+            android:background="@drawable/circled_square"
+            android:backgroundTint="@color/cardColor4"
+            app:layout_constraintBottom_toTopOf="@id/next_activity_view"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="20dp"  />
+
+        <TextView
+            android:id="@+id/next_activities_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/next_activities_marker"
+            app:layout_constraintTop_toTopOf="@id/next_activities_marker"
+            app:layout_constraintLeft_toRightOf="@id/next_activities_marker"
+            android:layout_marginStart="5dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="3dp"
+            android:text="Sua próxima aula" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/next_activity_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="10dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/more_activities"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/square"
+        android:elevation="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginStart="40dp"
-        android:scrollbars="vertical" />
+        app:layout_constraintBottom_toBottomOf="parent">
 
+        <ImageView
+            android:id="@+id/more_activities_marker"
+            android:layout_width="30dp"
+            android:layout_height="18dp"
+            android:background="@drawable/circled_square"
+            android:backgroundTint="@color/cardColor3"
+            app:layout_constraintBottom_toTopOf="@id/more_activities_view"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginStart="20dp"  />
 
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/content_filter_layout"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="70dp"-->
-<!--        android:layout_marginBottom="20dp"-->
-<!--        app:layout_constraintLeft_toLeftOf="parent"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/more_activities_view">-->
+        <TextView
+            android:id="@+id/more_activities_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/more_activities_marker"
+            app:layout_constraintTop_toTopOf="@id/more_activities_marker"
+            app:layout_constraintLeft_toRightOf="@id/more_activities_marker"
+            android:layout_marginStart="5dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:layout_marginBottom="3dp"
+            android:text="Mais aulas" />
 
-<!--        <ImageView-->
-<!--            android:id="@+id/content_logo"-->
-<!--            android:layout_width="40dp"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:background="@drawable/book" />-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/more_activities_view"
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="5dp"
+            android:scrollbars="vertical" />
 
-<!--        <TextView-->
-<!--            android:id="@+id/more_content_text"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="16sp"-->
-<!--            android:layout_marginTop="3dp"-->
-<!--            android:textColor="@color/matteBlack"-->
-<!--            android:text="Aulas"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:layout_below="@id/content_logo"-->
-<!--            android:gravity="center"/>-->
-<!--    </RelativeLayout>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-<!--    <RelativeLayout-->
-<!--        android:id="@+id/exercise_filter_layout"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginEnd="60dp"-->
-<!--        android:layout_marginBottom="20dp"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/more_activities_view">-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/exercise_logo"-->
-<!--            android:layout_width="40dp"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:background="@drawable/homework"-->
-<!--            android:layout_alignParentTop="true"-->
-<!--            android:layout_centerInParent="true" />-->
-
-<!--        <TextView-->
-<!--            android:id="@+id/more_exercises_text"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:textSize="16sp"-->
-<!--            android:layout_marginTop="3dp"-->
-<!--            android:textColor="@color/matteBlack"-->
-<!--            android:text="Exercícios"-->
-<!--            android:layout_centerInParent="true"-->
-<!--            android:layout_below="@id/exercise_logo"-->
-<!--            android:gravity="center"/>-->
-<!--    </RelativeLayout>-->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/more_activities_view"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="20dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginStart="5dp"
-        android:scrollbars="vertical" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
