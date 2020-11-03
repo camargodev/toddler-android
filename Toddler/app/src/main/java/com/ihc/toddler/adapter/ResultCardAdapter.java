@@ -60,6 +60,9 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
 
     @Override
     public void onBindViewHolder(@NonNull QuizViewHolder holder, int position) {
+
+        holder.resultExerciseNumber.setText(String.valueOf(position+1));
+
         if (!areQuestionsRevealed.get(position)) {
             int color = ContextCompat.getColor(originScreen, R.color.gray);
             holder.background.setBackgroundColor(color);
@@ -67,7 +70,6 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
         }
 
         Exercise exercise = quiz.getExercises().get(position);
-        Integer selectedAnswer = quiz.getAnswers().get(position);
 
         int color, icon;
 
@@ -90,7 +92,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     }
 
     class QuizViewHolder extends RecyclerView.ViewHolder {
-        TextView interrogationPoint;
+        TextView interrogationPoint, resultExerciseNumber;
         ImageView resultIcon;
         RelativeLayout background;
         public QuizViewHolder(View itemView, final TextToSpeech textToSpeech) {
@@ -99,6 +101,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
             interrogationPoint = itemView.findViewById(R.id.hidden_result_text);
             resultIcon = itemView.findViewById(R.id.result_icon);
             background = itemView.findViewById(R.id.result_background);
+            resultExerciseNumber = itemView.findViewById(R.id.result_exercise_number);
 
             interrogationPoint.setVisibility(View.VISIBLE);
             resultIcon.setVisibility(View.INVISIBLE);
