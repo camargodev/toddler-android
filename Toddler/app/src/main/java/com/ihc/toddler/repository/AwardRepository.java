@@ -38,6 +38,15 @@ public class AwardRepository {
         return awardsByTier;
     }
 
+    protected List<Award> getByIdList(List<Integer> ids) {
+        List<Award> awards = new ArrayList<>();
+        for (Integer id : ids)
+            for (Award award : awardList)
+                if (award.getId() == id)
+                    awards.add(award);
+        return awards;
+    }
+
 
 
 }
