@@ -1,13 +1,16 @@
 package com.ihc.toddler.dialog;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,7 +28,6 @@ import java.util.List;
 public class NewAwardsDialog extends Dialog implements View.OnClickListener {
 
     private MainActivity main;
-    private Button goToAwards;
     private List<Award> awards;
 
     public NewAwardsDialog(@NonNull MainActivity main, List<Award> awards) {
@@ -34,13 +36,18 @@ public class NewAwardsDialog extends Dialog implements View.OnClickListener {
         this.awards = awards;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.awards_achieved_dialog);
-        goToAwards = findViewById(R.id.go_to_my_awards);
+
+        Button goToAwards = findViewById(R.id.go_to_my_awards);
+        TextView newAwardsTitle = findViewById(R.id.new_awards_title);
+
         goToAwards.setOnClickListener(this);
+        newAwardsTitle.setText(buildTitle());
 
         RecyclerView recyclerView = findViewById(R.id.new_awards_view);
 
@@ -57,5 +64,9 @@ public class NewAwardsDialog extends Dialog implements View.OnClickListener {
             Toast.makeText(main, "Will go to my awards", Toast.LENGTH_SHORT).show();
             dismiss();
         }
+    }
+
+    private String buildTitle() {
+        return awards.size() +  " novas conquista" + (awards.size() > 1 ? "s" : "");
     }
 }
