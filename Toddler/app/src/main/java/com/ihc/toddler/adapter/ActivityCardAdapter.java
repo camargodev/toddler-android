@@ -36,12 +36,21 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     List<AbstractActivity> activities;
     Context originScreen;
     TextToSpeech textToSpeech;
+    boolean next;
 
     public ActivityCardAdapter(List<AbstractActivity> activities, Context originScreen, TextToSpeech textToSpeech) {
         this.activities = activities;
         this.originScreen = originScreen;
         this.textToSpeech = textToSpeech;
     }
+
+    public ActivityCardAdapter(List<AbstractActivity> activities, Context originScreen, TextToSpeech textToSpeech, boolean next) {
+        this.activities = activities;
+        this.originScreen = originScreen;
+        this.textToSpeech = textToSpeech;
+        this.next = next;
+    }
+
 
     @NonNull
     @Override
@@ -64,6 +73,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
         if (ActivityTracker.getInstance().isActivityConsumed(activity))
             color = ContextCompat.getColor(originScreen, R.color.gray);
         holder.topPart.setBackgroundColor(color);
+        holder.type.setText(String.valueOf(activity.getId()));
 
     }
 
