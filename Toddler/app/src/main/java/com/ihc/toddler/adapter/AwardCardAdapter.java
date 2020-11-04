@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,6 +65,7 @@ public class AwardCardAdapter extends RecyclerView.Adapter<AwardCardAdapter.Awar
             holder.awardIcon.setBackgroundResource(award.getAwardTier().getAchievedIconId());
         } else {
             holder.awardIcon.setBackgroundResource(award.getAwardTier().getNotAchievedIconId());
+            holder.awardIcon.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.gray));
         }
 //        holder.background.setBackgroundColor(color);
     }
