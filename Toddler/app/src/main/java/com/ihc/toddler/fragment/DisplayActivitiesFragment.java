@@ -13,10 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.ActivityCardAdapter;
+import com.ihc.toddler.adapter.BaseCardAdapter;
 import com.ihc.toddler.entity.AbstractActivity;
 import com.ihc.toddler.entity.ActivityType;
 import com.ihc.toddler.entity.Content;
@@ -72,10 +74,10 @@ public abstract class DisplayActivitiesFragment extends Fragment {
         AbstractActivity first = activities.get(0);
         List<AbstractActivity> others = activities.subList(1, activities.size());
 
-        ActivityCardAdapter moreActivitiesCardAdapter = new ActivityCardAdapter(others, getActivity(), textToSpeech);
+        BaseCardAdapter moreActivitiesCardAdapter = new BaseCardAdapter(others, getActivity(), textToSpeech);
         ActivityCardAdapter nextActivityCardAdapter = new ActivityCardAdapter(Collections.singletonList(first), getActivity(), textToSpeech);
 
-        RecyclerView.LayoutManager moreActivitiesManager = new GridLayoutManager(getActivity(), 2);
+        RecyclerView.LayoutManager moreActivitiesManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView.LayoutManager nextActivityManager = new GridLayoutManager(getActivity(), 1);
 
         moreActivitiesView.setLayoutManager(moreActivitiesManager);
