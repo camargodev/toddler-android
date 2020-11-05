@@ -1,8 +1,5 @@
 package com.ihc.toddler.manager;
 
-import android.content.Context;
-import android.widget.Toast;
-
 import com.ihc.toddler.activity.MainActivity;
 import com.ihc.toddler.dialog.NewAwardsDialog;
 import com.ihc.toddler.entity.Award;
