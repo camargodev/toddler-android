@@ -1,12 +1,8 @@
 package com.ihc.toddler.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,15 +17,9 @@ import com.ihc.toddler.adapter.ActivityCardAdapter;
 import com.ihc.toddler.adapter.BaseCardAdapter;
 import com.ihc.toddler.entity.AbstractActivity;
 import com.ihc.toddler.entity.ActivitiesStats;
-import com.ihc.toddler.entity.ActivityType;
-import com.ihc.toddler.entity.Content;
-import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.persistence.ActivityTracker;
-import com.ihc.toddler.repository.ContentRepository;
-import com.ihc.toddler.repository.QuizRepository;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -59,8 +49,8 @@ public abstract class DisplayActivitiesFragment extends Fragment {
         leftLabel.setText(getLabel());
 
         ActivitiesStats stats = getStats();
-        alreadyDoneNumber.setText(String.valueOf(stats.getNumberOfConsumesActivities()));
-        leftNumber.setText(String.valueOf(stats.getTotalNumberOfActivities() - stats.getNumberOfConsumesActivities()));
+        alreadyDoneNumber.setText(String.valueOf(stats.getNumberOfConsumedActivities()));
+        leftNumber.setText(String.valueOf(stats.getTotalNumberOfActivities() - stats.getNumberOfConsumedActivities()));
 
         textToSpeech = new TextToSpeech(view.getContext(), new TextToSpeech.OnInitListener() {
             @Override

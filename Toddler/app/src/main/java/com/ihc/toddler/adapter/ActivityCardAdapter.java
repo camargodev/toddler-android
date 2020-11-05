@@ -55,8 +55,9 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     @NonNull
     @Override
     public ActivityViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
+        int layoutId = next ? R.layout.long_card_activity_list_row : R.layout.card_activity_list_row;
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_activity_list_row, viewGroup, false);
+                .inflate(layoutId, viewGroup, false);
         return new ActivityViewHolder(itemView, position, activities, textToSpeech);
     }
 

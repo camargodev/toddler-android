@@ -14,7 +14,7 @@ public class ActivitiesStats {
         return totalNumberOfActivities;
     }
 
-    public int getNumberOfConsumesActivities() {
+    public int getNumberOfConsumedActivities() {
         return numberOfConsumesActivities;
     }
 }
