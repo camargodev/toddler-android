@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cadsBgColor"
+    android:background="@color/colorPrimary"
     tools:context=".activity.DisplayResultsActivity">
 
     <TextView
@@ -21,16 +21,16 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintVertical_bias="0.07" />
 
-    <TextView
-        android:id="@+id/your_answers"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Clique para descobrir o resultado"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/results_recycler_view"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="10dp"/>
+<!--    <TextView-->
+<!--        android:id="@+id/your_answers"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Clique para descobrir o resultado"-->
+<!--        android:textSize="20sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/results_panel"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        android:layout_marginBottom="10dp"/>-->
 
 <!--    <TextView-->
 <!--        android:id="@+id/results"-->
@@ -47,25 +47,43 @@
 <!--        android:onClick="readResults"-->
 <!--        android:gravity="center_horizontal|center_vertical"-->
 <!--        tools:ignore="OnClick" />-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/results_recycler_view"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/results_panel"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        app:layout_constraintTop_toBottomOf="@id/results_title"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginTop="50dp"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+        android:background="@color/colorAccent"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
-        android:scrollbars="vertical" />
+        app:layout_constraintTop_toBottomOf="@id/open_result_recycler_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/results_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:scrollbars="vertical" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/open_result_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        app:layout_constraintTop_toBottomOf="@id/results_recycler_view"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/results_title"
         android:layout_marginTop="50dp"
         android:layout_marginStart="5dp"
         android:layout_marginEnd="5dp"
