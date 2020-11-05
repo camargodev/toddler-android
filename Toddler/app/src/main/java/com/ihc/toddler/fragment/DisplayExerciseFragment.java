@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.AbstractActivity;
-import com.ihc.toddler.repository.ContentRepository;
 import com.ihc.toddler.repository.QuizRepository;
 
 import java.util.ArrayList;
@@ -22,7 +21,7 @@ public class DisplayExerciseFragment extends DisplayActivitiesFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activies_display_fragment, container, false);
+        return inflater.inflate(R.layout.activities_display_fragment, container, false);
     }
 
     @Override

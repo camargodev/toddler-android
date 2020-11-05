@@ -22,6 +22,7 @@
 
     <color name="gray">#989898</color>
 
+    <color name="lightGray">#BFBFBF</color>
     <color name="base">#FAF4E8</color>
 
 </resources>
