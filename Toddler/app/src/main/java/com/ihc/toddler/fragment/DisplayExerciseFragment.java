@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.AbstractActivity;
+import com.ihc.toddler.entity.ActivitiesStats;
+import com.ihc.toddler.persistence.ActivityDataConsumer;
 import com.ihc.toddler.repository.QuizRepository;
 
 import java.util.ArrayList;
@@ -35,5 +37,15 @@ public class DisplayExerciseFragment extends DisplayActivitiesFragment {
     protected void setTitles(TextView next, TextView more) {
         next.setText("Próximo Exercício");
         more.setText("Mais Exercícios");
+    }
+
+    @Override
+    protected String getLabel() {
+        return "exercícios";
+    }
+
+    @Override
+    protected ActivitiesStats getStats() {
+        return ActivityDataConsumer.getQuizStats();
     }
 }

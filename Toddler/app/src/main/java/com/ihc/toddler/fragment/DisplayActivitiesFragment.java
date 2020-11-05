@@ -20,6 +20,7 @@ import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.ActivityCardAdapter;
 import com.ihc.toddler.adapter.BaseCardAdapter;
 import com.ihc.toddler.entity.AbstractActivity;
+import com.ihc.toddler.entity.ActivitiesStats;
 import com.ihc.toddler.entity.ActivityType;
 import com.ihc.toddler.entity.Content;
 import com.ihc.toddler.entity.Quiz;
@@ -36,7 +37,7 @@ import java.util.Locale;
 public abstract class DisplayActivitiesFragment extends Fragment {
 
     protected TextToSpeech textToSpeech;
-    protected TextView nextTitle, moreTitle;
+    protected TextView nextTitle, moreTitle, alreadyDoneNumber, alreadyDoneLabel, leftNumber, leftLabel;
     private RecyclerView moreActivitiesView, nextActivityView;
 
     @Override
@@ -48,7 +49,18 @@ public abstract class DisplayActivitiesFragment extends Fragment {
         nextTitle = view.findViewById(R.id.next_activities_title);
         moreTitle = view.findViewById(R.id.more_activities_title);
 
+        alreadyDoneNumber = view.findViewById(R.id.already_gone_number);
+        alreadyDoneLabel = view.findViewById(R.id.already_gone_type);
+        leftNumber = view.findViewById(R.id.left_number);
+        leftLabel = view.findViewById(R.id.left_type);
+
         setTitles(nextTitle, moreTitle);
+        alreadyDoneLabel.setText(getLabel());
+        leftLabel.setText(getLabel());
+
+        ActivitiesStats stats = getStats();
+        alreadyDoneNumber.setText(String.valueOf(stats.getNumberOfConsumesActivities()));
+        leftNumber.setText(String.valueOf(stats.getTotalNumberOfActivities() - stats.getNumberOfConsumesActivities()));
 
         textToSpeech = new TextToSpeech(view.getContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -88,6 +100,8 @@ public abstract class DisplayActivitiesFragment extends Fragment {
     }
 
     protected abstract void setTitles(TextView next, TextView more);
+    protected abstract String getLabel();
+    protected abstract ActivitiesStats getStats();
 
     private List<AbstractActivity> getSortedActivities() {
         List<AbstractActivity> sortedActivities = new ArrayList<>();

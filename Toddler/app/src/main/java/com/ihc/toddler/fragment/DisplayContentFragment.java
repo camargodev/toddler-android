@@ -11,6 +11,8 @@ import androidx.annotation.Nullable;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.entity.AbstractActivity;
+import com.ihc.toddler.entity.ActivitiesStats;
+import com.ihc.toddler.persistence.ActivityDataConsumer;
 import com.ihc.toddler.repository.ContentRepository;
 
 import java.util.ArrayList;
@@ -36,5 +38,16 @@ public class DisplayContentFragment extends DisplayActivitiesFragment {
         next.setText("Próxima Aula");
         more.setText("Mais Aulas");
     }
+
+    @Override
+    protected String getLabel() {
+        return "aulas";
+    }
+
+    @Override
+    protected ActivitiesStats getStats() {
+        return ActivityDataConsumer.getContentStats();
+    }
+
 
 }
