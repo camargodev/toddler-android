@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:showIn = "@layout/activity_main"
-    android:background="@color/base"
+    android:background="@color/colorPrimary"
     tools:context = ".fragment.DisplayActivitiesFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,7 +38,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:text="Já foram" />
+                android:text="Faltam" />
 
             <TextView
                 android:id="@+id/already_gone_number"
@@ -122,27 +122,26 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/more_activities">
 
-        <ImageView
-            android:id="@+id/next_activities_marker"
-            android:layout_width="30dp"
-            android:layout_height="18dp"
-            android:background="@drawable/circled_square"
-            android:backgroundTint="@color/cardColor4"
-            app:layout_constraintBottom_toTopOf="@id/next_activity_view"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginStart="20dp"  />
+<!--        <ImageView-->
+<!--            android:id="@+id/next_activities_marker"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="18dp"-->
+<!--            android:background="@drawable/circled_square"-->
+<!--            android:backgroundTint="@color/cardColor4"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/next_activity_view"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            android:layout_marginStart="20dp"  />-->
 
         <TextView
             android:id="@+id/next_activities_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/next_activities_marker"
-            app:layout_constraintTop_toTopOf="@id/next_activities_marker"
-            app:layout_constraintLeft_toRightOf="@id/next_activities_marker"
-            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="10dp"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:layout_marginBottom="3dp"
             android:text="Sua próxima aula" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -171,27 +170,26 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <ImageView
-            android:id="@+id/more_activities_marker"
-            android:layout_width="30dp"
-            android:layout_height="18dp"
-            android:background="@drawable/circled_square"
-            android:backgroundTint="@color/cardColor3"
-            app:layout_constraintBottom_toTopOf="@id/more_activities_view"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginStart="20dp"  />
+<!--        <ImageView-->
+<!--            android:id="@+id/more_activities_marker"-->
+<!--            android:layout_width="30dp"-->
+<!--            android:layout_height="18dp"-->
+<!--            android:background="@drawable/circled_square"-->
+<!--            android:backgroundTint="@color/cardColor3"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/more_activities_view"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            android:layout_marginStart="20dp"  />-->
 
         <TextView
             android:id="@+id/more_activities_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/more_activities_marker"
-            app:layout_constraintTop_toTopOf="@id/more_activities_marker"
-            app:layout_constraintLeft_toRightOf="@id/more_activities_marker"
-            android:layout_marginStart="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="5dp"
             android:textStyle="bold"
             android:textSize="20sp"
-            android:layout_marginBottom="3dp"
             android:text="Mais aulas" />
 
         <androidx.recyclerview.widget.RecyclerView

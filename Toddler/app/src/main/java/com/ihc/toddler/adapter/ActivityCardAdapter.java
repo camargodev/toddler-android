@@ -73,7 +73,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
         if (ActivityTracker.getInstance().isActivityConsumed(activity))
             color = ContextCompat.getColor(originScreen, R.color.gray);
         holder.topPart.setBackgroundColor(color);
-        holder.type.setText(String.valueOf(activity.getId()));
+//        holder.type.setText(String.valueOf(activity.getId()));
 
     }
 
