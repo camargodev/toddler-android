@@ -44,7 +44,7 @@ public class DisplayResultsActivity extends GenericActivity {
         message.setText(getMessage());
         button.setBackgroundResource(R.drawable.next);
 
-        RecyclerView resultsListView = findViewById(R.id.results_recycler_view);
+        RecyclerView resultsListView = findViewById(R.id.correct_questions_view);
 
         openResultView = findViewById(R.id.open_result_recycler_view);
         openResultView.setVisibility(View.INVISIBLE);
@@ -52,7 +52,7 @@ public class DisplayResultsActivity extends GenericActivity {
         ResultCardAdapter activityCardAdapter = new ResultCardAdapter(quiz, this, textToSpeech);
         openResultCardAdapter = new OpenResultCardAdapter(this);
 
-        RecyclerView.LayoutManager resultListManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager resultListManager = new GridLayoutManager(this, 1);
         resultsListView.setLayoutManager(resultListManager);
         resultsListView.setAdapter(activityCardAdapter);
 

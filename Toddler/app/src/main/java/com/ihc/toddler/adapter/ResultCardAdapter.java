@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -95,7 +96,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     class QuizViewHolder extends RecyclerView.ViewHolder {
         TextView interrogationPoint, resultExerciseNumber;
         ImageView resultIcon;
-        RelativeLayout background;
+        ConstraintLayout background;
         public QuizViewHolder(View itemView, final DisplayResultsActivity originScreen, final TextToSpeech textToSpeech) {
             super(itemView);
 
