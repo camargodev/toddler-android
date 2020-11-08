@@ -5,8 +5,12 @@ import com.ihc.toddler.entity.AwardTier;
 import com.ihc.toddler.entity.awards.FinishedAllExercises;
 import com.ihc.toddler.entity.awards.FirstContentConsumed;
 import com.ihc.toddler.entity.awards.FirstQuizAnswered;
+import com.ihc.toddler.entity.awards.FiveContentConsumed;
 import com.ihc.toddler.entity.awards.FiveQuestionsCorrect;
+import com.ihc.toddler.entity.awards.FiveQuizAnswered;
 import com.ihc.toddler.entity.awards.MaxGradeInQuiz;
+import com.ihc.toddler.entity.awards.TenQuestionsCorrect;
+import com.ihc.toddler.entity.awards.ThreeMaxGradeInQuiz;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,16 +18,29 @@ import java.util.List;
 
 public class AwardRepository {
 
-    protected static final Integer FIRST_CONTENT_AWARD = 1, FIRST_QUIZ_AWARD = 2, FIVE_QUESTIONS_CORRECT_AWARD = 3,
-        MAX_GRADE = 4, FINISHED_ALL = 5;
+    private enum AwardDatabase {
 
-    protected static List<Award> awardList;
+        FINISHED_ALL(new FinishedAllExercises(1)),
+        FIRST_CONTENT(new FirstContentConsumed(2)),
+        FIRST_QUIZ(new FirstQuizAnswered(3)),
+        FIVE_CONTENT(new FiveContentConsumed(4)),
+        FIVE_QUESTIONS_CORRECT(new FiveQuestionsCorrect(5)),
+        FIVE_QUIZ(new FiveQuizAnswered(6)),
+        ONE_MAX_GRADE(new MaxGradeInQuiz(7)),
+        TEN_QUESTIONS_CORRECT(new TenQuestionsCorrect(8)),
+        THREE_MAX(new ThreeMaxGradeInQuiz(9));
+
+        Award award;
+        AwardDatabase(Award award) {
+            this.award = award;
+        }
+    }
+
+    protected static List<Award> awardList = new ArrayList<>();
 
     static {
-        awardList = Arrays.asList(new FirstContentConsumed(FIRST_CONTENT_AWARD),
-                                  new FirstQuizAnswered(FIRST_QUIZ_AWARD),
-                                  new FiveQuestionsCorrect(FIVE_QUESTIONS_CORRECT_AWARD),
-                new MaxGradeInQuiz(MAX_GRADE), new FinishedAllExercises(FINISHED_ALL));
+        for (AwardDatabase entry : AwardDatabase.values())
+            awardList.add(entry.award);
     }
 
     public static List<Award> getAll() {

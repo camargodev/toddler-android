@@ -41,9 +41,11 @@ public class LevelManager {
         int level = getCurrentLevel();
         int myLevelPoints = POINTS_TO_ACHIEVE_LEVEL[level-1];
         int nextLevelPoints = POINTS_TO_ACHIEVE_LEVEL[level];
-        int totalForNextLevel = nextLevelPoints - myLevelPoints;
-        int advanceOnCurrentLevel = totalPoints - myLevelPoints;
-        return (advanceOnCurrentLevel/totalForNextLevel) * 100;
+        float totalForNextLevel = nextLevelPoints - myLevelPoints;
+        float advanceOnCurrentLevel = totalPoints - myLevelPoints;
+        float progress = advanceOnCurrentLevel/totalForNextLevel;
+        int intProgress = ((int) (progress*100));
+        return intProgress;
     }
 
 

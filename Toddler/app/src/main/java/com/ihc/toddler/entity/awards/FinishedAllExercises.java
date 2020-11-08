@@ -9,6 +9,6 @@ import static com.ihc.toddler.entity.AwardTier.GOLD;
 
 public class FinishedAllExercises extends Award {
     public FinishedAllExercises(int id) {
-        super(id,"Terminou Tudo", "Parabéns! Você fez todos os exercícios disponíveis", GOLD, new FinishedAllExercisesValidator());
+        super(id,"Terminou Tudo", "Parabéns! Você fez todos os exercícios disponíveis", DIAMOND, new FinishedAllExercisesValidator());
     }
 }
