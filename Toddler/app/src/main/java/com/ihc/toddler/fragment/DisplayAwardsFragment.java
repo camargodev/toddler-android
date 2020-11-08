@@ -18,15 +18,17 @@ import com.ihc.toddler.adapter.AwardCardAdapter;
 import com.ihc.toddler.entity.Award;
 import com.ihc.toddler.entity.AwardTier;
 import com.ihc.toddler.manager.AwardManager;
+import com.ihc.toddler.manager.LevelManager;
 import com.ihc.toddler.repository.AwardRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 public class DisplayAwardsFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private TextView noAwardsText;
+    private TextView noAwardsText, levelNumber, levelTitle, missingPoints;
 
     @Nullable
     @Override
@@ -37,12 +39,10 @@ public class DisplayAwardsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        recyclerView = view.findViewById(R.id.your_awards_view);
-        noAwardsText = view.findViewById(R.id.no_awards);
-
+        mapLayout(view);
         List<Award> awards = getMyAwards();
         updateScreenAccordingToAwards(view, awards);
+        updateLevelInformation();
     }
 
     private List<Award> getMyAwards() {
@@ -79,14 +79,29 @@ public class DisplayAwardsFragment extends Fragment {
         recyclerView.setAdapter(activityCardAdapter);
     }
 
-    private void setAwardsPerTier(@NonNull View view, int id, AwardTier tier) {
-        RecyclerView recyclerView = view.findViewById(id);
+    private void mapLayout(View view) {
+        recyclerView = view.findViewById(R.id.your_awards_view);
+        noAwardsText = view.findViewById(R.id.no_awards);
+        levelNumber = view.findViewById(R.id.level_num_bg_text);
+        levelTitle = view.findViewById(R.id.your_level_title);
+        missingPoints = view.findViewById(R.id.points_left_to_next_level);
+    }
 
-        AwardCardAdapter activityCardAdapter = new AwardCardAdapter(view.getContext(), AwardRepository.getByTier(tier));
+    private void updateLevelInformation() {
+        LevelManager levelManager = LevelManager.getInstance();
+        int level = levelManager.getCurrentLevel();
+        int pointsLeft = levelManager.getPointsToNextLevel();
+        levelTitle.setText(buildLevelTile(level));
+        missingPoints.setText(buildLeftPointText(pointsLeft));
+        levelNumber.setText(String.valueOf(level));
+    }
 
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(activityCardAdapter);
+    private String buildLevelTile(int level) {
+        return "Nível " + level;
+    }
+
+    private String buildLeftPointText(int points) {
+        return "Faltam " + points + " pontos para\no próximo nível";
     }
 
 }

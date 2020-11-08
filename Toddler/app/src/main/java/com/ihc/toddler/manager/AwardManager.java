@@ -23,6 +23,7 @@ public class AwardManager extends AwardRepository {
         for (Award award : getAll())
             if (award.isAchievable() && !award.isAccomplished()) {
                 award.setAccomplished(true);
+                LevelManager.getInstance().computeAward(award);
                 awardsToNotify.add(award.getId());
             }
     }
