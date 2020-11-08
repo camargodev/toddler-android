@@ -41,11 +41,8 @@ public class DisplayAwardsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.your_awards_view);
         noAwardsText = view.findViewById(R.id.no_awards);
 
-        RecyclerView.LayoutManager manager = new GridLayoutManager(view.getContext(), 3);
-        AwardCardAdapter activityCardAdapter = new AwardCardAdapter(view.getContext(), getMyAwards());
-
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(activityCardAdapter);
+        List<Award> awards = getMyAwards();
+        updateScreenAccordingToAwards(view, awards);
     }
 
     private List<Award> getMyAwards() {
@@ -61,14 +58,25 @@ public class DisplayAwardsFragment extends Fragment {
         return myAwards;
     }
 
-    private void updateScreenAccordingToAwards(List<Award> awards) {
+    private void updateScreenAccordingToAwards(View view, List<Award> awards) {
         if (awards.size() == 0) {
             recyclerView.setVisibility(View.GONE);
             noAwardsText.setVisibility(View.VISIBLE);
         } else {
             recyclerView.setVisibility(View.VISIBLE);
             noAwardsText.setVisibility(View.GONE);
+
+            displayMyAwards(view, awards);
         }
+    }
+
+    private void displayMyAwards(View view, List<Award> awards) {
+
+        RecyclerView.LayoutManager manager = new GridLayoutManager(view.getContext(), 3);
+        AwardCardAdapter activityCardAdapter = new AwardCardAdapter(view.getContext(), awards);
+
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(activityCardAdapter);
     }
 
     private void setAwardsPerTier(@NonNull View view, int id, AwardTier tier) {
