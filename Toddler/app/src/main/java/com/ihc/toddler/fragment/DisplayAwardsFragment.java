@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,12 +24,12 @@ import com.ihc.toddler.repository.AwardRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 public class DisplayAwardsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private TextView noAwardsText, levelNumber, levelTitle, missingPoints;
+    private ProgressBar levelProgress;
 
     @Nullable
     @Override
@@ -85,15 +86,20 @@ public class DisplayAwardsFragment extends Fragment {
         levelNumber = view.findViewById(R.id.level_num_bg_text);
         levelTitle = view.findViewById(R.id.your_level_title);
         missingPoints = view.findViewById(R.id.points_left_to_next_level);
+        levelProgress = view.findViewById(R.id.next_level_progress);
     }
 
     private void updateLevelInformation() {
         LevelManager levelManager = LevelManager.getInstance();
         int level = levelManager.getCurrentLevel();
         int pointsLeft = levelManager.getPointsToNextLevel();
+        int progress = levelManager.getProgressForNextLevel();
+
         levelTitle.setText(buildLevelTile(level));
         missingPoints.setText(buildLeftPointText(pointsLeft));
         levelNumber.setText(String.valueOf(level));
+        levelProgress.setProgress(progress);
+
     }
 
     private String buildLevelTile(int level) {
