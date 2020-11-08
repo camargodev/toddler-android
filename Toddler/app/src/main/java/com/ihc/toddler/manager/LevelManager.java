@@ -24,15 +24,25 @@ public class LevelManager {
 
     public int getCurrentLevel() {
         int currentLevel = 1;
-        int currentLevelPoints = 5;
         int leftPoints = totalPoints;
-        while (leftPoints > currentLevelPoints) {
-            leftPoints -= currentLevelPoints;
-            currentLevelPoints *= 2;
+        while (leftPoints > getPointsByLevel(currentLevel)) {
+            leftPoints -= getPointsByLevel(currentLevel);
             currentLevel += 1;
         }
         return currentLevel;
     }
+
+    public int getPointsToNextLevel(){
+        int level = getCurrentLevel();
+        int nextLevelPoints = getPointsByLevel(level+1);
+        return nextLevelPoints - totalPoints;
+    }
+
+    public int getPointsByLevel(int level) {
+        if (level == 1) return 5;
+        return 2 * getPointsByLevel(level-1);
+    }
+
 
 
 

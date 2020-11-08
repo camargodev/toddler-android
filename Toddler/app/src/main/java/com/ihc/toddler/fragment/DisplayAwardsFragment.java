@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +25,9 @@ import java.util.List;
 
 public class DisplayAwardsFragment extends Fragment {
 
+    private RecyclerView recyclerView;
+    private TextView noAwardsText;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,7 +38,8 @@ public class DisplayAwardsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView recyclerView = view.findViewById(R.id.your_awards_view);
+        recyclerView = view.findViewById(R.id.your_awards_view);
+        noAwardsText = view.findViewById(R.id.no_awards);
 
         RecyclerView.LayoutManager manager = new GridLayoutManager(view.getContext(), 3);
         AwardCardAdapter activityCardAdapter = new AwardCardAdapter(view.getContext(), getMyAwards());
@@ -54,6 +59,16 @@ public class DisplayAwardsFragment extends Fragment {
             if (AwardManager.getInstance().isAwardAccomplished(award.getId()))
                 myAwards.add(award);
         return myAwards;
+    }
+
+    private void updateScreenAccordingToAwards(List<Award> awards) {
+        if (awards.size() == 0) {
+            recyclerView.setVisibility(View.GONE);
+            noAwardsText.setVisibility(View.VISIBLE);
+        } else {
+            recyclerView.setVisibility(View.VISIBLE);
+            noAwardsText.setVisibility(View.GONE);
+        }
     }
 
     private void setAwardsPerTier(@NonNull View view, int id, AwardTier tier) {
