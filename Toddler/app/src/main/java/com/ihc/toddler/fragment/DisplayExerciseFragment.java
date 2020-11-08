@@ -48,4 +48,9 @@ public class DisplayExerciseFragment extends DisplayActivitiesFragment {
     protected ActivitiesStats getStats() {
         return ActivityDataConsumer.getQuizStats();
     }
+
+    @Override
+    protected String getSwitchText() {
+        return "Mostrar exercícios já respondidos";
+    }
 }

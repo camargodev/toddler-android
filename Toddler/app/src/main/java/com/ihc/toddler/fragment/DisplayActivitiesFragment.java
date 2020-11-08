@@ -3,10 +3,12 @@ package com.ihc.toddler.fragment;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,7 +30,10 @@ public abstract class DisplayActivitiesFragment extends Fragment {
 
     protected TextToSpeech textToSpeech;
     protected TextView nextTitle, moreTitle, alreadyDoneNumber, alreadyDoneLabel, leftNumber, leftLabel;
+    protected SwitchCompat alreadyConsumedSwitch;
     private RecyclerView moreActivitiesView, nextActivityView;
+
+    private boolean considerConsumed = true;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -44,9 +49,12 @@ public abstract class DisplayActivitiesFragment extends Fragment {
         leftNumber = view.findViewById(R.id.left_number);
         leftLabel = view.findViewById(R.id.left_type);
 
+        alreadyConsumedSwitch = view.findViewById(R.id.consumed_switch);
+
         setTitles(nextTitle, moreTitle);
         alreadyDoneLabel.setText(getLabel());
         leftLabel.setText(getLabel());
+        alreadyConsumedSwitch.setText(getSwitchText());
 
         ActivitiesStats stats = getStats();
         alreadyDoneNumber.setText(String.valueOf(stats.getNumberOfConsumedActivities()));
@@ -60,19 +68,27 @@ public abstract class DisplayActivitiesFragment extends Fragment {
             }
         });
 
+        alreadyConsumedSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                considerConsumed = isChecked;
+                populateCardView(considerConsumed);
+            }
+        });
+
         textToSpeech.setSpeechRate(0.8f);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        populateCardView();
+        populateCardView(considerConsumed);
     }
 
     protected abstract List<AbstractActivity> getActivities();
 
-    private void populateCardView() {
-        List<AbstractActivity> activities = getSortedActivities();
+    private void populateCardView(boolean considerConsumed) {
+        List<AbstractActivity> activities = considerConsumed ? getSortedActivities() : getAvailableSortedActivities();
         AbstractActivity first = activities.get(0);
         List<AbstractActivity> others = activities.subList(1, activities.size());
 
@@ -92,16 +108,35 @@ public abstract class DisplayActivitiesFragment extends Fragment {
     protected abstract void setTitles(TextView next, TextView more);
     protected abstract String getLabel();
     protected abstract ActivitiesStats getStats();
+    protected abstract String getSwitchText();
 
-    private List<AbstractActivity> getSortedActivities() {
-        List<AbstractActivity> sortedActivities = new ArrayList<>();
+    private AbstractActivity getFirstAvailableActivity() {
         List<AbstractActivity> activities = getActivities();
         for (AbstractActivity activity : activities)
-            if (!ActivityTracker.getInstance().isActivityConsumed(activity))
-                sortedActivities.add(activity);
-        for (AbstractActivity activity : activities)
-            if (ActivityTracker.getInstance().isActivityConsumed(activity))
+            if (!ActivityTracker.getInstance().isActivityConsumed(activity)) return activity;
+        return null;
+    }
+
+    private List<AbstractActivity> getSortedActivities() {
+        AbstractActivity firstAvailableActivity = getFirstAvailableActivity();
+        if (firstAvailableActivity == null)
+            return getActivities();
+
+        List<AbstractActivity> sortedActivities = new ArrayList<>();
+        sortedActivities.add(firstAvailableActivity);
+        for (AbstractActivity activity : getActivities())
+            if (activity.getId() != firstAvailableActivity.getId())
                 sortedActivities.add(activity);
         return sortedActivities;
     }
+
+
+    private List<AbstractActivity> getAvailableSortedActivities() {
+        List<AbstractActivity> sortedActivities = new ArrayList<>();
+        for (AbstractActivity activity : getActivities())
+            if (!ActivityTracker.getInstance().isActivityConsumed(activity))
+                sortedActivities.add(activity);
+        return sortedActivities;
+    }
+
 }

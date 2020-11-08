@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -65,6 +66,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     public void onBindViewHolder(@NonNull ActivityViewHolder holder, int position) {
         AbstractActivity activity = activities.get(position);
         int color = ContextCompat.getColor(originScreen, getRandomColorId());
+        int gray = ContextCompat.getColor(originScreen, R.color.gray);
 
         holder.title.setText(activity.getTitle());
 //        holder.type.setText(activity.getTypeName());
@@ -72,8 +74,12 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
             holder.icon.setBackgroundResource(R.drawable.homework);
         }
         if (ActivityTracker.getInstance().isActivityConsumed(activity))
-            color = ContextCompat.getColor(originScreen, R.color.gray);
+            color = gray;
         holder.topPart.setBackgroundColor(color);
+        if (ActivityTracker.getInstance().isActivityConsumed(activity)) {
+            holder.icon.setBackgroundResource(R.drawable.correct);
+            holder.icon.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.gray));
+        }
 //        holder.type.setText(String.valueOf(activity.getId()));
 
     }

@@ -18,5 +18,17 @@
         <item name="borderlessButtonStyle">@style/Widget.AppCompat.Button.Borderless.Colored</item>
     </style>
 
+    <style name="CustomSwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/cardColor3</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/darkGray
+        </item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">@color/gray
+        </item>
+    </style>
 
 </resources>

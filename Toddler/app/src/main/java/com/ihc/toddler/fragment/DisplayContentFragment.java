@@ -49,5 +49,10 @@ public class DisplayContentFragment extends DisplayActivitiesFragment {
         return ActivityDataConsumer.getContentStats();
     }
 
+    @Override
+    protected String getSwitchText() {
+        return "Mostrar aulas já assistidas";
+    }
+
 
 }
