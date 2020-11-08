@@ -29,7 +29,7 @@
 
         <TextView
             android:id="@+id/award_title"
-            android:layout_width="match_parent"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:text="Título da conquista"
             android:gravity="center"

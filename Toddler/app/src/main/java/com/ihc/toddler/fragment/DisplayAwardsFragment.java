@@ -8,13 +8,19 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.AwardCardAdapter;
+import com.ihc.toddler.entity.Award;
 import com.ihc.toddler.entity.AwardTier;
+import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.repository.AwardRepository;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DisplayAwardsFragment extends Fragment {
 
@@ -27,10 +33,27 @@ public class DisplayAwardsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setAwardsPerTier(view, R.id.bronze_awards_recycler_view, AwardTier.BRONZE);
-        setAwardsPerTier(view, R.id.silver_awards_recycler_view, AwardTier.SILVER);
-        setAwardsPerTier(view, R.id.gold_awards_recycler_view, AwardTier.GOLD);
-        setAwardsPerTier(view, R.id.diamond_awards_recycler_view, AwardTier.DIAMOND);
+
+        RecyclerView recyclerView = view.findViewById(R.id.your_awards_view);
+
+        RecyclerView.LayoutManager manager = new GridLayoutManager(view.getContext(), 3);
+        AwardCardAdapter activityCardAdapter = new AwardCardAdapter(view.getContext(), getMyAwards());
+
+        recyclerView.setLayoutManager(manager);
+        recyclerView.setAdapter(activityCardAdapter);
+    }
+
+    private List<Award> getMyAwards() {
+        List<Award> myAwards = new ArrayList<>();
+        List<Award> allAwards = new ArrayList<>();
+        allAwards.addAll(AwardRepository.getByTier(AwardTier.DIAMOND));
+        allAwards.addAll(AwardRepository.getByTier(AwardTier.GOLD));
+        allAwards.addAll(AwardRepository.getByTier(AwardTier.SILVER));
+        allAwards.addAll(AwardRepository.getByTier(AwardTier.BRONZE));
+        for (Award award : allAwards)
+            if (AwardManager.getInstance().isAwardAccomplished(award.getId()))
+                myAwards.add(award);
+        return myAwards;
     }
 
     private void setAwardsPerTier(@NonNull View view, int id, AwardTier tier) {
