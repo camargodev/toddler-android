@@ -26,6 +26,7 @@ import com.ihc.toddler.entity.ExerciseStatus;
 import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.manager.ResultOpeningManager;
 import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.repository.QuizRepository;
 import com.ihc.toddler.view.ExerciseView;
@@ -41,15 +42,15 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     Quiz quiz;
     DisplayResultsActivity originScreen;
     TextToSpeech textToSpeech;
-    List<Boolean> areQuestionsRevealed;
+//    List<Boolean> areQuestionsRevealed;
 
     public ResultCardAdapter(Quiz quiz, DisplayResultsActivity originScreen, TextToSpeech textToSpeech) {
         this.quiz = quiz;
         this.originScreen = originScreen;
         this.textToSpeech = textToSpeech;
-        this.areQuestionsRevealed = new ArrayList<>();
-        for (int i = 0; i <quiz.getNumberOfExercises(); i++)
-            this.areQuestionsRevealed.add(false);
+//        this.areQuestionsRevealed = new ArrayList<>();
+//        for (int i = 0; i <quiz.getNumberOfExercises(); i++)
+//            this.areQuestionsRevealed.add(false);
     }
 
     @NonNull
@@ -65,13 +66,16 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
 
         holder.resultExerciseNumber.setText(String.valueOf(position+1));
 
-        if (!areQuestionsRevealed.get(position)) {
+        if (!ResultOpeningManager.getInstance().isOpened(position)) {
             int color = ContextCompat.getColor(originScreen, R.color.gray);
             holder.background.setBackgroundColor(color);
             return;
         }
 
         Exercise exercise = quiz.getExercises().get(position);
+
+        holder.interrogationPoint.setVisibility(View.INVISIBLE);
+        holder.resultIcon.setVisibility(View.VISIBLE);
 
         int color, icon;
 
@@ -108,23 +112,23 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
             interrogationPoint.setVisibility(View.VISIBLE);
             resultIcon.setVisibility(View.INVISIBLE);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final int position = getLayoutPosition();
-                    if (!areQuestionsRevealed.get(position)) {
-                        areQuestionsRevealed.set(position, true);
-                        interrogationPoint.setVisibility(View.INVISIBLE);
-                        resultIcon.setVisibility(View.VISIBLE);
-                        notifyDataSetChanged();
-                    } else {
-//                        new SpeechManager(textToSpeech).talk(description.getText().toString());
-                    }
-
-//                    originScreen.getOpenResultCardAdapter().setOpenExercise(QuizManager.getInstance().getQuiz().getExercises().get(position));
-                    originScreen.getOpenResultCardAdapter().notifyDataSetChanged();
-                }
-            });
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    final int position = getLayoutPosition();
+//                    if (!areQuestionsRevealed.get(position)) {
+//                        areQuestionsRevealed.set(position, true);
+//                        interrogationPoint.setVisibility(View.INVISIBLE);
+//                        resultIcon.setVisibility(View.VISIBLE);
+//                        notifyDataSetChanged();
+//                    } else {
+////                        new SpeechManager(textToSpeech).talk(description.getText().toString());
+//                    }
+//
+////                    originScreen.getOpenResultCardAdapter().setOpenExercise(QuizManager.getInstance().getQuiz().getExercises().get(position));
+//                    originScreen.getOpenResultCardAdapter().notifyDataSetChanged();
+//                }
+//            });
         }
     }
 }

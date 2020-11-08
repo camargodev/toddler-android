@@ -28,6 +28,7 @@ public class DisplayResultsActivity extends GenericActivity {
     private Button button;
     private Quiz quiz = QuizManager.getInstance().getQuiz();
     private OpenResultCardAdapter openResultCardAdapter;
+    private ResultCardAdapter resultsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,13 +49,12 @@ public class DisplayResultsActivity extends GenericActivity {
 
         openResultView = findViewById(R.id.open_result_recycler_view);
 
-        ResultCardAdapter activityCardAdapter = new ResultCardAdapter(quiz, this, textToSpeech);
+        resultsAdapter = new ResultCardAdapter(quiz, this, textToSpeech);
         openResultCardAdapter = new OpenResultCardAdapter(this, quiz.getExercises());
 
-//        RecyclerView.LayoutManager resultListManager = new GridLayoutManager(this, 1);
-//        resultsListView.setLayoutManager(resultListManager);
-//        resultsListView.setAdapter(activityCardAdapter);
-
+        RecyclerView.LayoutManager resultListManager = new GridLayoutManager(this, 3);
+        resultsListView.setLayoutManager(resultListManager);
+        resultsListView.setAdapter(resultsAdapter);
 
         RecyclerView.LayoutManager openResultManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         openResultView.setLayoutManager(openResultManager);
@@ -92,5 +92,9 @@ public class DisplayResultsActivity extends GenericActivity {
 
     public RecyclerView getOpenResultView() {
         return openResultView;
+    }
+
+    public ResultCardAdapter getResultsAdapter() {
+        return resultsAdapter;
     }
 }

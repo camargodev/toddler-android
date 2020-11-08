@@ -3,6 +3,7 @@ package com.ihc.toddler.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.ihc.toddler.R;
 import com.ihc.toddler.activity.DisplayResultsActivity;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.ExerciseStatus;
+import com.ihc.toddler.manager.ResultOpeningManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,17 +25,14 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
 
     List<Exercise> exercises;
     DisplayResultsActivity originScreen;
-    List<Boolean> revealed = new ArrayList<>();
+    ResultOpeningManager manager = ResultOpeningManager.getInstance();
 
     public OpenResultCardAdapter(DisplayResultsActivity originScreen, List<Exercise> exercises) {
         this.originScreen = originScreen;
         this.exercises = exercises;
-        for (int i = 0; i < exercises.size(); i++) revealed.add(false);
+        manager.init(exercises.size());
     }
 
-//    public void setOpenExercise(List<Exercise> exercises) {
-//        this.exercises = exercises;
-//    }
 
     @NonNull
     @Override
@@ -48,10 +47,12 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
 
         Exercise openExercise = exercises.get(position);
 
-        holder.exerciseNumber.setText("Exercício " + String.valueOf(position+1));
+        holder.exerciseNumber.setText(String.valueOf(position+1));
         holder.exerciseQuestion.setText(openExercise.getQuestion().replace("\n"," "));
+        holder.entireBackground.setBackgroundColor(ContextCompat.getColor(originScreen, R.color.colorAccent));
+        holder.revealText.setTextColor(ContextCompat.getColor(originScreen, R.color.cardColor3));
 
-        if (revealed.get(position))
+        if (manager.isOpened(position))
             setFieldsReveleadAnswer(holder, openExercise);
         else
             setFieldsHiddenAnswer(holder, openExercise);
@@ -111,34 +112,34 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
     }
 
     class OpenResultViewHolder extends RecyclerView.ViewHolder {
-        TextView exerciseQuestion, exerciseDescription, exerciseNumber, revealText;
+        TextView exerciseQuestion, exerciseDescription, exerciseNumber;
+        Button revealText;
         TextView youAnsweredLabel, yourAnswer, correctWasLabel, correctWas, resultLabel;
         ImageView icon;
 //        RelativeLayout background;
-        ConstraintLayout background;
+        ConstraintLayout background, entireBackground;
         public OpenResultViewHolder(View itemView) {
             super(itemView);
             exerciseQuestion = itemView.findViewById(R.id.exercise_question);
             exerciseNumber = itemView.findViewById(R.id.exercise_number);
             background = itemView.findViewById(R.id.result_highlight_bg);
-            revealText = itemView.findViewById(R.id.reveal_result_text);
+            entireBackground = itemView.findViewById(R.id.result_background);
+            revealText = itemView.findViewById(R.id.reveal_result_button);
             youAnsweredLabel = itemView.findViewById(R.id.you_answered_label);
             yourAnswer = itemView.findViewById(R.id.you_answered);
             correctWasLabel = itemView.findViewById(R.id.correct_was_label);
             correctWas = itemView.findViewById(R.id.correct_was);
             icon = itemView.findViewById(R.id.answer_icon);
             resultLabel = itemView.findViewById(R.id.result_label);
-            itemView.setOnClickListener(new View.OnClickListener() {
+            revealText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (revealed.get(getAdapterPosition())) return;
-                    revealed.set(getAdapterPosition(), true);
+                    if(manager.isOpened(getAdapterPosition())) return;
+                    manager.open(getAdapterPosition());
                     notifyDataSetChanged();
+                    originScreen.getResultsAdapter().notifyDataSetChanged();
                 }
             });
-//            exerciseDescription = itemView.findViewById(R.id.result_description);
-//            icon = itemView.findViewById(R.id.small_emoticon_bg);
-//            background = itemView.findViewById(R.id.colorful_background);
         }
     }
 }
