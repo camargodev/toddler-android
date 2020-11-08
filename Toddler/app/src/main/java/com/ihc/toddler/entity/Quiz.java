@@ -67,7 +67,8 @@ public class Quiz extends AbstractActivity {
 
     public void submitQuiz() {
         for (int i = 0; i < exercises.size(); i++) {
-            if (exercises.get(i).getAnswer() == answers.get(i)) {
+            exercises.get(i).setActualAnswer(answers.get(i));
+            if (exercises.get(i).getExpectedAnswer() == answers.get(i)) {
                 exercises.get(i).setStatus(ExerciseStatus.CORRECT);
                 this.correctCount += 1;
             } else {
@@ -118,7 +119,7 @@ public class Quiz extends AbstractActivity {
             if (answer.equals(BLANK_ANSWER))
                 text.append(BLANK_ANSWER_TEXT);
             else
-                text.append(answer == exercise.getAnswer() ? "Correta :D" : "Incorreta :(");
+                text.append(answer == exercise.getExpectedAnswer() ? "Correta :D" : "Incorreta :(");
             text.append("\n");
             text.append("\n");
         }

@@ -47,14 +47,13 @@ public class DisplayResultsActivity extends GenericActivity {
         RecyclerView resultsListView = findViewById(R.id.correct_questions_view);
 
         openResultView = findViewById(R.id.open_result_recycler_view);
-        openResultView.setVisibility(View.INVISIBLE);
 
         ResultCardAdapter activityCardAdapter = new ResultCardAdapter(quiz, this, textToSpeech);
-        openResultCardAdapter = new OpenResultCardAdapter(this);
+        openResultCardAdapter = new OpenResultCardAdapter(this, quiz.getExercises());
 
-        RecyclerView.LayoutManager resultListManager = new GridLayoutManager(this, 1);
-        resultsListView.setLayoutManager(resultListManager);
-        resultsListView.setAdapter(activityCardAdapter);
+//        RecyclerView.LayoutManager resultListManager = new GridLayoutManager(this, 1);
+//        resultsListView.setLayoutManager(resultListManager);
+//        resultsListView.setAdapter(activityCardAdapter);
 
 
         RecyclerView.LayoutManager openResultManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);

@@ -44,17 +44,145 @@
             android:textSize="18sp" />
 
 
-        <Button
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/circled_square"
-            android:backgroundTint="@color/cardColor3"
+<!--        <Button-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:background="@drawable/circled_square"-->
+<!--            android:backgroundTint="@color/cardColor3"-->
+<!--            card_view:layout_constraintLeft_toLeftOf="parent"-->
+<!--            card_view:layout_constraintRight_toRightOf="parent"-->
+<!--            card_view:layout_constraintTop_toBottomOf="@id/exercise_question"-->
+<!--            android:text="Revelar Resultado"-->
+<!--            android:textColor="@color/colorAccent"-->
+<!--            android:layout_marginTop="10dp" />-->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/result_highlight_bg"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="3dp"
+            android:background="@color/correct"
+            card_view:layout_constraintHorizontal_bias="0.0"
             card_view:layout_constraintLeft_toLeftOf="parent"
             card_view:layout_constraintRight_toRightOf="parent"
-            card_view:layout_constraintTop_toBottomOf="@id/exercise_question"
-            android:text="Revelar Resultado"
-            android:textColor="@color/colorAccent"
-            android:layout_marginTop="10dp" />
+            card_view:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/reveal_result_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Revelar Resultado"
+                android:gravity="center"
+                android:textColor="@color/colorAccent"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintRight_toRightOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                />
+
+            <ImageView
+                android:id="@+id/answer_icon"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/correct"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintRight_toRightOf="parent"
+                android:layout_marginBottom="20dp"
+                />
+
+            <TextView
+                android:id="@+id/result_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Acertou! :D"
+                android:gravity="center"
+                android:textColor="@color/colorAccent"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                card_view:layout_constraintRight_toRightOf="parent"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="3dp"
+                />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/you_answered_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Você Respondeu"
+                    android:textColor="@color/colorAccent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/you_answered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BA-TA-TA"
+                    android:textColor="@color/colorAccent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/you_answered_label"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                card_view:layout_constraintRight_toRightOf="parent"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/correct_was_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="O correto era"
+                    android:textColor="@color/colorAccent"
+                    card_view:layout_constraintTop_toTopOf="parent"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    android:textSize="16sp"
+                    />
+
+                <TextView
+                    android:id="@+id/correct_was"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="BA-TA-TA"
+                    android:textColor="@color/colorAccent"
+                    card_view:layout_constraintTop_toBottomOf="@+id/correct_was_label"
+                    card_view:layout_constraintLeft_toLeftOf="parent"
+                    card_view:layout_constraintRight_toRightOf="parent"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 

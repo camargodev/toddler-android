@@ -121,7 +121,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
 //                        new SpeechManager(textToSpeech).talk(description.getText().toString());
                     }
 
-                    originScreen.getOpenResultCardAdapter().setOpenExercise(QuizManager.getInstance().getQuiz().getExercises().get(position));
+//                    originScreen.getOpenResultCardAdapter().setOpenExercise(QuizManager.getInstance().getQuiz().getExercises().get(position));
                     originScreen.getOpenResultCardAdapter().notifyDataSetChanged();
                 }
             });
