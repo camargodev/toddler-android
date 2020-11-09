@@ -11,10 +11,11 @@
 <!--    <color name="cardColor5">#F379A3</color>-->
     <color name="cardColor6">#EE7EFF</color>
     <color name="cardColor7">#7B8FFF</color>
+    <color name="cardColor8">#3EA8DA</color>
 
     <color name="cadsBgColor">#FFFFFF</color>
 
-    <color name="correct">#99C861</color>
+    <color name="correct">#68BD6C</color>
     <color name="wrong">#FF897F</color>
     <color name="notAnswered">#989898</color>
 
