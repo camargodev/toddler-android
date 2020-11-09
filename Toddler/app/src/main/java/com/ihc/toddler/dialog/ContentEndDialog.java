@@ -55,9 +55,9 @@ public class ContentEndDialog extends Dialog implements View.OnClickListener {
         goNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.finish();
                 ActivityTracker.getInstance().persistActivity(content);
                 AwardManager.getInstance().triggerAwardValidations();
+                activity.finish();
                 dismiss();
             }
         });

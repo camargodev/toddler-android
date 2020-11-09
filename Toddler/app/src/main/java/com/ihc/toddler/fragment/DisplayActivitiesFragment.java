@@ -56,10 +56,6 @@ public abstract class DisplayActivitiesFragment extends Fragment {
         leftLabel.setText(getLabel());
         alreadyConsumedSwitch.setText(getSwitchText());
 
-        ActivitiesStats stats = getStats();
-        alreadyDoneNumber.setText(String.valueOf(stats.getNumberOfConsumedActivities()));
-        leftNumber.setText(String.valueOf(stats.getTotalNumberOfActivities() - stats.getNumberOfConsumedActivities()));
-
         textToSpeech = new TextToSpeech(view.getContext(), new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -83,6 +79,10 @@ public abstract class DisplayActivitiesFragment extends Fragment {
     public void onResume() {
         super.onResume();
         populateCardView(considerConsumed);
+        ActivitiesStats stats = getStats();
+        alreadyDoneNumber.setText(String.valueOf(stats.getNumberOfConsumedActivities()));
+        leftNumber.setText(String.valueOf(stats.getTotalNumberOfActivities() - stats.getNumberOfConsumedActivities()));
+
     }
 
     protected abstract List<AbstractActivity> getActivities();
