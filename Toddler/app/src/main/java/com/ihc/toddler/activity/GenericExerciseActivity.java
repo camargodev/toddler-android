@@ -24,6 +24,7 @@ import com.ihc.toddler.dialog.QuizUnfinishedEndDialog;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.manager.ColorManager;
 import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.manager.SpecificColorManager;
 import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
@@ -38,12 +39,13 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     protected QuizManager quizManager = QuizManager.getInstance();
     protected ExerciseView exerciseView;
     protected Button nextButton, previousButton;
-    protected Integer unselectedColor = ColorManager.getRandomColorId();
-    protected Integer selectedColor = ColorManager.getRandomColorId();
+    protected Integer selectedColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        selectedColor = SpecificColorManager.getColorForCard(quizManager.getCurrentExerciseIndex());
 
         Exercise currentExercise = quizManager.getCurrentExercise();
         exerciseView = ExerciseViewFactory.make(currentExercise);

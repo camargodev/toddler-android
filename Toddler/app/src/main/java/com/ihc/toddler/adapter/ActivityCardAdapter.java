@@ -23,6 +23,7 @@ import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.manager.SpecificColorManager;
 import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.persistence.ActivityTracker;
 import com.ihc.toddler.view.ExerciseView;
@@ -65,7 +66,9 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     @Override
     public void onBindViewHolder(@NonNull ActivityViewHolder holder, int position) {
         AbstractActivity activity = activities.get(position);
-        int color = ContextCompat.getColor(originScreen, getRandomColorId());
+        int color = SpecificColorManager.getRandomCardColor();
+        if (next)
+            color = SpecificColorManager.getNextActivityColor();
         int gray = ContextCompat.getColor(originScreen, R.color.gray);
 
         holder.title.setText(activity.getTitle());
@@ -75,7 +78,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
         }
         if (ActivityTracker.getInstance().isActivityConsumed(activity))
             color = gray;
-        holder.topPart.setBackgroundColor(color);
+        holder.topPart.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, color));
         if (ActivityTracker.getInstance().isActivityConsumed(activity)) {
             holder.icon.setBackgroundResource(R.drawable.correct);
             holder.icon.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.gray));
@@ -107,12 +110,14 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
                     AbstractActivity activity = activities.get(getAdapterPosition());
                     if (activity instanceof Quiz) {
                         QuizManager manager = QuizManager.getInstance((Quiz) activity);
+                        SpecificColorManager.generateColorList(((Quiz) activity).getNumberOfExercises());
                         Exercise currentExercise = manager.getCurrentExercise();
                         ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);
                         Intent firstQuestion = exerciseView.getIntent(v.getContext());
                         v.getContext().startActivity(firstQuestion);
                     } else {
                         ContentManager.getInstance((Content) activity);
+                        SpecificColorManager.generateColorList(((Content) activity).getNumberOfParts());
                         Intent firstPart = new Intent(v.getContext(), ContentActivity.class);
                         v.getContext().startActivity(firstPart);
                     }

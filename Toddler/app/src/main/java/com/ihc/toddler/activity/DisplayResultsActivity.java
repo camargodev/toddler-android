@@ -23,6 +23,7 @@ import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.LevelManager;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.manager.ResultOpeningManager;
+import com.ihc.toddler.manager.SpecificColorManager;
 import com.ihc.toddler.persistence.ActivityTracker;
 import com.ihc.toddler.repository.QuizRepository;
 
@@ -68,6 +69,8 @@ public class DisplayResultsActivity extends GenericActivity {
         openResultView.setLayoutManager(openResultManager);
         openResultView.setAdapter(openResultCardAdapter);
 
+        revealGrade.setBackgroundTintList(AppCompatResources.getColorStateList(DisplayResultsActivity.this,SpecificColorManager.getHighlightedColor()));
+
         revealGrade.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,11 +83,12 @@ public class DisplayResultsActivity extends GenericActivity {
                 revealGrade.setVisibility(View.INVISIBLE);
                 yourGradeLabel.setVisibility(View.VISIBLE);
                 yourGrade.setVisibility(View.VISIBLE);
+                yourGrade.setTextColor(getResources().getColor(SpecificColorManager.getHighlightedColor()));
 
                 clickToReview.setText("Clique em um exercício para revisa-lo");
 
                 yourGrade.setText(getGradeMessage());
-                goToMenu.setBackgroundTintList(AppCompatResources.getColorStateList(DisplayResultsActivity.this, R.color.cardColor3));
+                goToMenu.setBackgroundTintList(AppCompatResources.getColorStateList(DisplayResultsActivity.this,SpecificColorManager.getHighlightedColor()));
 
                 speechManager.readWithNormalClick(yourGradeLabel, (yourGradeLabel.getText() + " " + yourGrade.getText()));
                 speechManager.readWithNormalClick(yourGrade, (yourGradeLabel.getText() + " " + yourGrade.getText()));
