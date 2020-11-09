@@ -53,4 +53,14 @@ public class DisplayExerciseFragment extends DisplayActivitiesFragment {
     protected String getSwitchText() {
         return "Mostrar exercícios já respondidos";
     }
+
+    @Override
+    protected String getAlreadyDoneTextToSpeak(int num) {
+        return "Você já fez " + num + " questionários";
+    }
+
+    @Override
+    protected String getLeftTextToSpeak(int num) {
+        return "Faltam " + num + " questionários";
+    }
 }

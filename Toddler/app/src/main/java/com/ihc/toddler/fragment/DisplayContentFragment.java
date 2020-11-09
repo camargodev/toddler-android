@@ -54,5 +54,15 @@ public class DisplayContentFragment extends DisplayActivitiesFragment {
         return "Mostrar aulas já assistidas";
     }
 
+    @Override
+    protected String getAlreadyDoneTextToSpeak(int num) {
+        return "Você já assistiu " + num + " aulas";
+    }
+
+    @Override
+    protected String getLeftTextToSpeak(int num) {
+        return "Faltam " + num + " aulas";
+    }
+
 
 }

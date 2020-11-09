@@ -89,7 +89,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
         return activities.size();
     }
 
-    static class ActivityViewHolder extends RecyclerView.ViewHolder {
+    class ActivityViewHolder extends RecyclerView.ViewHolder {
         TextView title, type;
         FrameLayout parent, topPart;
         ImageView icon;
@@ -123,7 +123,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
                 @Override
                 public boolean onLongClick(View v) {
                     AbstractActivity activity = activities.get(getAdapterPosition());
-                    String toTalk = activity.getTypeName() + "   " + activity.getTitle();
+                    String toTalk = activity.getTitle();
                     new SpeechManager(textToSpeech).talk(toTalk);
                     return false;
                 }

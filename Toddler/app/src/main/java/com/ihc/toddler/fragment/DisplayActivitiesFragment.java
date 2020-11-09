@@ -19,6 +19,7 @@ import com.ihc.toddler.adapter.ActivityCardAdapter;
 import com.ihc.toddler.adapter.BaseCardAdapter;
 import com.ihc.toddler.entity.AbstractActivity;
 import com.ihc.toddler.entity.ActivitiesStats;
+import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.persistence.ActivityTracker;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public abstract class DisplayActivitiesFragment extends Fragment {
     private RecyclerView moreActivitiesView, nextActivityView;
 
     private boolean considerConsumed = false;
+    protected SpeechManager speechManager;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public abstract class DisplayActivitiesFragment extends Fragment {
             }
         });
 
+        speechManager = new SpeechManager(textToSpeech);
+
         alreadyConsumedSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -83,6 +87,11 @@ public abstract class DisplayActivitiesFragment extends Fragment {
         alreadyDoneNumber.setText(String.valueOf(stats.getNumberOfConsumedActivities()));
         leftNumber.setText(String.valueOf(stats.getTotalNumberOfActivities() - stats.getNumberOfConsumedActivities()));
 
+        speechManager.readWithNormalClick(alreadyDoneNumber, getAlreadyDoneTextToSpeak(stats.getNumberOfConsumedActivities()));
+        speechManager.readWithNormalClick(leftNumber, getLeftTextToSpeak(stats.getTotalNumberOfActivities() - stats.getNumberOfConsumedActivities()));
+        speechManager.readWithNormalClick(nextTitle);
+        speechManager.readWithNormalClick(moreTitle);
+        speechManager.readWithLongClick(alreadyConsumedSwitch, getSwitchText());
     }
 
     protected abstract List<AbstractActivity> getActivities();
@@ -109,6 +118,8 @@ public abstract class DisplayActivitiesFragment extends Fragment {
     protected abstract String getLabel();
     protected abstract ActivitiesStats getStats();
     protected abstract String getSwitchText();
+    protected abstract String getAlreadyDoneTextToSpeak(int num);
+    protected abstract String getLeftTextToSpeak(int num);
 
     private AbstractActivity getFirstAvailableActivity() {
         List<AbstractActivity> activities = getActivities();
