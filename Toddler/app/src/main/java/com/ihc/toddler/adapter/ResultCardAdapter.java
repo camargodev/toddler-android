@@ -28,6 +28,7 @@ import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.manager.ResultOpeningManager;
+import com.ihc.toddler.manager.SpecificColorManager;
 import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.repository.QuizRepository;
 import com.ihc.toddler.view.ExerciseView;
@@ -80,10 +81,10 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
         int icon;
 
         if (exercise.getStatus().equals(ExerciseStatus.CORRECT)) {
-            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.correct));
+            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, SpecificColorManager.getCorrectColor()));
             icon = R.drawable.correct;
         } else {
-            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.wrong));
+            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, SpecificColorManager.getWrongColor()));
             icon = R.drawable.wrong;
         }
 
