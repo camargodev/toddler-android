@@ -5,11 +5,13 @@ import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -21,6 +23,7 @@ import com.ihc.toddler.entity.Award;
 import com.ihc.toddler.entity.AwardTier;
 import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.LevelManager;
+import com.ihc.toddler.manager.SpecificColorManager;
 import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.repository.AwardRepository;
 
@@ -35,6 +38,7 @@ public class DisplayAwardsFragment extends Fragment {
     private ProgressBar levelProgress;
     protected TextToSpeech textToSpeech;
     protected SpeechManager speechManager;
+    private ImageView levelNumberBg;
 
     @Nullable
     @Override
@@ -45,7 +49,9 @@ public class DisplayAwardsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         mapLayout(view);
+        levelNumberBg.setBackgroundTintList(AppCompatResources.getColorStateList(view.getContext(), SpecificColorManager.getHighlightedColor()));
 
         textToSpeech = new TextToSpeech(view.getContext(), new TextToSpeech.OnInitListener() {
             @Override
@@ -101,6 +107,7 @@ public class DisplayAwardsFragment extends Fragment {
         recyclerView = view.findViewById(R.id.your_awards_view);
         noAwardsText = view.findViewById(R.id.no_awards);
         levelNumber = view.findViewById(R.id.level_num_bg_text);
+        levelNumberBg = view.findViewById(R.id.level_num_bg);
         levelTitle = view.findViewById(R.id.your_level_title);
         missingPoints = view.findViewById(R.id.points_left_to_next_level);
         levelProgress = view.findViewById(R.id.next_level_progress);
