@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.activity.ContentActivity;
+import com.ihc.toddler.dialog.AwardDescriptionDialog;
+import com.ihc.toddler.dialog.ContentEndDialog;
 import com.ihc.toddler.entity.AbstractActivity;
 import com.ihc.toddler.entity.Award;
 import com.ihc.toddler.entity.Content;
@@ -75,7 +77,7 @@ public class AwardCardAdapter extends RecyclerView.Adapter<AwardCardAdapter.Awar
         return awards.size();
     }
 
-    static class AwardViewHolder extends RecyclerView.ViewHolder {
+    class AwardViewHolder extends RecyclerView.ViewHolder {
         TextView awardTitle;
         ImageView awardIcon;
         ConstraintLayout background;
@@ -84,6 +86,14 @@ public class AwardCardAdapter extends RecyclerView.Adapter<AwardCardAdapter.Awar
             awardTitle = itemView.findViewById(R.id.award_title);
             awardIcon = itemView.findViewById(R.id.award_logo);
             background = itemView.findViewById(R.id.award_background);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AwardDescriptionDialog dialog = new AwardDescriptionDialog(originScreen, awards.get(getAdapterPosition()));
+                    dialog.show();
+                }
+            });
         }
     }
 }
