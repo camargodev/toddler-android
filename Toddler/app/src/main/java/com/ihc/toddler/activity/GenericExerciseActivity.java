@@ -65,6 +65,12 @@ public abstract class GenericExerciseActivity extends GenericActivity {
         nextButton.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
         previousButton.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
 
+
+        speechManager.readWithNormalClick(exerciseTextView);
+        speechManager.readWithLongClick(nextButton, "Próximo");
+        speechManager.readWithLongClick(previousButton, "Anterior");
+        speechManager.readWithNormalClick(selectedAnswer);
+
 //        textToSpeech = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
 //            @Override
 //            public void onInit(int status) {
@@ -94,6 +100,7 @@ public abstract class GenericExerciseActivity extends GenericActivity {
         String selectedAnswerText = quizManager.getCurrentExercise().getAnswers().get(answerIndex);
         String text = "RESPOSTA SELECIONADA: " + selectedAnswerText;
         selectedAnswer.setText(text);
+        speechManager.readWithNormalClick(selectedAnswer);
     }
 
     protected void goToPrevious() {

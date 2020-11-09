@@ -45,6 +45,13 @@ public class ContentActivity extends GenericActivity {
         titleButton.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
         nextButton.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
         previousButton.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
+
+        speechManager.readWithNormalClick(currentPartTextView);
+        speechManager.readWithLongClick(nextButton, "Próximo");
+        speechManager.readWithLongClick(previousButton, "Anterior");
+
+
+
     }
 
     protected void hidePreviousButton() {
