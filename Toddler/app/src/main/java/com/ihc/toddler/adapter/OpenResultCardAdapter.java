@@ -74,7 +74,7 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
     }
 
     private void setFieldsHiddenAnswer(OpenResultViewHolder holder, Exercise openExercise) {
-        holder.background.setBackgroundColor(ContextCompat.getColor(originScreen, R.color.cardColor3));
+        holder.entireBackground.setBackgroundColor(ContextCompat.getColor(originScreen, R.color.cardColor3));
         holder.revealText.setVisibility(View.VISIBLE);
         holder.youAnsweredLabel.setVisibility(View.GONE);
         holder.yourAnswer.setVisibility(View.GONE);
@@ -91,14 +91,14 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
         holder.yourAnswer.setVisibility(View.VISIBLE);
         holder.correctWasLabel.setVisibility(View.VISIBLE);
         holder.correctWas.setVisibility(View.VISIBLE);
-        holder.resultLabel.setVisibility(View.VISIBLE);
+//        holder.resultLabel.setVisibility(View.VISIBLE);
         holder.icon.setVisibility(View.VISIBLE);
         if (openExercise.getStatus() == ExerciseStatus.CORRECT) {
-            holder.background.setBackgroundColor(ContextCompat.getColor(originScreen, R.color.correct));
+            holder.entireBackground.setBackgroundColor(ContextCompat.getColor(originScreen, R.color.correct));
             holder.icon.setBackgroundResource(R.drawable.correct);
             holder.resultLabel.setText("Ebaa =D");
         } else {
-            holder.background.setBackgroundColor(ContextCompat.getColor(originScreen, R.color.wrong));
+            holder.entireBackground.setBackgroundColor(ContextCompat.getColor(originScreen, R.color.wrong));
             holder.icon.setBackgroundResource(R.drawable.wrong);
             holder.resultLabel.setText("Oops =(");
         }
