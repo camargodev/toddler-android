@@ -110,12 +110,14 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
                     AbstractActivity activity = activities.get(getAdapterPosition());
                     if (activity instanceof Quiz) {
                         QuizManager manager = QuizManager.getInstance((Quiz) activity);
+                        SpecificColorManager.generateColorList(((Quiz) activity).getNumberOfExercises());
                         Exercise currentExercise = manager.getCurrentExercise();
                         ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);
                         Intent firstQuestion = exerciseView.getIntent(v.getContext());
                         v.getContext().startActivity(firstQuestion);
                     } else {
                         ContentManager.getInstance((Content) activity);
+                        SpecificColorManager.generateColorList(((Content) activity).getNumberOfParts());
                         Intent firstPart = new Intent(v.getContext(), ContentActivity.class);
                         v.getContext().startActivity(firstPart);
                     }

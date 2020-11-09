@@ -18,6 +18,7 @@ import com.ihc.toddler.entity.ContentPart;
 import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.ColorManager;
 import com.ihc.toddler.manager.ContentManager;
+import com.ihc.toddler.manager.SpecificColorManager;
 import com.ihc.toddler.persistence.ActivityTracker;
 
 import java.util.List;
@@ -27,12 +28,15 @@ public class ContentActivity extends GenericActivity {
     protected TextView contentTextView, currentPartTextView;
     protected Button nextButton, previousButton, titleButton;
     protected ContentManager contentManager = ContentManager.getInstance();
-    private int selectedColor = ColorManager.getRandomColorId();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_activity);
+
+//        if (contentManager.isFirstPart()) SpecificColorManager.generateColorList(contentManager.getNumberOfParts());
+        int selectedColor = SpecificColorManager.getColorForCard(contentManager.getCurrentPartNumber() - 1);
+
         mapLayout();
         setCurrentExerciseText();
 

@@ -2,10 +2,14 @@ package com.ihc.toddler.manager;
 
 import com.ihc.toddler.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.ihc.toddler.manager.ColorManager.getRandomColorId;
 
 public class SpecificColorManager {
 
+    private static List<Integer> colors = new ArrayList<>();
 
     public static int getCorrectColor() {
         return R.color.correct;
@@ -32,5 +36,14 @@ public class SpecificColorManager {
         while (color == getNextActivityColor())
             color = ColorManager.getRandomColorId();
         return color;
+    }
+
+    public static void generateColorList(int size)  {
+        colors.clear();
+        for (int i = 0; i < size; i++) colors.add(getRandomCardColor());
+    }
+
+    public static int getColorForCard(int index) {
+        return colors.get(index);
     }
 }

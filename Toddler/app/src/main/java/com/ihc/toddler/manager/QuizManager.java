@@ -59,6 +59,10 @@ public class QuizManager {
         return quiz.getNumberOfExercises();
     }
 
+    public int getCurrentExerciseIndex() {
+        return currentExercise;
+    }
+
     public int getCurrentExerciseNumber() {
         return this.currentExercise + 1;
     }
