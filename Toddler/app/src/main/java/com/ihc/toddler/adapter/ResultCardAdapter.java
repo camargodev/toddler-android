@@ -117,6 +117,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
                     final int position = getLayoutPosition();
                     if (!ResultOpeningManager.getInstance().isOpened(position)) return;
                     originScreen.setExerciseInHighlight(quiz.getExercises().get(position), position);
+                    new SpeechManager(textToSpeech).talk("Questão " + (position+1));
 //                    originScreen.getOpenResultCardAdapter().setExercise(quiz.getExercises().get(position));
 
 

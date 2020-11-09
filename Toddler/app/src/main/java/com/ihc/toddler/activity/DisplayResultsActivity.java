@@ -58,7 +58,7 @@ public class DisplayResultsActivity extends GenericActivity {
         openResultView.setVisibility(View.INVISIBLE);
 
         resultsAdapter = new ResultCardAdapter(quiz, this, textToSpeech);
-        openResultCardAdapter = new OpenResultCardAdapter(this);
+        openResultCardAdapter = new OpenResultCardAdapter(this, textToSpeech);
 
         RecyclerView.LayoutManager resultListManager = new GridLayoutManager(this, 4);
         resultsListView.setLayoutManager(resultListManager);
@@ -85,6 +85,9 @@ public class DisplayResultsActivity extends GenericActivity {
 
                 yourGrade.setText(getGradeMessage());
                 goToMenu.setBackgroundTintList(AppCompatResources.getColorStateList(DisplayResultsActivity.this, R.color.cardColor3));
+
+                speechManager.readWithNormalClick(yourGradeLabel, (yourGradeLabel.getText() + " " + yourGrade.getText()));
+                speechManager.readWithNormalClick(yourGrade, (yourGradeLabel.getText() + " " + yourGrade.getText()));
             }
         });
 
@@ -94,6 +97,12 @@ public class DisplayResultsActivity extends GenericActivity {
                 if (resultsOpened) finish();
             }
         });
+
+        speechManager.readWithLongClick(revealGrade, "Revelar Nota");
+        speechManager.readWithNormalClick(quizTitle);
+
+        speechManager.readWithLongClick(goToMenu, "Terminar");
+
 
     }
 
@@ -121,10 +130,6 @@ public class DisplayResultsActivity extends GenericActivity {
         double grade = ((double) quiz.getCorrectCount() / quiz.getNumberOfExercises()) * 10;
         @SuppressLint("DefaultLocale") String stringGrade = String.format("%.1f", grade);
         return stringGrade;
-    }
-
-    public void readAction(View view) {
-        speechManager.talk(getGradeMessage());
     }
 
     public void readResults(View view) {

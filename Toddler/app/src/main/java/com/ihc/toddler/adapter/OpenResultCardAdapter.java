@@ -1,5 +1,6 @@
 package com.ihc.toddler.adapter;
 
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.ExerciseStatus;
 import com.ihc.toddler.manager.ColorManager;
 import com.ihc.toddler.manager.ResultOpeningManager;
+import com.ihc.toddler.manager.SpeechManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +29,13 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
 //    List<Exercise> exercises;
     Exercise exercise;
     DisplayResultsActivity originScreen;
+    SpeechManager manager;
 //    ResultOpeningManager manager = ResultOpeningManager.getInstance();
 //    List<Integer> colors = new ArrayList<>();
 
-    public OpenResultCardAdapter(DisplayResultsActivity originScreen) {
+    public OpenResultCardAdapter(DisplayResultsActivity originScreen, TextToSpeech textToSpeech) {
         this.originScreen = originScreen;
+        this.manager = new SpeechManager(textToSpeech);
 //        this.exercises = exercises;
 //        manager.init(exercises.size());
 //        for (int i =0; i < exercises.size(); i++) colors.add(ColorManager.getRandomColorId());
@@ -63,6 +67,18 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
 
 //        if (manager.isOpened(position))
         setFieldsReveleadAnswer(holder, openExercise);
+
+        manager.readWithNormalClick(holder.exerciseQuestion);
+
+        String yourAnswer = holder.youAnsweredLabel.getText() + " " + holder.yourAnswer.getText();
+        String correctWas = holder.correctWasLabel.getText() + " " + holder.correctWas.getText();
+
+        manager.readWithNormalClick(holder.youAnsweredLabel, yourAnswer);
+        manager.readWithNormalClick(holder.yourAnswer, yourAnswer);
+        manager.readWithNormalClick(holder.correctWasLabel, correctWas);
+        manager.readWithNormalClick(holder.correctWas, correctWas);
+
+
 //        else
 //            setFieldsHiddenAnswer(holder, openExercise, colors.get(position));
 
@@ -114,6 +130,9 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
         }
         holder.yourAnswer.setText(openExercise.getActualAnswerText());
         holder.correctWas.setText(openExercise.getExpectedAnswerText());
+
+
+
     }
 
     @Override

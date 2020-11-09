@@ -40,7 +40,6 @@
                 android:layout_height="wrap_content"
                 android:text="..."
                 android:gravity="center"
-                android:textStyle="bold"
                 android:textColor="@color/colorAccent"
                 android:layout_marginBottom="30dp"
                 card_view:layout_constraintLeft_toLeftOf="parent"
