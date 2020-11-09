@@ -136,6 +136,7 @@ public abstract class DisplayActivitiesFragment extends Fragment {
         for (AbstractActivity activity : getActivities())
             if (!ActivityTracker.getInstance().isActivityConsumed(activity))
                 sortedActivities.add(activity);
+        if (sortedActivities.size() == 0) return getActivities();
         return sortedActivities;
     }
 
