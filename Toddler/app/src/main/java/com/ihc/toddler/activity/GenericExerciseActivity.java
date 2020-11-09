@@ -117,7 +117,7 @@ public abstract class GenericExerciseActivity extends GenericActivity {
             if (quizManager.isLastExercise()) {
                 if (quizManager.getNumberOfExercises() != quizManager.getQuiz().getAnsweredCount()) {
 
-                    QuizUnfinishedEndDialog dialog = new QuizUnfinishedEndDialog(this);
+                    QuizUnfinishedEndDialog dialog = new QuizUnfinishedEndDialog(this, textToSpeech);
                     dialog.show();
 
 //                    new AlertDialog.Builder(this, R.style.AlertDialogTheme)
@@ -132,7 +132,7 @@ public abstract class GenericExerciseActivity extends GenericActivity {
 
                 } else {
 
-                    QuizEndDialog dialog = new QuizEndDialog(this);
+                    QuizEndDialog dialog = new QuizEndDialog(this, textToSpeech);
                     dialog.show();
 //                    new AlertDialog.Builder(this, R.style.AlertDialogTheme)
 //                            .setTitle("Acabou?")

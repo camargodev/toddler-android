@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -16,15 +18,18 @@ import com.ihc.toddler.activity.DisplayResultsActivity;
 import com.ihc.toddler.activity.GenericExerciseActivity;
 import com.ihc.toddler.entity.Content;
 import com.ihc.toddler.manager.AwardManager;
+import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.persistence.ActivityTracker;
 
 public class QuizEndDialog extends Dialog implements View.OnClickListener {
 
     private GenericExerciseActivity activity;
+    private TextToSpeech textToSpeech;
 
-    public QuizEndDialog(@NonNull GenericExerciseActivity activity) {
+    public QuizEndDialog(@NonNull GenericExerciseActivity activity, TextToSpeech textToSpeech) {
         super(activity);
         this.activity = activity;
+        this.textToSpeech = textToSpeech;
     }
 
     @SuppressLint("SetTextI18n")
@@ -36,6 +41,8 @@ public class QuizEndDialog extends Dialog implements View.OnClickListener {
 
         Button goBack = findViewById(R.id.go_back);
         Button goNext = findViewById(R.id.go_next);
+        TextView title = findViewById(R.id.quiz_end_title);
+        TextView text = findViewById(R.id.quiz_end_text);
 
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +60,13 @@ public class QuizEndDialog extends Dialog implements View.OnClickListener {
                 dismiss();
             }
         });
+
+        SpeechManager speechManager = new SpeechManager(textToSpeech);
+        speechManager.readWithNormalClick(title);
+        speechManager.readWithNormalClick(text);
+
+        speechManager.readWithLongClick(goBack, "Voltar");
+        speechManager.readWithLongClick(goNext, "Terminar");
     }
 
     @Override
