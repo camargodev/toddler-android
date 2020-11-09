@@ -16,6 +16,7 @@ import com.ihc.toddler.R;
 import com.ihc.toddler.activity.DisplayResultsActivity;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.ExerciseStatus;
+import com.ihc.toddler.manager.ColorManager;
 import com.ihc.toddler.manager.ResultOpeningManager;
 
 import java.util.ArrayList;
@@ -26,11 +27,13 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
     List<Exercise> exercises;
     DisplayResultsActivity originScreen;
     ResultOpeningManager manager = ResultOpeningManager.getInstance();
+    List<Integer> colors = new ArrayList<>();
 
     public OpenResultCardAdapter(DisplayResultsActivity originScreen, List<Exercise> exercises) {
         this.originScreen = originScreen;
         this.exercises = exercises;
         manager.init(exercises.size());
+        for (int i =0; i < exercises.size(); i++) colors.add(ColorManager.getRandomColorId());
     }
 
 
@@ -55,7 +58,7 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
         if (manager.isOpened(position))
             setFieldsReveleadAnswer(holder, openExercise);
         else
-            setFieldsHiddenAnswer(holder, openExercise);
+            setFieldsHiddenAnswer(holder, openExercise, colors.get(position));
 
 
 //        originScreen.getOpenResultView().setVisibility(View.VISIBLE);
@@ -73,8 +76,9 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
 //        }
     }
 
-    private void setFieldsHiddenAnswer(OpenResultViewHolder holder, Exercise openExercise) {
-        holder.entireBackground.setBackgroundColor(ContextCompat.getColor(originScreen, R.color.cardColor3));
+    private void setFieldsHiddenAnswer(OpenResultViewHolder holder, Exercise openExercise, int colorId) {
+        holder.entireBackground.setBackgroundColor(ContextCompat.getColor(originScreen, colorId));
+        holder.revealText.setTextColor(colorId);
         holder.revealText.setVisibility(View.VISIBLE);
         holder.youAnsweredLabel.setVisibility(View.GONE);
         holder.yourAnswer.setVisibility(View.GONE);

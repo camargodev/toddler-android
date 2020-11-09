@@ -78,7 +78,7 @@
             android:layout_height="wrap_content"
             android:progress="75"
             android:max="100"
-            android:progressTint="@color/cardColor2"
+            android:progressTint="@color/cardColor4"
             app:layout_constraintTop_toBottomOf="@id/your_level_title"
             app:layout_constraintLeft_toLeftOf="@id/your_level_title"
 

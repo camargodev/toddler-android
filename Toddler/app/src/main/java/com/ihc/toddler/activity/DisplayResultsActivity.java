@@ -17,15 +17,17 @@ import com.ihc.toddler.adapter.OpenResultCardAdapter;
 import com.ihc.toddler.adapter.ResultCardAdapter;
 import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.AwardManager;
+import com.ihc.toddler.manager.LevelManager;
 import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.manager.ResultOpeningManager;
 import com.ihc.toddler.persistence.ActivityTracker;
 import com.ihc.toddler.repository.QuizRepository;
 
 public class DisplayResultsActivity extends GenericActivity {
 
     private RecyclerView openResultView;
-    private TextView quizTitle, results, message;
-    private Button button;
+    private TextView quizTitle, results, message, yourGradeLabel, yourGrade;
+    private Button revealGrade;
     private Quiz quiz = QuizManager.getInstance().getQuiz();
     private OpenResultCardAdapter openResultCardAdapter;
     private ResultCardAdapter resultsAdapter;
@@ -42,8 +44,8 @@ public class DisplayResultsActivity extends GenericActivity {
         AwardManager.getInstance().triggerAwardValidations();
 
         quizTitle.setText(quiz.getTitle());
-        message.setText(getMessage());
-        button.setBackgroundResource(R.drawable.next);
+//        message.setText(getMessage());
+//        button.setBackgroundResource(R.drawable.next);
 
         RecyclerView resultsListView = findViewById(R.id.correct_questions_view);
 
@@ -59,12 +61,28 @@ public class DisplayResultsActivity extends GenericActivity {
         RecyclerView.LayoutManager openResultManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         openResultView.setLayoutManager(openResultManager);
         openResultView.setAdapter(openResultCardAdapter);
+
+        revealGrade.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < quiz.getNumberOfExercises(); i++)
+                    ResultOpeningManager.getInstance().open(i);
+                resultsAdapter.notifyDataSetChanged();
+            }
+        });
+
     }
 
     private void mapLayout() {
         quizTitle = findViewById(R.id.results_title);
-        message = findViewById(R.id.exercise_message);
-        button = findViewById(R.id.exercise_action);
+        yourGrade = findViewById(R.id.your_grade);
+        yourGradeLabel = findViewById(R.id.your_grade_is);
+        revealGrade = findViewById(R.id.reveal_grades);
+
+        yourGradeLabel.setVisibility(View.INVISIBLE);
+        yourGrade.setVisibility(View.INVISIBLE);
+//        message = findViewById(R.id.exercise_message);
+//        button = findViewById(R.id.exercise_action);
     }
 
     public void exerciseAction(View view) {
