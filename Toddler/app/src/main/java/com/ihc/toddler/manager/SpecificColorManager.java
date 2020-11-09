@@ -7,9 +7,10 @@ import java.util.List;
 
 import static com.ihc.toddler.manager.ColorManager.getRandomColorId;
 
-public class SpecificColorManager {
+public class SpecificColorManager  {
 
     private static List<Integer> colors = new ArrayList<>();
+    private static int last = 0;
 
     public static int getCorrectColor() {
         return R.color.correct;
@@ -20,7 +21,7 @@ public class SpecificColorManager {
     }
 
     public static int getHighlightedColor()  {
-        return R.color.highlight;
+        return R.color.cardColor6;
     }
 
     public static int getAlreadyDoneColor() {
@@ -32,9 +33,14 @@ public class SpecificColorManager {
     }
 
     public static int getRandomCardColor() {
-        int color = ColorManager.getRandomColorId();
-        while (color == getNextActivityColor())
-            color = ColorManager.getRandomColorId();
+//        int color = ColorManager.getRandomColorId();
+//        while (color == getNextActivityColor())
+//            color = ColorManager.getRandomColorId();
+//        return color;
+        last = last % 4;
+        int color = R.color.cardColor3;
+        if (last == 0 || last == 1) color = R.color.cardColor7;
+        last += 1;
         return color;
     }
 
