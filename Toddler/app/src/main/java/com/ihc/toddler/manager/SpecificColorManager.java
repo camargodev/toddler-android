@@ -12,7 +12,11 @@ public class SpecificColorManager {
     }
 
     public static int getNextActivityColor() {
-        return R.color.cardColor6;
+        return getHighlightedColor();
+    }
+
+    public static int getHighlightedColor()  {
+        return R.color.highlight;
     }
 
     public static int getAlreadyDoneColor() {
