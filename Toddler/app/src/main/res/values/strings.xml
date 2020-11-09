@@ -19,4 +19,11 @@
     <string name="question_dummy">Qual é a resposta?</string>
     <string name="appbar_scrolling_view_behavior">Teste</string>
 
+    <string-array name="navigation_drawer_items_array">
+        <item>Luana</item>
+        <item>Aulas</item>
+        <item>Exercícios</item>
+        <item>Conquistas</item>
+    </string-array>
+
 </resources>

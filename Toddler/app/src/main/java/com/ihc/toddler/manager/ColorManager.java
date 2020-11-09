@@ -9,7 +9,7 @@ import java.util.Random;
 
 public class ColorManager {
 
-    static List<Integer> cardColors = Arrays.asList(R.color.cardColor1, R.color.cardColor2, R.color.cardColor3,
+    static List<Integer> cardColors = Arrays.asList(R.color.cardColor3,
             R.color.cardColor4, R.color.cardColor6, R.color.cardColor7);
 
     static List<Integer> lastColors = new ArrayList<>();

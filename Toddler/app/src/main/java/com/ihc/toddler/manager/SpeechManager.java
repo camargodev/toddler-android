@@ -16,7 +16,7 @@ public class SpeechManager {
         readWithNormalClick(element, element.getText().toString());
     }
 
-    public void readWithNormalClick(final TextView element, final String text) {
+    public void readWithNormalClick(final View element, final String text) {
         element.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,7 +29,7 @@ public class SpeechManager {
         readWithLongClick(element, element.getText().toString());
     }
 
-    public void readWithLongClick(final TextView element, final String text) {
+    public void readWithLongClick(final View element, final String text) {
         element.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

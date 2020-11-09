@@ -22,6 +22,8 @@
         <activity android:name=".activity.GenericExerciseActivity"/>
         <activity android:name=".activity.ContentActivity"/>
         <activity android:name=".activity.ContentEndActivity"/>
+        <activity android:name=".fragment.DisplayAwardsFragment"/>
+        <activity android:name=".fragment.DisplayActivitiesFragment"/>
     </application>
 
 </manifest>

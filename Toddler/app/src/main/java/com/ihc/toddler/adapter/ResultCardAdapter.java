@@ -8,25 +8,32 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.activity.ContentActivity;
+import com.ihc.toddler.activity.DisplayResultsActivity;
 import com.ihc.toddler.entity.AbstractActivity;
 import com.ihc.toddler.entity.Content;
 import com.ihc.toddler.entity.Exercise;
+import com.ihc.toddler.entity.ExerciseStatus;
 import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.manager.QuizManager;
+import com.ihc.toddler.manager.ResultOpeningManager;
 import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.repository.QuizRepository;
 import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.ihc.toddler.manager.ColorManager.getRandomColorId;
@@ -34,13 +41,17 @@ import static com.ihc.toddler.manager.ColorManager.getRandomColorId;
 public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.QuizViewHolder> {
 
     Quiz quiz;
-    Context originScreen;
+    DisplayResultsActivity originScreen;
     TextToSpeech textToSpeech;
+//    List<Boolean> areQuestionsRevealed;
 
-    public ResultCardAdapter(Quiz quiz, Context originScreen, TextToSpeech textToSpeech) {
+    public ResultCardAdapter(Quiz quiz, DisplayResultsActivity originScreen, TextToSpeech textToSpeech) {
         this.quiz = quiz;
         this.originScreen = originScreen;
         this.textToSpeech = textToSpeech;
+//        this.areQuestionsRevealed = new ArrayList<>();
+        ResultOpeningManager.getInstance().init(quiz.getNumberOfExercises());
+//            this.areQuestionsRevealed.add(false);
     }
 
     @NonNull
@@ -48,36 +59,35 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     public QuizViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.card_result_list_row, viewGroup, false);
-        return new QuizViewHolder(itemView, quiz, textToSpeech);
+        return new QuizViewHolder(itemView, originScreen, textToSpeech);
     }
 
     @Override
     public void onBindViewHolder(@NonNull QuizViewHolder holder, int position) {
-        Exercise exercise = quiz.getExercises().get(position);
-        Integer selectedAnswer = quiz.getAnswers().get(position);
 
-        String questionHeader = (position+1) + ": "+ exercise.getQuestion().replace("\n", " ");
-        holder.number.setText(questionHeader);
+        holder.resultExerciseNumber.setText(String.valueOf(position+1));
 
-        if (selectedAnswer.equals(Quiz.BLANK_ANSWER)) {
-            int color = ContextCompat.getColor(originScreen, R.color.notAnswered);
-            holder.topPart.setBackgroundColor(color);
-            holder.emoticon.setText(":|");
-            holder.description.setText("Não respondido ");
-        } else if (selectedAnswer.equals(exercise.getAnswer())) {
-            int color = ContextCompat.getColor(originScreen, R.color.correct);
-            holder.topPart.setBackgroundColor(color);
-            holder.emoticon.setText(":)");
-            String correctString = "Você acertou! A resposta é: " + exercise.getAnswers().get(exercise.getAnswer()-1);
-            holder.description.setText(correctString);
-        } else {
-            int color = ContextCompat.getColor(originScreen, R.color.wrong);
-            holder.topPart.setBackgroundColor(color);
-            holder.emoticon.setText(":(");
-            String incorrectString = "Poxa, você marcou " + exercise.getAnswers().get(selectedAnswer-1)
-                    +   " e o correto é " + exercise.getAnswers().get(exercise.getAnswer()-1);
-            holder.description.setText(incorrectString);
+        if (!ResultOpeningManager.getInstance().isOpened(position)) {
+            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.gray));
+            return;
         }
+
+        Exercise exercise = quiz.getExercises().get(position);
+
+        holder.interrogationPoint.setVisibility(View.INVISIBLE);
+        holder.resultIcon.setVisibility(View.VISIBLE);
+
+        int icon;
+
+        if (exercise.getStatus().equals(ExerciseStatus.CORRECT)) {
+            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.correct));
+            icon = R.drawable.correct;
+        } else {
+            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.wrong));
+            icon = R.drawable.wrong;
+        }
+
+        holder.resultIcon.setBackgroundResource(icon);
 
     }
 
@@ -86,47 +96,44 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
         return quiz.getNumberOfExercises();
     }
 
-    static class QuizViewHolder extends RecyclerView.ViewHolder {
-        TextView number, description, emoticon;
-        FrameLayout parent, topPart;
-        public QuizViewHolder(View itemView, final Quiz quiz, final TextToSpeech textToSpeech) {
+    class QuizViewHolder extends RecyclerView.ViewHolder {
+        TextView interrogationPoint, resultExerciseNumber;
+        ImageView resultIcon;
+        ConstraintLayout background;
+        public QuizViewHolder(View itemView, final DisplayResultsActivity originScreen, final TextToSpeech textToSpeech) {
             super(itemView);
-            topPart = itemView.findViewById(R.id.exercise_top_part);
-            number = itemView.findViewById(R.id.exercise_number);
-            description = itemView.findViewById(R.id.exercise_description);
-            emoticon = itemView.findViewById(R.id.small_emoticon);
+
+            interrogationPoint = itemView.findViewById(R.id.hidden_result_text);
+            resultIcon = itemView.findViewById(R.id.result_icon);
+            background = itemView.findViewById(R.id.result_background);
+            resultExerciseNumber = itemView.findViewById(R.id.result_exercise_number);
+
+            interrogationPoint.setVisibility(View.VISIBLE);
+            resultIcon.setVisibility(View.INVISIBLE);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new SpeechManager(textToSpeech).talk(description.getText().toString());
-//                    Exercise exercise = quiz.getExercises().get(getAdapterPosition());
-//                    String  answer = quiz.getExercises().get(getAdapterPosition());
-//                    if (activity instanceof Quiz) {
-//                        Quiz quiz = QuizRepository.getQuiz();
-//                        QuizManager manager = QuizManager.getInstance(quiz);
-//
-//                        Exercise currentExercise = manager.getCurrentExercise();
-//                        ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);
-//                        Intent firstQuestion = exerciseView.getIntent(v.getContext());
-//                        v.getContext().startActivity(firstQuestion);
+                    final int position = getLayoutPosition();
+                    if (!ResultOpeningManager.getInstance().isOpened(position)) return;
+                    originScreen.setExerciseInHighlight(quiz.getExercises().get(position), position);
+                    new SpeechManager(textToSpeech).talk("Questão " + (position+1));
+//                    originScreen.getOpenResultCardAdapter().setExercise(quiz.getExercises().get(position));
+
+
+//                    if (!areQuestionsRevealed.get(position)) {
+//                        areQuestionsRevealed.set(position, true);
+//                        interrogationPoint.setVisibility(View.INVISIBLE);
+//                        resultIcon.setVisibility(View.VISIBLE);
+//                        notifyDataSetChanged();
 //                    } else {
-//                        ContentManager.getInstance((Content) activity);
-//                        Intent firstPart = new Intent(v.getContext(), ContentActivity.class);
-//                        v.getContext().startActivity(firstPart);
+////                        new SpeechManager(textToSpeech).talk(description.getText().toString());
 //                    }
+//
+////                    originScreen.getOpenResultCardAdapter().setOpenExercise(QuizManager.getInstance().getQuiz().getExercises().get(position));
+//                    originScreen.getOpenResultCardAdapter().notifyDataSetChanged();
                 }
             });
-//
-//            itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//                @Override
-//                public boolean onLongClick(View v) {
-//                    AbstractActivity activity = activities.get(getAdapterPosition());
-//                    String toTalk = activity.getTypeName() + "   " + activity.getTitle();
-//                    new SpeechManager(textToSpeech).talk(toTalk);
-//                    return false;
-//                }
-//            });
         }
     }
 }

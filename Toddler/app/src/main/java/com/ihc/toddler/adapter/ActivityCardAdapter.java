@@ -2,21 +2,16 @@ package com.ihc.toddler.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +24,7 @@ import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.manager.SpeechManager;
-import com.ihc.toddler.repository.QuizRepository;
+import com.ihc.toddler.persistence.ActivityTracker;
 import com.ihc.toddler.view.ExerciseView;
 import com.ihc.toddler.view.ExerciseViewFactory;
 
@@ -42,6 +37,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     List<AbstractActivity> activities;
     Context originScreen;
     TextToSpeech textToSpeech;
+    boolean next;
 
     public ActivityCardAdapter(List<AbstractActivity> activities, Context originScreen, TextToSpeech textToSpeech) {
         this.activities = activities;
@@ -49,11 +45,20 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
         this.textToSpeech = textToSpeech;
     }
 
+    public ActivityCardAdapter(List<AbstractActivity> activities, Context originScreen, TextToSpeech textToSpeech, boolean next) {
+        this.activities = activities;
+        this.originScreen = originScreen;
+        this.textToSpeech = textToSpeech;
+        this.next = next;
+    }
+
+
     @NonNull
     @Override
     public ActivityViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
+        int layoutId = next ? R.layout.long_card_activity_list_row : R.layout.card_activity_list_row;
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_activity_list_row, viewGroup, false);
+                .inflate(layoutId, viewGroup, false);
         return new ActivityViewHolder(itemView, position, activities, textToSpeech);
     }
 
@@ -61,13 +66,21 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
     public void onBindViewHolder(@NonNull ActivityViewHolder holder, int position) {
         AbstractActivity activity = activities.get(position);
         int color = ContextCompat.getColor(originScreen, getRandomColorId());
+        int gray = ContextCompat.getColor(originScreen, R.color.gray);
 
-        holder.topPart.setBackgroundColor(color);
         holder.title.setText(activity.getTitle());
-        holder.type.setText(activity.getTypeName());
+//        holder.type.setText(activity.getTypeName());
         if (activity instanceof Quiz) {
             holder.icon.setBackgroundResource(R.drawable.homework);
         }
+        if (ActivityTracker.getInstance().isActivityConsumed(activity))
+            color = gray;
+        holder.topPart.setBackgroundColor(color);
+        if (ActivityTracker.getInstance().isActivityConsumed(activity)) {
+            holder.icon.setBackgroundResource(R.drawable.correct);
+            holder.icon.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.gray));
+        }
+//        holder.type.setText(String.valueOf(activity.getId()));
 
     }
 
@@ -76,7 +89,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
         return activities.size();
     }
 
-    static class ActivityViewHolder extends RecyclerView.ViewHolder {
+    class ActivityViewHolder extends RecyclerView.ViewHolder {
         TextView title, type;
         FrameLayout parent, topPart;
         ImageView icon;
@@ -93,9 +106,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
                 public void onClick(View v) {
                     AbstractActivity activity = activities.get(getAdapterPosition());
                     if (activity instanceof Quiz) {
-                        Quiz quiz = QuizRepository.getQuiz();
-                        QuizManager manager = QuizManager.getInstance(quiz);
-
+                        QuizManager manager = QuizManager.getInstance((Quiz) activity);
                         Exercise currentExercise = manager.getCurrentExercise();
                         ExerciseView exerciseView = ExerciseViewFactory.make(currentExercise);
                         Intent firstQuestion = exerciseView.getIntent(v.getContext());
@@ -112,7 +123,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
                 @Override
                 public boolean onLongClick(View v) {
                     AbstractActivity activity = activities.get(getAdapterPosition());
-                    String toTalk = activity.getTypeName() + "   " + activity.getTitle();
+                    String toTalk = activity.getTitle();
                     new SpeechManager(textToSpeech).talk(toTalk);
                     return false;
                 }

@@ -1,0 +1,53 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="110dp"
+    card_view:cardCornerRadius="13dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginStart="7dp"
+    android:layout_marginEnd="7dp"
+    card_view:cardElevation="0dp"
+    android:layout_height="110dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/award_background"
+        android:layout_width="110dp"
+        android:layout_height="110dp">
+
+        <ImageView
+            android:id="@+id/award_logo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="3dp"
+            android:gravity="center"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintLeft_toLeftOf="parent"
+            card_view:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/normal_not_achieved" />
+
+        <TextView
+            android:id="@+id/award_title"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:text="Título da conquista"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:layout_marginStart="3dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="3dp"
+            card_view:layout_constraintTop_toBottomOf="@id/award_logo"
+            card_view:layout_constraintRight_toRightOf="parent"
+            card_view:layout_constraintLeft_toLeftOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+<!--    <FrameLayout-->
+<!--        android:id="@+id/parent"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="55dp"-->
+<!--        android:layout_marginTop="65dp"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="vertical">-->
+<!--    </FrameLayout>-->
+</androidx.cardview.widget.CardView>
