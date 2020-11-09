@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -31,11 +32,13 @@ public class NewAwardsDialog extends Dialog implements View.OnClickListener {
 
     private MainActivity main;
     private List<Award> awards;
+    private TextToSpeech textToSpeech;
 
-    public NewAwardsDialog(@NonNull MainActivity main, List<Award> awards) {
+    public NewAwardsDialog(@NonNull MainActivity main, List<Award> awards , TextToSpeech textToSpeech) {
         super(main);
         this.main = main;
         this.awards = awards;
+        this.textToSpeech = textToSpeech;
     }
 
     @SuppressLint("SetTextI18n")
@@ -53,7 +56,7 @@ public class NewAwardsDialog extends Dialog implements View.OnClickListener {
 
         RecyclerView recyclerView = findViewById(R.id.new_awards_view);
 
-        AwardCardAdapter activityCardAdapter = new AwardCardAdapter(main, awards);
+        AwardCardAdapter activityCardAdapter = new AwardCardAdapter(main, awards, textToSpeech);
 
         RecyclerView.LayoutManager manager = new GridLayoutManager(main, 3);
         recyclerView.setLayoutManager(manager);

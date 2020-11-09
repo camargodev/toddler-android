@@ -1,6 +1,7 @@
 package com.ihc.toddler.activity;
 
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,6 +28,7 @@ import com.ihc.toddler.navdrawer.NavigationDrawerProfile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView navigationDrawerListView;
     private Toolbar toolbar;
     private ActionBarDrawerToggle actionBarDrawerToggle;
+    private TextToSpeech textToSpeech;
 
     public static final int PROFILE = 0, CONTENTS = 1, EXERCISES = 2, AWARDS = 3;
 
@@ -52,7 +55,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        AwardManager.getInstance().notifyAward(this);
+
+        textToSpeech = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR)
+                    textToSpeech.setLanguage(new Locale("pt", "BR"));
+            }
+        });
+
+        AwardManager.getInstance().notifyAward(this, textToSpeech);
         selectItem(0);
     }
 

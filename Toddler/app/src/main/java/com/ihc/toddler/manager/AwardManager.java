@@ -1,5 +1,7 @@
 package com.ihc.toddler.manager;
 
+import android.speech.tts.TextToSpeech;
+
 import com.ihc.toddler.activity.MainActivity;
 import com.ihc.toddler.dialog.NewAwardsDialog;
 import com.ihc.toddler.entity.Award;
@@ -35,11 +37,11 @@ public class AwardManager extends AwardRepository {
         return false;
     }
 
-    public void notifyAward(MainActivity context) {
+    public void notifyAward(MainActivity context, TextToSpeech textToSpeech) {
         if (awardsToNotify.size() == 0) return;
         List<Award> awards = getByIdList(awardsToNotify);
 
-        NewAwardsDialog newAwardsDialog = new NewAwardsDialog(context, awards);
+        NewAwardsDialog newAwardsDialog = new NewAwardsDialog(context, awards, textToSpeech);
         newAwardsDialog.show();
 
         awardsToNotify.clear();

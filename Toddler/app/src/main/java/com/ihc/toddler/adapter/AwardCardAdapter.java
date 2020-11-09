@@ -43,10 +43,12 @@ public class AwardCardAdapter extends RecyclerView.Adapter<AwardCardAdapter.Awar
 
     List<Award> awards;
     Context originScreen;
+    TextToSpeech textToSpeech;
 
-    public AwardCardAdapter(Context originScreen, List<Award> awards) {
+    public AwardCardAdapter(Context originScreen, List<Award> awards, TextToSpeech textToSpeech) {
         this.awards = awards;
         this.originScreen = originScreen;
+        this.textToSpeech = textToSpeech;
     }
 
     @NonNull
@@ -90,7 +92,7 @@ public class AwardCardAdapter extends RecyclerView.Adapter<AwardCardAdapter.Awar
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AwardDescriptionDialog dialog = new AwardDescriptionDialog(originScreen, awards.get(getAdapterPosition()));
+                    AwardDescriptionDialog dialog = new AwardDescriptionDialog(originScreen, awards.get(getAdapterPosition()), textToSpeech);
                     dialog.show();
                 }
             });

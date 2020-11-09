@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -20,6 +21,9 @@ import com.ihc.toddler.adapter.AwardDescriptionCardAdapter;
 import com.ihc.toddler.entity.Award;
 import com.ihc.toddler.entity.Content;
 import com.ihc.toddler.fragment.DisplayAwardsFragment;
+import com.ihc.toddler.manager.SpeechManager;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -27,11 +31,13 @@ public class AwardDescriptionDialog extends Dialog implements View.OnClickListen
 
     private Context main;
     private Award award;
+    private TextToSpeech textToSpeech;
 
-    public AwardDescriptionDialog(@NonNull Context main, Award award) {
+    public AwardDescriptionDialog(@NonNull Context main, Award award, TextToSpeech textToSpeech) {
         super(main);
         this.main = main;
         this.award = award;
+        this.textToSpeech = textToSpeech;
     }
 
     @SuppressLint("SetTextI18n")
@@ -43,13 +49,15 @@ public class AwardDescriptionDialog extends Dialog implements View.OnClickListen
 
         RecyclerView recyclerView = findViewById(R.id.award_description_view);
 
-        AwardDescriptionCardAdapter activityCardAdapter = new AwardDescriptionCardAdapter(main, award);
+        AwardDescriptionCardAdapter activityCardAdapter = new AwardDescriptionCardAdapter(main, award, textToSpeech);
 
         RecyclerView.LayoutManager manager = new GridLayoutManager(main, 1);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(activityCardAdapter);
+
     }
 
     @Override
-    public void onClick(View v) { }
+    public void onClick(View v) {
+    }
 }

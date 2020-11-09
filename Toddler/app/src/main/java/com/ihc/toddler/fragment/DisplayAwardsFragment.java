@@ -91,7 +91,7 @@ public class DisplayAwardsFragment extends Fragment {
     private void displayMyAwards(View view, List<Award> awards) {
 
         RecyclerView.LayoutManager manager = new GridLayoutManager(view.getContext(), 3);
-        AwardCardAdapter activityCardAdapter = new AwardCardAdapter(view.getContext(), awards);
+        AwardCardAdapter activityCardAdapter = new AwardCardAdapter(view.getContext(), awards, textToSpeech);
 
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(activityCardAdapter);
