@@ -23,7 +23,6 @@ public class NavigationDrawerProfile implements NavigationDrawerGenericItem {
             Log.e("NavigationDrawerLine", "Should have two views: icon and name");
             return;
         }
-        ((ImageView) views.get(0)).setImageResource(icon);
-        ((TextView) views.get(1)).setText(name);
+        ((TextView) views.get(1)).setText("Oi, " + name);
     }
 }
