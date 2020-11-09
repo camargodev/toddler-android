@@ -30,12 +30,12 @@ import java.util.Locale;
 public abstract class DisplayActivitiesFragment extends Fragment {
 
     protected TextToSpeech textToSpeech;
+    protected SpeechManager speechManager;
     protected TextView nextTitle, moreTitle, alreadyDoneNumber, alreadyDoneLabel, leftNumber, leftLabel;
     protected SwitchCompat alreadyConsumedSwitch;
     private RecyclerView moreActivitiesView, nextActivityView;
 
     private boolean considerConsumed = false;
-    protected SpeechManager speechManager;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

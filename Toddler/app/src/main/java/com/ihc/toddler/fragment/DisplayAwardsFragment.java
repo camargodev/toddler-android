@@ -1,6 +1,7 @@
 package com.ihc.toddler.fragment;
 
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +21,20 @@ import com.ihc.toddler.entity.Award;
 import com.ihc.toddler.entity.AwardTier;
 import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.LevelManager;
+import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.repository.AwardRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class DisplayAwardsFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private TextView noAwardsText, levelNumber, levelTitle, missingPoints, myPoints;
     private ProgressBar levelProgress;
+    protected TextToSpeech textToSpeech;
+    protected SpeechManager speechManager;
 
     @Nullable
     @Override
@@ -41,6 +46,17 @@ public class DisplayAwardsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mapLayout(view);
+
+        textToSpeech = new TextToSpeech(view.getContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if(status != TextToSpeech.ERROR)
+                    textToSpeech.setLanguage(new Locale("pt", "BR"));
+            }
+        });
+
+        speechManager = new SpeechManager(textToSpeech);
+
         List<Award> awards = getMyAwards();
         updateScreenAccordingToAwards(view, awards);
         updateLevelInformation();
@@ -63,6 +79,7 @@ public class DisplayAwardsFragment extends Fragment {
         if (awards.size() == 0) {
             recyclerView.setVisibility(View.GONE);
             noAwardsText.setVisibility(View.VISIBLE);
+            speechManager.readWithNormalClick(noAwardsText);
         } else {
             recyclerView.setVisibility(View.VISIBLE);
             noAwardsText.setVisibility(View.GONE);
@@ -101,6 +118,11 @@ public class DisplayAwardsFragment extends Fragment {
         levelNumber.setText(String.valueOf(level));
         levelProgress.setProgress(progress);
         myPoints.setText("Você já tem " + levelManager.getTotalPoints() + " pontos");
+
+        speechManager.readWithNormalClick(levelTitle);
+        speechManager.readWithNormalClick(levelNumber);
+        speechManager.readWithNormalClick(missingPoints);
+        speechManager.readWithNormalClick(myPoints);
 
     }
 
