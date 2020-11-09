@@ -195,7 +195,7 @@
             android:textColor="@color/darkGray"
             android:theme="@style/CustomSwitch"
             android:layoutDirection="rtl"
-            android:checked="true"
+            android:checked="false"
             />
 
 

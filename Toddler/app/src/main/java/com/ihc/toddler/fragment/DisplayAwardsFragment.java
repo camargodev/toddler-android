@@ -28,7 +28,7 @@ import java.util.List;
 public class DisplayAwardsFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private TextView noAwardsText, levelNumber, levelTitle, missingPoints;
+    private TextView noAwardsText, levelNumber, levelTitle, missingPoints, myPoints;
     private ProgressBar levelProgress;
 
     @Nullable
@@ -87,6 +87,7 @@ public class DisplayAwardsFragment extends Fragment {
         levelTitle = view.findViewById(R.id.your_level_title);
         missingPoints = view.findViewById(R.id.points_left_to_next_level);
         levelProgress = view.findViewById(R.id.next_level_progress);
+        myPoints = view.findViewById(R.id.your_points_title);
     }
 
     private void updateLevelInformation() {
@@ -99,6 +100,7 @@ public class DisplayAwardsFragment extends Fragment {
         missingPoints.setText(buildLeftPointText(pointsLeft));
         levelNumber.setText(String.valueOf(level));
         levelProgress.setProgress(progress);
+        myPoints.setText("Você já tem " + levelManager.getTotalPoints() + " pontos");
 
     }
 
@@ -107,7 +109,7 @@ public class DisplayAwardsFragment extends Fragment {
     }
 
     private String buildLeftPointText(int points) {
-        return "Faltam " + points + " pontos para\no próximo nível";
+        return "Faltam " + points + " pontos para o próximo nível";
     }
 
 }
