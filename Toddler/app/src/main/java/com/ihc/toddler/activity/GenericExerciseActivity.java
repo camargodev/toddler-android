@@ -18,6 +18,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.ihc.toddler.R;
+import com.ihc.toddler.dialog.ContentEndDialog;
+import com.ihc.toddler.dialog.QuizEndDialog;
+import com.ihc.toddler.dialog.QuizUnfinishedEndDialog;
 import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.manager.ColorManager;
 import com.ihc.toddler.manager.QuizManager;
@@ -106,33 +109,40 @@ public abstract class GenericExerciseActivity extends GenericActivity {
 
             if (quizManager.isLastExercise()) {
                 if (quizManager.getNumberOfExercises() != quizManager.getQuiz().getAnsweredCount()) {
-                    new AlertDialog.Builder(this, R.style.AlertDialogTheme)
-                            .setTitle("Pera lá")
-                            .setMessage("Esse é o último exercício e você ainda não respondeu todos. " +
-                                    "Antes de continuar, garanta que todos estão respondidos.")
 
-                            .setPositiveButton("Ok", null)
-                            .setIcon(R.drawable.small_logo)
-                            .show();
+                    QuizUnfinishedEndDialog dialog = new QuizUnfinishedEndDialog(this);
+                    dialog.show();
+
+//                    new AlertDialog.Builder(this, R.style.AlertDialogTheme)
+//                            .setTitle("Pera lá")
+//                            .setMessage("Esse é o último exercício e você ainda não respondeu todos. " +
+//                                    "Antes de continuar, garanta que todos estão respondidos.")
+//
+//                            .setPositiveButton("Ok", null)
+//                            .setIcon(R.drawable.small_logo)
+//                            .show();
                     return;
 
                 } else {
-                    new AlertDialog.Builder(this, R.style.AlertDialogTheme)
-                            .setTitle("Acabou?")
-                            .setMessage("Você tem certeza que não quer mudar a resposta de nenhum exercício?")
 
-                            .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                                Intent resultsIntent = new Intent(getApplicationContext(), DisplayResultsActivity.class);
-                                                finish();
-                                                startActivity(resultsIntent);
-                                }
-                            })
-
-                            // A null listener allows the button to dismiss the dialog and take no further action.
-                            .setNegativeButton("Voltar", null)
-                            .setIcon(R.drawable.small_logo)
-                            .show();
+                    QuizEndDialog dialog = new QuizEndDialog(this);
+                    dialog.show();
+//                    new AlertDialog.Builder(this, R.style.AlertDialogTheme)
+//                            .setTitle("Acabou?")
+//                            .setMessage("Você tem certeza que não quer mudar a resposta de nenhum exercício?")
+//
+//                            .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                                Intent resultsIntent = new Intent(getApplicationContext(), DisplayResultsActivity.class);
+//                                                finish();
+//                                                startActivity(resultsIntent);
+//                                }
+//                            })
+//
+//                            // A null listener allows the button to dismiss the dialog and take no further action.
+//                            .setNegativeButton("Voltar", null)
+//                            .setIcon(R.drawable.small_logo)
+//                            .show();
                     return;
 
                 }

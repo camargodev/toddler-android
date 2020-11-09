@@ -11,11 +11,16 @@ import android.widget.TextView;
 import androidx.appcompat.content.res.AppCompatResources;
 
 import com.ihc.toddler.R;
+import com.ihc.toddler.dialog.ContentEndDialog;
+import com.ihc.toddler.dialog.NewAwardsDialog;
+import com.ihc.toddler.entity.Award;
 import com.ihc.toddler.entity.ContentPart;
 import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.ColorManager;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.persistence.ActivityTracker;
+
+import java.util.List;
 
 public class ContentActivity extends GenericActivity {
 
@@ -56,23 +61,8 @@ public class ContentActivity extends GenericActivity {
 
     protected void goToNext() {
         if (contentManager.isLastPart()) {
-            new AlertDialog.Builder(this, R.style.AlertDialogTheme)
-                    .setTitle("Acabou a aula")
-                    .setMessage("Se você entendeu a matéria, vá para os exercícios.")
-
-                    .setPositiveButton("Continuar", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent resultsIntent = new Intent(getApplicationContext(), MainActivity.class);
-                            ActivityTracker.getInstance().persistActivity(contentManager.getContent());
-                            AwardManager.getInstance().triggerAwardValidations();
-                            finish();
-                            startActivity(resultsIntent);
-                        }
-                    })
-
-                    .setNegativeButton("Voltar", null)
-                    .setIcon(R.drawable.small_logo)
-                    .show();
+            ContentEndDialog newAwardsDialog = new ContentEndDialog(this, contentManager.getContent());
+            newAwardsDialog.show();
             return;
         }
         contentManager.goToNext();
