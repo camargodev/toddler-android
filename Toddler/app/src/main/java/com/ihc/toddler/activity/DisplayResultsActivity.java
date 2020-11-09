@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +35,8 @@ public class DisplayResultsActivity extends GenericActivity {
     private Quiz quiz = QuizManager.getInstance().getQuiz();
     private OpenResultCardAdapter openResultCardAdapter;
     private ResultCardAdapter resultsAdapter;
+    private boolean resultsOpened;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,8 @@ public class DisplayResultsActivity extends GenericActivity {
             public void onClick(View v) {
                 for (int i = 0; i < quiz.getNumberOfExercises(); i++)
                     ResultOpeningManager.getInstance().open(i);
+                resultsOpened = true;
+
                 resultsAdapter.notifyDataSetChanged();
 
                 revealGrade.setVisibility(View.INVISIBLE);
@@ -79,7 +84,14 @@ public class DisplayResultsActivity extends GenericActivity {
                 clickToReview.setText("Clique em um exercício para revisa-lo");
 
                 yourGrade.setText(getGradeMessage());
-                goToMenu.setBackgroundColor(getResources().getColor(R.color.cardColor3));
+                goToMenu.setBackgroundTintList(AppCompatResources.getColorStateList(DisplayResultsActivity.this, R.color.cardColor3));
+            }
+        });
+
+        goToMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (resultsOpened) finish();
             }
         });
 
