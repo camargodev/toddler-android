@@ -49,7 +49,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
         this.originScreen = originScreen;
         this.textToSpeech = textToSpeech;
 //        this.areQuestionsRevealed = new ArrayList<>();
-//        for (int i = 0; i <quiz.getNumberOfExercises(); i++)
+        ResultOpeningManager.getInstance().init(quiz.getNumberOfExercises());
 //            this.areQuestionsRevealed.add(false);
     }
 
@@ -112,10 +112,15 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
             interrogationPoint.setVisibility(View.VISIBLE);
             resultIcon.setVisibility(View.INVISIBLE);
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    final int position = getLayoutPosition();
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final int position = getLayoutPosition();
+                    if (!ResultOpeningManager.getInstance().isOpened(position)) return;
+                    originScreen.setExerciseInHighlight(quiz.getExercises().get(position));
+//                    originScreen.getOpenResultCardAdapter().setExercise(quiz.getExercises().get(position));
+
+
 //                    if (!areQuestionsRevealed.get(position)) {
 //                        areQuestionsRevealed.set(position, true);
 //                        interrogationPoint.setVisibility(View.INVISIBLE);
@@ -127,8 +132,8 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
 //
 ////                    originScreen.getOpenResultCardAdapter().setOpenExercise(QuizManager.getInstance().getQuiz().getExercises().get(position));
 //                    originScreen.getOpenResultCardAdapter().notifyDataSetChanged();
-//                }
-//            });
+                }
+            });
         }
     }
 }

@@ -24,18 +24,23 @@ import java.util.List;
 
 public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAdapter.OpenResultViewHolder> {
 
-    List<Exercise> exercises;
+//    List<Exercise> exercises;
+    Exercise exercise;
     DisplayResultsActivity originScreen;
-    ResultOpeningManager manager = ResultOpeningManager.getInstance();
-    List<Integer> colors = new ArrayList<>();
+//    ResultOpeningManager manager = ResultOpeningManager.getInstance();
+//    List<Integer> colors = new ArrayList<>();
 
-    public OpenResultCardAdapter(DisplayResultsActivity originScreen, List<Exercise> exercises) {
+    public OpenResultCardAdapter(DisplayResultsActivity originScreen) {
         this.originScreen = originScreen;
-        this.exercises = exercises;
-        manager.init(exercises.size());
-        for (int i =0; i < exercises.size(); i++) colors.add(ColorManager.getRandomColorId());
+//        this.exercises = exercises;
+//        manager.init(exercises.size());
+//        for (int i =0; i < exercises.size(); i++) colors.add(ColorManager.getRandomColorId());
     }
 
+    public void setExercise(Exercise exercise) {
+        this.exercise = exercise;
+        notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -48,17 +53,19 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
     @Override
     public void onBindViewHolder(@NonNull OpenResultViewHolder holder, int position) {
 
-        Exercise openExercise = exercises.get(position);
+        if (exercise == null) return;
+
+        Exercise openExercise = exercise;
 
         holder.exerciseNumber.setText(String.valueOf(position+1));
         holder.exerciseQuestion.setText(openExercise.getQuestion().replace("\n"," "));
         holder.entireBackground.setBackgroundColor(ContextCompat.getColor(originScreen, R.color.colorAccent));
         holder.revealText.setTextColor(ContextCompat.getColor(originScreen, R.color.cardColor3));
 
-        if (manager.isOpened(position))
-            setFieldsReveleadAnswer(holder, openExercise);
-        else
-            setFieldsHiddenAnswer(holder, openExercise, colors.get(position));
+//        if (manager.isOpened(position))
+        setFieldsReveleadAnswer(holder, openExercise);
+//        else
+//            setFieldsHiddenAnswer(holder, openExercise, colors.get(position));
 
 
 //        originScreen.getOpenResultView().setVisibility(View.VISIBLE);
@@ -112,7 +119,7 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
 
     @Override
     public int getItemCount() {
-        return exercises.size();
+        return 1;
     }
 
     class OpenResultViewHolder extends RecyclerView.ViewHolder {
@@ -135,15 +142,15 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
             correctWas = itemView.findViewById(R.id.correct_was);
             icon = itemView.findViewById(R.id.answer_icon);
             resultLabel = itemView.findViewById(R.id.result_label);
-            revealText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(manager.isOpened(getAdapterPosition())) return;
-                    manager.open(getAdapterPosition());
-                    notifyDataSetChanged();
-                    originScreen.getResultsAdapter().notifyDataSetChanged();
-                }
-            });
+//            revealText.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if(manager.isOpened(getAdapterPosition())) return;
+//                    manager.open(getAdapterPosition());
+//                    notifyDataSetChanged();
+//                    originScreen.getResultsAdapter().notifyDataSetChanged();
+//                }
+//            });
         }
     }
 }

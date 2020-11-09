@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.OpenResultCardAdapter;
 import com.ihc.toddler.adapter.ResultCardAdapter;
+import com.ihc.toddler.entity.Exercise;
 import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.LevelManager;
@@ -26,12 +28,12 @@ import com.ihc.toddler.repository.QuizRepository;
 public class DisplayResultsActivity extends GenericActivity {
 
     private RecyclerView openResultView;
-    private TextView quizTitle, results, message, yourGradeLabel, yourGrade;
+    private TextView quizTitle, results, message, yourGradeLabel, yourGrade, clickToReview;
     private Button revealGrade;
+    private ConstraintLayout goToMenu;
     private Quiz quiz = QuizManager.getInstance().getQuiz();
     private OpenResultCardAdapter openResultCardAdapter;
     private ResultCardAdapter resultsAdapter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,9 +52,10 @@ public class DisplayResultsActivity extends GenericActivity {
         RecyclerView resultsListView = findViewById(R.id.correct_questions_view);
 
         openResultView = findViewById(R.id.open_result_recycler_view);
+        openResultView.setVisibility(View.INVISIBLE);
 
         resultsAdapter = new ResultCardAdapter(quiz, this, textToSpeech);
-        openResultCardAdapter = new OpenResultCardAdapter(this, quiz.getExercises());
+        openResultCardAdapter = new OpenResultCardAdapter(this);
 
         RecyclerView.LayoutManager resultListManager = new GridLayoutManager(this, 3);
         resultsListView.setLayoutManager(resultListManager);
@@ -68,6 +71,15 @@ public class DisplayResultsActivity extends GenericActivity {
                 for (int i = 0; i < quiz.getNumberOfExercises(); i++)
                     ResultOpeningManager.getInstance().open(i);
                 resultsAdapter.notifyDataSetChanged();
+
+                revealGrade.setVisibility(View.INVISIBLE);
+                yourGradeLabel.setVisibility(View.VISIBLE);
+                yourGrade.setVisibility(View.VISIBLE);
+
+                clickToReview.setText("Clique em um exercício para revisa-lo");
+
+                yourGrade.setText(getGradeMessage());
+                goToMenu.setBackgroundColor(getResources().getColor(R.color.cardColor3));
             }
         });
 
@@ -78,6 +90,8 @@ public class DisplayResultsActivity extends GenericActivity {
         yourGrade = findViewById(R.id.your_grade);
         yourGradeLabel = findViewById(R.id.your_grade_is);
         revealGrade = findViewById(R.id.reveal_grades);
+        goToMenu = findViewById(R.id.go_back_to_menu);
+        clickToReview = findViewById(R.id.click_to_review_text);
 
         yourGradeLabel.setVisibility(View.INVISIBLE);
         yourGrade.setVisibility(View.INVISIBLE);
@@ -90,14 +104,14 @@ public class DisplayResultsActivity extends GenericActivity {
         finish();
     }
 
-    private String getMessage() {
+    private String getGradeMessage() {
         double grade = ((double) quiz.getCorrectCount() / quiz.getNumberOfExercises()) * 10;
-        @SuppressLint("DefaultLocale") String stringGrade = String.format("%.2f", grade);
-        return "Sua nota: " + stringGrade + "/10";
+        @SuppressLint("DefaultLocale") String stringGrade = String.format("%.1f", grade);
+        return stringGrade;
     }
 
     public void readAction(View view) {
-        speechManager.talk(getMessage());
+        speechManager.talk(getGradeMessage());
     }
 
     public void readResults(View view) {
@@ -114,5 +128,11 @@ public class DisplayResultsActivity extends GenericActivity {
 
     public ResultCardAdapter getResultsAdapter() {
         return resultsAdapter;
+    }
+
+    public void setExerciseInHighlight(Exercise exercise) {
+        clickToReview.setVisibility(View.INVISIBLE);
+        openResultView.setVisibility(View.VISIBLE);
+        openResultCardAdapter.setExercise(exercise);
     }
 }
