@@ -33,7 +33,7 @@ public abstract class DisplayActivitiesFragment extends Fragment {
     protected SwitchCompat alreadyConsumedSwitch;
     private RecyclerView moreActivitiesView, nextActivityView;
 
-    private boolean considerConsumed = true;
+    private boolean considerConsumed = false;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

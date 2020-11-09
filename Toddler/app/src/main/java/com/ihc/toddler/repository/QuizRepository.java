@@ -33,6 +33,9 @@ public class QuizRepository {
         exercises.add(new MultipleChoiceExercise("Quantas sílabas\ntem a palavra\ncamelo?", Arrays.asList("1", "2", "3", "4"), C));
         exercises.add(new TrueOrFalseExercise("As sílabas de PATO\nsão PA e TO?", TRUE));
         exercises.add(new MultipleChoiceExercise("Quais são as\nsílabas de BALÃO?", Arrays.asList("BA-LÃO", "BAL-ÃO", "BALÃ-O", "BA-LÃ-O"), A));
+        exercises.add(new TrueOrFalseExercise("CATARATA tem 4 sílabas?", TRUE));
+        exercises.add(new TrueOrFalseExercise("A última sílaba de SAPATO\né ATO?", FALSE));
+        exercises.add(new MultipleChoiceExercise("Qual é a primeira sílaba\nde CARRO?", Arrays.asList("CA", "CAR", "RRO", "RO"), B));
         return new Quiz("Separação de sílabas", exercises);
     }
 

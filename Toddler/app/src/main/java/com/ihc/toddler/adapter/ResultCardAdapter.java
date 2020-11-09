@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,8 +68,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
         holder.resultExerciseNumber.setText(String.valueOf(position+1));
 
         if (!ResultOpeningManager.getInstance().isOpened(position)) {
-            int color = ContextCompat.getColor(originScreen, R.color.gray);
-            holder.background.setBackgroundColor(color);
+            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.gray));
             return;
         }
 
@@ -77,17 +77,16 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
         holder.interrogationPoint.setVisibility(View.INVISIBLE);
         holder.resultIcon.setVisibility(View.VISIBLE);
 
-        int color, icon;
+        int icon;
 
         if (exercise.getStatus().equals(ExerciseStatus.CORRECT)) {
-            color = ContextCompat.getColor(originScreen, R.color.correct);
+            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.correct));
             icon = R.drawable.correct;
         } else {
-            color = ContextCompat.getColor(originScreen, R.color.wrong);
+            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.wrong));
             icon = R.drawable.wrong;
         }
 
-        holder.background.setBackgroundColor(color);
         holder.resultIcon.setBackgroundResource(icon);
 
     }
