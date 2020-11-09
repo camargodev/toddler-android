@@ -19,6 +19,7 @@ import com.ihc.toddler.adapter.ActivityCardAdapter;
 import com.ihc.toddler.adapter.BaseCardAdapter;
 import com.ihc.toddler.entity.AbstractActivity;
 import com.ihc.toddler.entity.ActivitiesStats;
+import com.ihc.toddler.manager.SpecificColorManager;
 import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.persistence.ActivityTracker;
 
@@ -84,8 +85,12 @@ public abstract class DisplayActivitiesFragment extends Fragment {
         super.onResume();
         populateCardView(considerConsumed);
         ActivitiesStats stats = getStats();
+
         alreadyDoneNumber.setText(String.valueOf(stats.getNumberOfConsumedActivities()));
         leftNumber.setText(String.valueOf(stats.getTotalNumberOfActivities() - stats.getNumberOfConsumedActivities()));
+
+        alreadyDoneNumber.setTextColor(getResources().getColor(SpecificColorManager.getAlreadyDoneColor()));
+        leftNumber.setTextColor(getResources().getColor(SpecificColorManager.getLeftColor()));
 
         speechManager.readWithNormalClick(alreadyDoneNumber, getAlreadyDoneTextToSpeak(stats.getNumberOfConsumedActivities()));
         speechManager.readWithNormalClick(leftNumber, getLeftTextToSpeak(stats.getTotalNumberOfActivities() - stats.getNumberOfConsumedActivities()));
