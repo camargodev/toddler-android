@@ -68,7 +68,7 @@ public class ContentActivity extends GenericActivity {
 
     protected void goToNext() {
         if (contentManager.isLastPart()) {
-            ContentEndDialog newAwardsDialog = new ContentEndDialog(this, contentManager.getContent());
+            ContentEndDialog newAwardsDialog = new ContentEndDialog(this, contentManager.getContent(), textToSpeech);
             newAwardsDialog.show();
             return;
         }
