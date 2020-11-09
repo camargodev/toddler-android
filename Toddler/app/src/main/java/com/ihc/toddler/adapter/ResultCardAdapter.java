@@ -117,7 +117,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
                 public void onClick(View v) {
                     final int position = getLayoutPosition();
                     if (!ResultOpeningManager.getInstance().isOpened(position)) return;
-                    originScreen.setExerciseInHighlight(quiz.getExercises().get(position));
+                    originScreen.setExerciseInHighlight(quiz.getExercises().get(position), position);
 //                    originScreen.getOpenResultCardAdapter().setExercise(quiz.getExercises().get(position));
 
 

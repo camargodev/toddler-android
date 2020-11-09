@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,7 +55,7 @@ public class NewAwardsDialog extends Dialog implements View.OnClickListener {
 
         AwardCardAdapter activityCardAdapter = new AwardCardAdapter(main, awards);
 
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(main, LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager manager = new GridLayoutManager(main, 3);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(activityCardAdapter);
     }
@@ -68,6 +69,7 @@ public class NewAwardsDialog extends Dialog implements View.OnClickListener {
     }
 
     private String buildTitle() {
-        return awards.size() +  " novas conquista" + (awards.size() > 1 ? "s" : "");
+        if (awards.size() > 1) return awards.size() +  " novas conquistas";
+        return awards.size() +  " nova conquista";
     }
 }

@@ -29,7 +29,7 @@ import com.ihc.toddler.repository.QuizRepository;
 public class DisplayResultsActivity extends GenericActivity {
 
     private RecyclerView openResultView;
-    private TextView quizTitle, results, message, yourGradeLabel, yourGrade, clickToReview;
+    private TextView quizTitle, results, message, yourGradeLabel, yourGrade, clickToReview, currentExercise;
     private Button revealGrade;
     private ConstraintLayout goToMenu;
     private Quiz quiz = QuizManager.getInstance().getQuiz();
@@ -104,6 +104,7 @@ public class DisplayResultsActivity extends GenericActivity {
         revealGrade = findViewById(R.id.reveal_grades);
         goToMenu = findViewById(R.id.go_back_to_menu);
         clickToReview = findViewById(R.id.click_to_review_text);
+        currentExercise =  findViewById(R.id.current_exercise);
 
         yourGradeLabel.setVisibility(View.INVISIBLE);
         yourGrade.setVisibility(View.INVISIBLE);
@@ -142,9 +143,10 @@ public class DisplayResultsActivity extends GenericActivity {
         return resultsAdapter;
     }
 
-    public void setExerciseInHighlight(Exercise exercise) {
+    public void setExerciseInHighlight(Exercise exercise, int position) {
         clickToReview.setVisibility(View.INVISIBLE);
         openResultView.setVisibility(View.VISIBLE);
         openResultCardAdapter.setExercise(exercise);
+        currentExercise.setText("Questão " + (position+1));
     }
 }

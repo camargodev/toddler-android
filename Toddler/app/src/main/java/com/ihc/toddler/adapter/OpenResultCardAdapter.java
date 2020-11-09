@@ -57,7 +57,6 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
 
         Exercise openExercise = exercise;
 
-        holder.exerciseNumber.setText(String.valueOf(position+1));
         holder.exerciseQuestion.setText(openExercise.getQuestion().replace("\n"," "));
         holder.entireBackground.setBackgroundColor(ContextCompat.getColor(originScreen, R.color.colorAccent));
         holder.revealText.setTextColor(ContextCompat.getColor(originScreen, R.color.cardColor3));
