@@ -100,7 +100,7 @@ public abstract class GenericExerciseActivity extends GenericActivity {
         button.setTextColor(getResources().getColor(R.color.colorAccent));
         int answerIndex = quizManager.getCurrentAnswer() - 1;
         String selectedAnswerText = quizManager.getCurrentExercise().getAnswers().get(answerIndex);
-        String text = "RESPOSTA SELECIONADA: " + selectedAnswerText;
+        String text = "Resposta selecionada: " + selectedAnswerText;
         selectedAnswer.setText(text);
         speechManager.readWithNormalClick(selectedAnswer);
     }
@@ -183,7 +183,7 @@ public abstract class GenericExerciseActivity extends GenericActivity {
     protected void setCurrentExerciseText() {
         int current = quizManager.getCurrentExerciseNumber();
         int total = quizManager.getNumberOfExercises();
-        String text = "EXERCÍCIO " + current + " DE " + total;
+        String text = "Exercício " + current + " de " + total;
         exerciseTextView.setText(text);
         exerciseTextView.setBackgroundTintList(AppCompatResources.getColorStateList(this, selectedColor));
     }

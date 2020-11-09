@@ -17,38 +17,47 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ihc.toddler.R;
 import com.ihc.toddler.activity.MainActivity;
 import com.ihc.toddler.dialog.AwardDescriptionDialog;
+import com.ihc.toddler.entity.AbstractActivity;
 import com.ihc.toddler.entity.Award;
 import com.ihc.toddler.entity.HelpItem;
 import com.ihc.toddler.manager.AwardManager;
 import com.ihc.toddler.manager.HelpManager;
+import com.ihc.toddler.manager.SpeechManager;
 
 import java.util.List;
 
 public class HelpItemAdapter extends RecyclerView.Adapter<HelpItemAdapter.HelpItemViewHolder> {
 
-    List<Award> awards;
     MainActivity main;
     TextToSpeech textToSpeech;
+    HelpManager helpManager;
+    SpeechManager speechManager;
 
-    public HelpItemAdapter(MainActivity main, List<Award> awards, TextToSpeech textToSpeech) {
-        this.awards = awards;
+    public HelpItemAdapter(MainActivity main, TextToSpeech textToSpeech) {
         this.main = main;
         this.textToSpeech = textToSpeech;
+        this.helpManager = HelpManager.getInstance();
+        this.speechManager = new SpeechManager(textToSpeech);
     }
 
     @NonNull
     @Override
     public HelpItemViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         View itemView = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.card_award_list_row, viewGroup, false);
+                .inflate(R.layout.help_item, viewGroup, false);
         return new HelpItemViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull HelpItemViewHolder holder, int position) {
-        HelpItem item = HelpManager.getInstance().getCurrentHelpItem();
-        holder.text.setText(item.getText());
+        HelpItem item = helpManager.getCurrentHelpItem();
         holder.title.setText(item.getTitle());
+        holder.text.setText(item.getText());
+        holder.next.setText(item.getButtonText());
+
+//        speechManager.readWithNormalClick(holder.title);
+//        speechManager.readWithNormalClick(holder.text);
+//        speechManager.readWithLongClick(holder.next, String.valueOf(holder.next.getText()));
     }
 
     @Override
@@ -65,13 +74,38 @@ public class HelpItemAdapter extends RecyclerView.Adapter<HelpItemAdapter.HelpIt
             text = itemView.findViewById(R.id.explaining_click);
             next = itemView.findViewById(R.id.go_next_help);
 
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    AwardDescriptionDialog dialog = new AwardDescriptionDialog(originScreen, awards.get(getAdapterPosition()), textToSpeech);
-//                    dialog.show();
-//                }
-//            });
+            next.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (helpManager.isLast())
+                        return;
+                    helpManager.next();
+                    notifyDataSetChanged();
+                }
+            });
+
+            text.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    speechManager.talk((String) text.getText());
+                }
+            });
+
+            title.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    speechManager.talk((String) title.getText());
+                }
+            });
+
+            next.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    speechManager.talk((String) next.getText());
+                    return false;
+                }
+            });
+
         }
     }
 }
