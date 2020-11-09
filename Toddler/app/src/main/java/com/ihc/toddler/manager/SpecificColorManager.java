@@ -46,7 +46,9 @@ public class SpecificColorManager  {
 
     public static void generateColorList(int size)  {
         colors.clear();
-        for (int i = 0; i < size; i++) colors.add(getRandomCardColor());
+        for (int i = 0; i < size; i++)
+            if (i % 2 == 0) colors.add(R.color.cardColor3);
+            else  colors.add(R.color.cardColor7);
     }
 
     public static int getColorForCard(int index) {
