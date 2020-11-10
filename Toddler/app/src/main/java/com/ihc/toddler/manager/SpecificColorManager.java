@@ -11,11 +11,18 @@ public class SpecificColorManager  {
 
     private static List<Integer> colors = new ArrayList<>();
     private static int last = 0;
+    private final static boolean colorful  = false;
 
-    public static int getWrongColor() { return R.color.gray; }
+    public static int getWrongColor() {
+        if (colorful)
+            return R.color.gray;
+        return R.color.wrong;
+    }
 
     public static int getCorrectColor() {
-        return getRandomCardColor();
+        if (colorful)
+            return getRandomCardColor();
+        return R.color.correct;
     }
 
     public static int getNextActivityColor() {
@@ -23,30 +30,39 @@ public class SpecificColorManager  {
     }
 
     public static int getHighlightedColor()  {
-        return getRandomCardColor();
+        if (colorful)
+            return getRandomCardColor();
+        return R.color.highlight;
     }
 
     public static int getAlreadyDoneColor() {
-        return getRandomCardColor();
+        return getCorrectColor();
     }
 
     public static int getLeftColor() {
-        return R.color.gray;
+        return getWrongColor();
     }
 
     public static int getRandomCardColor() {
-        return ColorManager.getRandomColorId();
-//        last = last % 4;
-//        int color = R.color.cardColor3;
-//        if (last == 0 || last == 1) color = R.color.cardColor7;
-//        last += 1;
-//        return color;
+        if (colorful)
+            return ColorManager.getRandomColorId();
+        last = last % 4;
+        int color = R.color.cardColor3;
+        if (last == 0 || last == 1) color = R.color.cardColor7;
+        last += 1;
+        return color;
     }
 
     public static void generateColorList(int size)  {
         colors.clear();
-        for (int i = 0; i < size; i++)
-            colors.add(getRandomCardColor());
+        if (colorful) {
+            for (int i = 0; i < size; i++)
+                colors.add(getRandomCardColor());
+        } else {
+            for (int i = 0; i < size; i++)
+                if (i % 2 == 0) colors.add(R.color.cardColor3);
+                else colors.add(R.color.cardColor7);
+        }
     }
 
     public static int getColorForCard(int index) {

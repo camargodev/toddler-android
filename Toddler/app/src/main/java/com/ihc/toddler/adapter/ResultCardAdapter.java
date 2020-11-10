@@ -54,7 +54,11 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
 //        this.areQuestionsRevealed = new ArrayList<>();
         ResultOpeningManager.getInstance().init(quiz.getNumberOfExercises());
         colors = new ArrayList<>();
-        for (int i = 0; i < quiz.getNumberOfExercises(); i++) colors.add(SpecificColorManager.getCorrectColor());
+        for (int i = 0; i < quiz.getNumberOfExercises(); i++)
+            if (quiz.getExercises().get(i).getStatus() == ExerciseStatus.CORRECT)
+                colors.add(SpecificColorManager.getCorrectColor());
+            else
+                colors.add(SpecificColorManager.getWrongColor());
 //            this.areQuestionsRevealed.add(false);
     }
 
@@ -87,7 +91,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
             holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, colors.get(position)));
             icon = R.drawable.correct;
         } else {
-            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.gray));
+            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, colors.get(position)));
             icon = R.drawable.wrong;
         }
 
