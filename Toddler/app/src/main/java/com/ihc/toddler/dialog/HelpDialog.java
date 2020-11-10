@@ -38,7 +38,7 @@ public class HelpDialog extends Dialog implements View.OnClickListener {
 
         RecyclerView recyclerView = findViewById(R.id.help_item_view);
 
-        HelpItemAdapter adapter = new HelpItemAdapter(main, textToSpeech);
+        HelpItemAdapter adapter = new HelpItemAdapter(main, textToSpeech, this);
 
         RecyclerView.LayoutManager manager = new GridLayoutManager(main, 1);
         recyclerView.setLayoutManager(manager);

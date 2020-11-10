@@ -44,6 +44,7 @@
         android:onClick="readContent"
         android:text="@string/question_dummy"
         android:textColor="@color/colorAccent"
+        android:textAllCaps="false"
         android:textStyle="bold"
         android:textSize="20sp"
         android:background="@drawable/circled_square"

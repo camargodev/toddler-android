@@ -15,9 +15,9 @@ public class HelpManager {
 
     private HelpManager() {
         items.add(new HelpItem("Oie! =D", "Bem-vindo ao Toddler! Aqui, você aprende brincando", "Como usar?"));
-        items.add(new HelpItem("Como usar?", "Todo texto pode ser clicado para ser lido. Como esse aqui, clica para tentar! =)", "Entendi"));
+        items.add(new HelpItem("Como usar?", "Todo texto pode ser clicado para ser lido. Como esse aqui, clica para tentar!", "Entendi"));
         items.add(new HelpItem("Mas e os botões? =o", "É a mesma coisa, mas com um clique longo. Como esse aqui embaixo:", "Legal"));
-        items.add(new HelpItem("Isso aí!", "O Toddler é simples assim, já pode começar a usar.", "Começar"));
+        items.add(new HelpItem("Isso aí!", "O Toddler é simples assim, já pode começar a usar.", "Vamos lá!"));
     }
 
     public static HelpManager getInstance() {

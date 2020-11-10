@@ -86,7 +86,7 @@ public class ContentActivity extends GenericActivity {
     protected void setCurrentExerciseText() {
         int current = contentManager.getCurrentPartNumber();
         int total = contentManager.getNumberOfParts();
-        String text = "PARTE " + current + " DE " + total;
+        String text = "Parte " + current + " de " + total;
         currentPartTextView.setText(text);
     }
 

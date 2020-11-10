@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.ihc.toddler.R;
 import com.ihc.toddler.activity.MainActivity;
 import com.ihc.toddler.dialog.AwardDescriptionDialog;
+import com.ihc.toddler.dialog.HelpDialog;
 import com.ihc.toddler.entity.AbstractActivity;
 import com.ihc.toddler.entity.Award;
 import com.ihc.toddler.entity.HelpItem;
@@ -32,12 +33,14 @@ public class HelpItemAdapter extends RecyclerView.Adapter<HelpItemAdapter.HelpIt
     TextToSpeech textToSpeech;
     HelpManager helpManager;
     SpeechManager speechManager;
+    HelpDialog dialog;
 
-    public HelpItemAdapter(MainActivity main, TextToSpeech textToSpeech) {
+    public HelpItemAdapter(MainActivity main, TextToSpeech textToSpeech, HelpDialog dialog) {
         this.main = main;
         this.textToSpeech = textToSpeech;
         this.helpManager = HelpManager.getInstance();
         this.speechManager = new SpeechManager(textToSpeech);
+        this.dialog = dialog;
     }
 
     @NonNull
@@ -77,8 +80,10 @@ public class HelpItemAdapter extends RecyclerView.Adapter<HelpItemAdapter.HelpIt
             next.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (helpManager.isLast())
+                    if (helpManager.isLast()) {
+                        dialog.dismiss();
                         return;
+                    }
                     helpManager.next();
                     notifyDataSetChanged();
                 }
