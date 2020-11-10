@@ -6,6 +6,8 @@
     android:layout_marginTop="5dp"
     android:layout_marginStart="5dp"
     android:layout_marginEnd="5dp"
+    card_view:cardElevation="0dp"
+
     android:layout_width="80dp"
     android:layout_height="80dp">
 
@@ -32,6 +34,8 @@
             card_view:layout_constraintBottom_toBottomOf="parent"
             android:backgroundTint="@color/correct"
             android:background="@drawable/square"
+            android:elevation="3dp"
+
             >
 
             <TextView

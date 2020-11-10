@@ -152,10 +152,11 @@ public class DisplayResultsActivity extends GenericActivity {
         return resultsAdapter;
     }
 
-    public void setExerciseInHighlight(Exercise exercise, int position) {
+    public void setExerciseInHighlight(Exercise exercise, int position, int color) {
         clickToReview.setVisibility(View.INVISIBLE);
         openResultView.setVisibility(View.VISIBLE);
         openResultCardAdapter.setExercise(exercise);
+        openResultCardAdapter.setColor(color);
         currentExercise.setText("Questão " + (position+1));
     }
 }

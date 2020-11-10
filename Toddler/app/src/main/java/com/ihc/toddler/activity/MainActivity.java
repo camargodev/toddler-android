@@ -17,6 +17,9 @@ import androidx.fragment.app.FragmentManager;
 
 import com.ihc.toddler.R;
 import com.ihc.toddler.adapter.DrawerItemCustomAdapter;
+import com.ihc.toddler.adapter.HelpItemAdapter;
+import com.ihc.toddler.dialog.HelpDialog;
+import com.ihc.toddler.dialog.NewAwardsDialog;
 import com.ihc.toddler.fragment.DisplayContentFragment;
 import com.ihc.toddler.fragment.DisplayExerciseFragment;
 import com.ihc.toddler.navdrawer.NavigationDrawerGenericItem;
@@ -42,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int PROFILE = 0, CONTENTS = 1, EXERCISES = 2, AWARDS = 3;
 
+    private static boolean showHelp = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         mapLayout();
         setupNavigationDrawer(buildNavigationDrawerLineArray());
         selectItem(CONTENTS);
+
     }
 
     @Override
@@ -63,6 +69,12 @@ public class MainActivity extends AppCompatActivity {
                     textToSpeech.setLanguage(new Locale("pt", "BR"));
             }
         });
+
+        if (showHelp) {
+            HelpDialog helpDialog = new HelpDialog(this, textToSpeech);
+            helpDialog.show();
+            showHelp = false;
+        }
 
         AwardManager.getInstance().notifyAward(this, textToSpeech);
         selectItem(0);

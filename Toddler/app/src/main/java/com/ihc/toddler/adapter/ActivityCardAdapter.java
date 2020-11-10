@@ -77,7 +77,7 @@ public class ActivityCardAdapter extends RecyclerView.Adapter<ActivityCardAdapte
             holder.icon.setBackgroundResource(R.drawable.homework);
         }
         if (ActivityTracker.getInstance().isActivityConsumed(activity))
-            color = gray;
+            color = R.color.gray;
         holder.topPart.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, color));
         if (ActivityTracker.getInstance().isActivityConsumed(activity)) {
             holder.icon.setBackgroundResource(R.drawable.correct);

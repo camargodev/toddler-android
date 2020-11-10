@@ -30,6 +30,7 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
     Exercise exercise;
     DisplayResultsActivity originScreen;
     SpeechManager manager;
+    int color;
 //    ResultOpeningManager manager = ResultOpeningManager.getInstance();
 //    List<Integer> colors = new ArrayList<>();
 
@@ -120,11 +121,11 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
 //        holder.resultLabel.setVisibility(View.VISIBLE);
         holder.icon.setVisibility(View.VISIBLE);
         if (openExercise.getStatus() == ExerciseStatus.CORRECT) {
-            holder.entireBackground.setBackgroundColor(ContextCompat.getColor(originScreen, R.color.correct));
+            holder.entireBackground.setBackgroundColor(ContextCompat.getColor(originScreen, color));
             holder.icon.setBackgroundResource(R.drawable.correct);
             holder.resultLabel.setText("Ebaa =D");
         } else {
-            holder.entireBackground.setBackgroundColor(ContextCompat.getColor(originScreen, R.color.wrong));
+            holder.entireBackground.setBackgroundColor(ContextCompat.getColor(originScreen, R.color.gray));
             holder.icon.setBackgroundResource(R.drawable.wrong);
             holder.resultLabel.setText("Oops =(");
         }
@@ -170,5 +171,9 @@ public class OpenResultCardAdapter extends RecyclerView.Adapter<OpenResultCardAd
 //                }
 //            });
         }
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }

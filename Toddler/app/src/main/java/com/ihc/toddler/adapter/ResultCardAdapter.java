@@ -28,6 +28,7 @@ import com.ihc.toddler.entity.Quiz;
 import com.ihc.toddler.manager.ContentManager;
 import com.ihc.toddler.manager.QuizManager;
 import com.ihc.toddler.manager.ResultOpeningManager;
+import com.ihc.toddler.manager.SpecificColorManager;
 import com.ihc.toddler.manager.SpeechManager;
 import com.ihc.toddler.repository.QuizRepository;
 import com.ihc.toddler.view.ExerciseView;
@@ -43,6 +44,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
     Quiz quiz;
     DisplayResultsActivity originScreen;
     TextToSpeech textToSpeech;
+    List<Integer> colors;
 //    List<Boolean> areQuestionsRevealed;
 
     public ResultCardAdapter(Quiz quiz, DisplayResultsActivity originScreen, TextToSpeech textToSpeech) {
@@ -51,6 +53,8 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
         this.textToSpeech = textToSpeech;
 //        this.areQuestionsRevealed = new ArrayList<>();
         ResultOpeningManager.getInstance().init(quiz.getNumberOfExercises());
+        colors = new ArrayList<>();
+        for (int i = 0; i < quiz.getNumberOfExercises(); i++) colors.add(SpecificColorManager.getCorrectColor());
 //            this.areQuestionsRevealed.add(false);
     }
 
@@ -80,10 +84,10 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
         int icon;
 
         if (exercise.getStatus().equals(ExerciseStatus.CORRECT)) {
-            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.correct));
+            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, colors.get(position)));
             icon = R.drawable.correct;
         } else {
-            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.wrong));
+            holder.background.setBackgroundTintList(AppCompatResources.getColorStateList(originScreen, R.color.gray));
             icon = R.drawable.wrong;
         }
 
@@ -116,7 +120,7 @@ public class ResultCardAdapter extends RecyclerView.Adapter<ResultCardAdapter.Qu
                 public void onClick(View v) {
                     final int position = getLayoutPosition();
                     if (!ResultOpeningManager.getInstance().isOpened(position)) return;
-                    originScreen.setExerciseInHighlight(quiz.getExercises().get(position), position);
+                    originScreen.setExerciseInHighlight(quiz.getExercises().get(position), position, colors.get(getAdapterPosition()));
                     new SpeechManager(textToSpeech).talk("Questão " + (position+1));
 //                    originScreen.getOpenResultCardAdapter().setExercise(quiz.getExercises().get(position));
 
